@@ -4,6 +4,7 @@ using akka::Akka.Actor;
 using Frontend.Shared.Cqrs.Commands;
 using Frontend.Shared.UI.Messages;
 using System;
+using System.Threading.Tasks;
 
 namespace Frontend.AkkaApp.UI.Cqrs
 {
@@ -18,26 +19,26 @@ namespace Frontend.AkkaApp.UI.Cqrs
             Receive<ReceiveTimeout>(timeout => Self.Tell(PoisonPill.Instance));
 #pragma warning restore RCS1163 // Unused parameter.
             //Receive<RoutedCommandEnvelope>(this.Handle);
-            Receive<EnableBookingCommand>(Handle);
-            Receive<DisableBookingCommand>(Handle);
-            Receive<BookRoomCommand>(Handle);
+            ReceiveAsync<EnableBookingCommand>(Handle);
+            ReceiveAsync<DisableBookingCommand>(Handle);
+            ReceiveAsync<BookRoomCommand>(Handle);
         }
 
-        private bool Handle(EnableBookingCommand cmd)
+        private async Task<bool> Handle(EnableBookingCommand cmd)
         {
-            _commandHandler.Handle(cmd);
+            await _commandHandler.Handle(cmd).ConfigureAwait(false);
             return true;
         }
 
-        private bool Handle(DisableBookingCommand cmd)
+        private async Task<bool> Handle(DisableBookingCommand cmd)
         {
-            _commandHandler.Handle(cmd);
+            await _commandHandler.Handle(cmd).ConfigureAwait(false);
             return true;
         }
 
-        private bool Handle(BookRoomCommand cmd)
+        private async Task<bool> Handle(BookRoomCommand cmd)
         {
-            _commandHandler.Handle(cmd);
+            await _commandHandler.Handle(cmd).ConfigureAwait(false);
             return true;
         }
 

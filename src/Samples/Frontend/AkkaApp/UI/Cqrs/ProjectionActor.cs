@@ -21,26 +21,34 @@ namespace Frontend.AkkaApp.UI.Cqrs
 
         private void Waiting()
         {
+            Receive<PollImmediately>(Handle);
             Receive<StartPolling>(Handle);
         }
 
         private void Polling()
         {
+            Receive<PollImmediately>(Handle);
             Receive<StopPolling>(Handle);
             Receive<ReceiveTimeout>(timeout => Poll());
+        }
+
+        private Boolean Handle(PollImmediately obj)
+        {
+            Poll();
+            return true;
         }
 
         private Boolean Handle(StopPolling obj)
         {
             SetReceiveTimeout(null);
-            Self.Tell(PoisonPill.Instance);
+            Become(Waiting);
             return true;
         }
 
         private Boolean Handle(StartPolling obj)
         {
             Become(Polling);
-            SetReceiveTimeout(TimeSpan.FromSeconds(5));
+            SetReceiveTimeout(TimeSpan.FromSeconds(3));
             Poll();
             return true;
         }
@@ -53,11 +61,13 @@ namespace Frontend.AkkaApp.UI.Cqrs
 
     public class StartPolling
     {
-
     }
 
     public class StopPolling
     {
+    }
 
+    public class PollImmediately
+    {
     }
 }

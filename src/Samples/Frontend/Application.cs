@@ -28,7 +28,7 @@ namespace Frontend
             }));
             serviceCollection.AddSingleton<IStreamsFactory, StreamsFactory>();
             serviceCollection.AddSingleton<IAggregateFactory, DefaultAggregateFactory>();
-            serviceCollection.AddSingleton<IRepository, Repository>();
+            serviceCollection.AddTransient<IRepository, Repository>(); // Do NOT use singleton for this one, it has bugs with _trackingAggregate
             serviceCollection.AddTransient<RoomCommandHandler>();
             serviceCollection.AddTransient<ProjectionEngine>();
 

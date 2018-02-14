@@ -10,8 +10,8 @@ namespace Frontend.Shared.Cqrs.Support
     {
         public INStoreLogger CreateLogger(string categoryName)
         {
-            //if (categoryName == typeof(PollingClient).FullName)
-            //    return NStoreNullLogger.Instance;
+            if (categoryName == typeof(PollingClient).FullName)
+                return NStoreNullLogger.Instance;
 
             return new ConsoleLoggerWrapper(
                 new ConsoleLogger(categoryName, (s, level) => true, true)
