@@ -29,8 +29,8 @@ namespace Frontend.AkkaApp.Ui.Cqrs
             {
                 case "start":
                     // create the CQRS engine actors
-                    var projectionActor = Context.ActorOf(Context.DI().Props<ProjectionActor>(), "projectionEngine");
-                    projectionActor.Tell(new StartPolling());
+                    var projectionActor = Context.ActorOf(Context.DI().Props<ProjectionActorV2>(), "projectionEngine");
+                    projectionActor.Tell(StartPolling.Instance);
                     // create the writer and the reader
                     var writer = Context.ActorOf<ConsoleWriterActor>("ConsoleWriter");
                     var debugUtilsActor = Context.ActorOf(Props.Create<DebugUtilsActor>(writer), "debugutils");

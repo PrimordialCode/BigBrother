@@ -24,6 +24,7 @@ namespace Frontend.AkkaApp
             // Actors MUST be transient
             // Any actor depencency must be transient or singleton
             serviceCollection.AddTransient<ProjectionActor>();
+            serviceCollection.AddTransient<ProjectionActorV2>();
             serviceCollection.AddTransient<RoomActor>();
 
             ActorMonitoring.AddSystem(new InMemoryActorMonitoringSystem("InMemory"));

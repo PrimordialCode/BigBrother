@@ -53,6 +53,10 @@ namespace Frontend.AkkaApp.UI.Cqrs
             return true;
         }
 
+        /// <summary>
+        /// blocking an actor wi a very long time might not be a good idea
+        /// It's non responsing to other messages (even system messages)
+        /// </summary>
         private void Poll()
         {
             _projectionEngine.Poll();
@@ -61,13 +65,16 @@ namespace Frontend.AkkaApp.UI.Cqrs
 
     public class StartPolling
     {
+        public static readonly StartPolling Instance = new StartPolling();
     }
 
     public class StopPolling
     {
+        public static readonly StopPolling Instance = new StopPolling();
     }
 
     public class PollImmediately
     {
+        public static readonly PollImmediately Instance = new PollImmediately();
     }
 }
