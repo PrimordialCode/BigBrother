@@ -16,10 +16,8 @@ namespace Frontend.AkkaApp.UI.Cqrs
         {
             _projectionEngine = Context.System.ActorSelection("/user/ConsoleUi/projectionEngine");
             _commandHandler = commandHandler;
-#pragma warning disable RCS1163 // Unused parameter.
             // kill the actor after inactivity
             Receive<ReceiveTimeout>(timeout => Self.Tell(PoisonPill.Instance));
-#pragma warning restore RCS1163 // Unused parameter.
             ReceiveAsync<EnableBookingCommand>(Handle);
             ReceiveAsync<DisableBookingCommand>(Handle);
             ReceiveAsync<BookRoomCommand>(Handle);

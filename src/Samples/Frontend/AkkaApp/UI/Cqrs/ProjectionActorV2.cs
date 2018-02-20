@@ -8,14 +8,11 @@ using System.Threading.Tasks;
 
 namespace Frontend.AkkaApp.UI.Cqrs
 {
-
     internal class ProjectionActorV2 : ReceiveActorWithLog, IWithUnboundedStash
     {
         private Task _longRunningTask;
         private CancellationTokenSource _cancellationToken;
-
         public IStash Stash { get; set; }
-
         private readonly ProjectionEngine _projectionEngine;
 
         public ProjectionActorV2(ProjectionEngine projectionEngine)
@@ -35,6 +32,18 @@ namespace Frontend.AkkaApp.UI.Cqrs
             Receive<StartPolling>(Handle);
         }
 
+        private void Working()
+        {
+            Receive<StopPolling>(Handle);
+
+            Receive<PollingCompleted>(result => Become(Waiting)); // handle errors properly!
+
+            // ignore any timeout we get while doing the actual work, don't what to stash these
+            Receive<ReceiveTimeout>(timeout => { });
+
+            ReceiveAny(o => Stash.Stash());
+        }
+
         private void Poll()
         {
             _cancellationToken = new CancellationTokenSource();
@@ -43,23 +52,11 @@ namespace Frontend.AkkaApp.UI.Cqrs
                 .ContinueWith(x =>
                 {
                     if (x.IsCanceled || x.IsFaulted)
-                        return new LongRunningTaskResult(false);
-                    return new LongRunningTaskResult(true);
+                        return new PollingCompleted(false);
+                    return new PollingCompleted(true);
                 }, TaskContinuationOptions.ExecuteSynchronously)
             .PipeTo(self);
             Become(Working);
-        }
-
-        private void Working()
-        {
-            Receive<StopPolling>(Handle);
-
-            Receive<LongRunningTaskResult>(result => Become(Waiting)); // handle errors properly!
-
-            // ignore any timeout we get while doing the actual work
-            Receive<ReceiveTimeout>(timeout => true);
-
-            ReceiveAny(o => Stash.Stash());
         }
 
         private Boolean Handle(StopPolling obj)
@@ -87,9 +84,9 @@ namespace Frontend.AkkaApp.UI.Cqrs
         }
     }
 
-    internal class LongRunningTaskResult
+    internal class PollingCompleted
     {
-        public LongRunningTaskResult(Boolean success)
+        public PollingCompleted(Boolean success)
         {
             Success = success;
         }

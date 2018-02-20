@@ -34,4 +34,25 @@ namespace Frontend.Shared.Cqrs.Commands
             await _repository.SaveAsync(aggregate, cmd.Id).ConfigureAwait(false);
         }
     }
+
+    /*
+    public abstract class CommandHandler<TAggregate> where TAggregate : class, IAggregate
+    {
+        private readonly IRepository _repository;
+        
+        protected CommandHandler(IRepository repository)
+        {
+            _repository = repository;
+        }
+
+        protected async Task Handle<TCommand>(TCommand cmd, Action<TAggregate> action) where TCommand : CqrsCommand
+        {
+            TAggregate aggregate = await _repository.GetByIdAsync<TAggregate>(cmd.AggregateId).ConfigureAwait(false);
+            
+            action(aggregate);
+
+            await _repository.SaveAsync(aggregate, cmd.Id).ConfigureAwait(false);
+        }
+    }
+    */
 }

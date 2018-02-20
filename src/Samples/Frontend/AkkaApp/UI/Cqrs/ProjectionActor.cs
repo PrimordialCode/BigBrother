@@ -25,7 +25,7 @@ namespace Frontend.AkkaApp.UI.Cqrs
             Receive<StartPolling>(Handle);
         }
 
-        private void Polling()
+        private void Working()
         {
             Receive<PollImmediately>(Handle);
             Receive<StopPolling>(Handle);
@@ -47,7 +47,7 @@ namespace Frontend.AkkaApp.UI.Cqrs
 
         private Boolean Handle(StartPolling obj)
         {
-            Become(Polling);
+            Become(Working);
             SetReceiveTimeout(TimeSpan.FromSeconds(3));
             Poll();
             return true;
