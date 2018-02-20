@@ -10,7 +10,7 @@
     <span>Status: {{actorDetail.status === 0 ? 'Started' : 'Stopped'}}</span>
   </div>
   <div flex *ngIf="actorCounters">
-    <ngx-charts-number-card [view]="[null, 100]" [results]="actorCounters">
+    <ngx-charts-number-card [view]="[700, 100]" [results]="actorCounters">
     </ngx-charts-number-card>
   </div>
   <div flex *ngIf="actorExceptions && actorExceptions.length > 0">

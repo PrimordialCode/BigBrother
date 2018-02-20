@@ -59,6 +59,6 @@ namespace Mammoth.BigBrother.Akka.Monitoring
                 ActorMonitoring.TrackException(_friendlyName, ex, message);
                 throw;
             }
-        }
+        }        
     }
 }
