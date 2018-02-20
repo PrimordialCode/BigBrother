@@ -6,6 +6,6 @@ Some gauges and probes are specificaly designed to work with and inpect Actors F
 
 # Warning
 
-The project is very early stages of development, it's highly unstable and needs a lot of cleanup and it's absolutely not Production Ready.
+The project is in a very early stage of development, it's highly unstable and needs a lot of cleanup and it's absolutely not Production Ready.
 
 USE IT AT YOUR OWN RISK.
