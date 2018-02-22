@@ -38,8 +38,10 @@ namespace Frontend.AkkaApp.UI.Cqrs
 
             Receive<PollingCompleted>(result => Become(Waiting)); // handle errors properly!
 
-            // ignore any timeout we get while doing the actual work, don't what to stash these
+            // ignore any timeout and pollimmediately message 
+            // we get while doing the actual work, don't what to stash these ones.
             Receive<ReceiveTimeout>(timeout => { });
+            Receive<PollImmediately>(msg => { });
 
             ReceiveAny(o => Stash.Stash());
         }
