@@ -8,6 +8,7 @@ using Mammoth.BigBrother.Monitoring;
 using Mammoth.BigBrother.Monitoring.Endpoint;
 using Mammoth.BigBrother.Monitoring.MonitoringSystems;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Frontend.AkkaApp
 {
@@ -30,7 +31,7 @@ namespace Frontend.AkkaApp
             ActorMonitoring.AddSystem(new InMemoryActorMonitoringSystem("InMemory"));
             EndpointInstaller.Start(5001);
 
-            string hocon = System.IO.File.ReadAllText(@".\AkkaApp\hocon.cfg");
+            string hocon = System.IO.File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"AkkaApp\hocon.cfg"));
             var config = ConfigurationFactory.ParseString(hocon);
             // .WithFallback();
             ColoredConsole.WriteLine("Creating the ActorSystem");
