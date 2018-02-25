@@ -82,6 +82,20 @@ namespace Mammoth.BigBrother.Monitoring
                 .Build());
         }
 
+        public static void TrackDeadLetter(string sender, string recipient, object message)
+        {
+            if (!Monitors.IsEnabled)
+            {
+                return;
+            }
+
+            Monitors.TrackEvent(MetricEvents.ActorDeadLetter, MetricProperties.For()
+                .Actor(sender)
+                .ActorRecipient(recipient)
+                .Message(message)
+                .Build());
+        }
+
         /*
         void UpdateCounter(string metricName, double delta = 1, IDictionary<string, string> properties = null)
         void UpdateGauge(string metricName, int value, IDictionary<string, string> properties = null);

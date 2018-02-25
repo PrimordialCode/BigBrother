@@ -40,7 +40,6 @@ namespace Mammoth.BigBrother.Akka.Monitoring
         protected override void PreRestart(Exception reason, object message)
         {
             base.PreRestart(reason, message);
-            // ActorMonitoring.TrackException(_friendlyName, reason, message);
         }
 
         // Not needed anymore, we use the custom logging Actor for tracing exceptions

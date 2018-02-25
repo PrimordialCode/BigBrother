@@ -2,8 +2,10 @@
 
 using akka::Akka.Actor;
 using akka::Akka.Configuration;
+using akka::Akka.Event;
 using Frontend.AkkaApp.UI.Cqrs;
 using Frontend.Shared;
+using Mammoth.BigBrother.Akka.Monitoring;
 using Mammoth.BigBrother.Monitoring;
 using Mammoth.BigBrother.Monitoring.Endpoint;
 using Mammoth.BigBrother.Monitoring.MonitoringSystems;
@@ -37,6 +39,10 @@ namespace Frontend.AkkaApp
             ColoredConsole.WriteLine("Creating the ActorSystem");
             _actorSystem = ActorSystem.Create(name, config);
             var resolver = new AkkaServiceProviderDependencyResolver(serviceCollection.BuildServiceProvider(), _actorSystem);
+
+            // add a deadletter watcher actor
+            var deadlettermonitorRef = _actorSystem.ActorOf<DeadLetterMonitor>("deadlettermonitor");
+            _actorSystem.EventStream.Subscribe(deadlettermonitorRef, typeof(DeadLetter));
         }
 
         public void WaitForShutdown()

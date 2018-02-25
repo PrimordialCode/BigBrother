@@ -10,6 +10,7 @@ namespace Mammoth.BigBrother.Monitoring
         public const string Type = "type";
         public const string Message = "message";
         public const string Exception = "exception";
+        public const string ActorRecipient = "actor_recipient";
 
         internal static MetricPropertiesBuilder For()
         {
@@ -24,6 +25,12 @@ namespace Mammoth.BigBrother.Monitoring
         public MetricPropertiesBuilder Actor(string name)
         {
             _properties[MetricProperties.Actor] = name;
+            return this;
+        }
+
+        public MetricPropertiesBuilder ActorRecipient(string name)
+        {
+            _properties[MetricProperties.ActorRecipient] = name;
             return this;
         }
 
