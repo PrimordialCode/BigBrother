@@ -43,6 +43,8 @@ namespace Mammoth.BigBrother.Akka.Monitoring
             // ActorMonitoring.TrackException(_friendlyName, reason, message);
         }
 
+        // Not needed anymore, we use the custom logging Actor for tracing exceptions
+        /*
         protected override void PostRestart(Exception reason)
         {
             base.PostRestart(reason);
@@ -61,5 +63,6 @@ namespace Mammoth.BigBrother.Akka.Monitoring
                 throw;
             }
         }
+        */
     }
 }

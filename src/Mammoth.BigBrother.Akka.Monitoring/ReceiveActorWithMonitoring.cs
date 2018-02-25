@@ -48,6 +48,8 @@ namespace Mammoth.BigBrother.Akka.Monitoring
             ActorMonitoring.TrackActorRestarted(_friendlyName, reason);
         }
 
+        // Not needed anymore, we use the custom logging Actor for tracing exceptions
+        /*
         protected override bool AroundReceive(Receive receive, object message)
         {
             try
@@ -59,6 +61,7 @@ namespace Mammoth.BigBrother.Akka.Monitoring
                 ActorMonitoring.TrackException(_friendlyName, ex, message);
                 throw;
             }
-        }        
+        }
+        */
     }
 }
