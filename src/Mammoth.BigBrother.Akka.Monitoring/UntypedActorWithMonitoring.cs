@@ -1,7 +1,6 @@
-﻿using System;
-using Akka.Actor;
+﻿using Akka.Actor;
 using Mammoth.BigBrother.Monitoring;
-using Mammoth.BigBrother.Monitoring.Metrics;
+using System;
 
 namespace Mammoth.BigBrother.Akka.Monitoring
 {
@@ -9,20 +8,10 @@ namespace Mammoth.BigBrother.Akka.Monitoring
     {
         private readonly string _friendlyName;
 
-        private readonly ActorIdentityInfo _monitoringIdentity;
-
         protected UntypedActorWithMonitoring()
         {
             _friendlyName = this.Self.GetFriendlyName();
-
-            _monitoringIdentity = new ActorIdentityInfo
-            {
-                Name = Context.Self.Path.Name,
-                Type = Context.Props.Type.Name,
-                Parent = Context.Parent.Path.Name
-            };
-
-            ActorMonitoring.TrackActorCreated(_friendlyName);
+            ActorMonitoring.TrackActorCreated(_friendlyName, Context.Props.Type.Name, Context.Parent.GetFriendlyName());
         }
 
         protected override void PreStart()
@@ -37,19 +26,19 @@ namespace Mammoth.BigBrother.Akka.Monitoring
             ActorMonitoring.TrackActorStopped(_friendlyName);
         }
 
-        protected override void PreRestart(Exception reason, object message)
-        {
-            base.PreRestart(reason, message);
-        }
+        //protected override void PreRestart(Exception reason, object message)
+        //{
+        //    base.PreRestart(reason, message);
+        //}
 
-        // Not needed anymore, we use the custom logging Actor for tracing exceptions
-        /*
         protected override void PostRestart(Exception reason)
         {
             base.PostRestart(reason);
             ActorMonitoring.TrackActorRestarted(_friendlyName, reason);
         }
 
+        // Not needed anymore, we use the custom logging Actor for tracing exceptions
+        /*
         protected override bool AroundReceive(Receive receive, object message)
         {
             try

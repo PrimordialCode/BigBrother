@@ -18,14 +18,14 @@ namespace Mammoth.BigBrother.Monitoring
             Monitors.RemoveSystem(monitoringSystemName);
         }
 
-        public static void TrackActorCreated(string name)
+        public static void TrackActorCreated(string name, string type, string parent)
         {
             if (!Monitors.IsEnabled)
             {
                 return;
             }
 
-            Monitors.TrackEvent(MetricEvents.ActorCreated, MetricProperties.For().Actor(name).Build());
+            Monitors.TrackEvent(MetricEvents.ActorCreated, MetricProperties.For().Actor(name).Type(type).ActorParent(parent).Build());
             Monitors.UpdateCounter(MetricCounters.ActorCreated, 1);
             Monitors.UpdateCounter(MetricCounters.ActorCreated_Specific(name));
         }
