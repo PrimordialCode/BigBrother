@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
+import { TreeModule } from 'angular-tree-component';
 
 import { CovalentCommonModule } from '@covalent/core/common';
 import { CovalentSearchModule } from '@covalent/core/search';
@@ -29,6 +30,7 @@ import './rxjs-operators';
 import { RouterModule } from '@angular/router';
 import { ConfigService } from './settings/config.service';
 import { environment } from '../environments/environment';
+import { ActorsTreeviewComponent } from './actors-treeview/actors-treeview.component';
 
 const COVALENT_MODULES: any[] = [
   CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
@@ -47,7 +49,8 @@ export function ConfigLoader(configService: ConfigService) {
     AppComponent,
     ActorsGraphComponent,
     ActorDetailComponent,
-    ActorsOverviewComponent
+    ActorsOverviewComponent,
+    ActorsTreeviewComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,8 @@ export function ConfigLoader(configService: ConfigService) {
     COVALENT_MODULES,
     MaterialModule,
     NgxChartsModule,
-    NgxGraphModule
+    NgxGraphModule,
+    TreeModule
   ],
   providers: [
     ConfigService,

@@ -38,7 +38,10 @@
           <mat-divider></mat-divider>
           <mat-card-content>
             <div flex>
-              <app-actors-graph #actorsGraph [height]="null" (selected)="selectedActor = $event" [customize]="false" [debug]="false"></app-actors-graph>
+              <app-actors-treeview (selected)="selectedActor = $event"></app-actors-treeview>
+              <!--
+                <app-actors-graph #actorsGraph [height]="null" (selected)="selectedActor = $event" [customize]="false" [debug]="false"></app-actors-graph>
+              -->
             </div>
           </mat-card-content>
         </mat-card>
