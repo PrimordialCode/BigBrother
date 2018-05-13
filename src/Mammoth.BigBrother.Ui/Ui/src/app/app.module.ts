@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
-import { TreeModule } from 'angular-tree-component';
 
 import { CovalentCommonModule } from '@covalent/core/common';
 import { CovalentSearchModule } from '@covalent/core/search';
@@ -60,8 +59,7 @@ export function ConfigLoader(configService: ConfigService) {
     COVALENT_MODULES,
     MaterialModule,
     NgxChartsModule,
-    NgxGraphModule,
-    TreeModule
+    NgxGraphModule
   ],
   providers: [
     ConfigService,

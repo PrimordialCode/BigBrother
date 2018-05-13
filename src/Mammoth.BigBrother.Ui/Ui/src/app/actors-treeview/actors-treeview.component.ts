@@ -1,7 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { EndpointWebApiService, IActorInfoDto } from '../services/endpoint-web-api.service';
 import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
-import { TreeNode } from 'angular-tree-component';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { MatTreeNestedDataSource } from '@angular/material';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-actors-treeview',
@@ -10,12 +12,19 @@ import { TreeNode } from 'angular-tree-component';
 })
 export class ActorsTreeviewComponent implements OnInit {
 
-  public actors: IActorInfoDto;
-  @Output() selected = new EventEmitter<ActorGraphNode>();
+  @Output() public selected = new EventEmitter<ActorGraphNode>();
+
+  // Material Tree Control
+  public nestedTreeControl: NestedTreeControl<IActorInfoDto>;
+  public nestedDataSource: MatTreeNestedDataSource<IActorInfoDto>;
+  // End Material Tree Control
 
   constructor(
     private endpoint: EndpointWebApiService
-  ) { }
+  ) {
+    this.nestedTreeControl = new NestedTreeControl<IActorInfoDto>(this._getChildren);
+    this.nestedDataSource = new MatTreeNestedDataSource();
+  }
 
   ngOnInit() {
     this.refresh();
@@ -23,25 +32,20 @@ export class ActorsTreeviewComponent implements OnInit {
 
   public async refresh() {
     const hierarchy = await this.endpoint.GetActorsHierarchy();
-    this.fixForLayout(hierarchy);
-    this.actors = hierarchy;
+    // let's exclude System/User cannot do anything with those
+    this.nestedDataSource.data = hierarchy.children[0].children;
   }
 
-  private fixForLayout(node: IActorInfoDto) {
-    const fix = <any>node;
-    fix.label = node.name;
-    if (node.children != null && node.children.length > 0) {
-      fix.isExpanded = true;
-    }
-    for (const n of node.children) {
-      this.fixForLayout(n);
-    }
-  }
+  // Material Tree Control
 
-  public onActivate(node: any) {
-    const n: IActorInfoDto = (<TreeNode>(node.node)).data;
+  private _getChildren = (node: IActorInfoDto) => of(node.children);
+
+  hasNestedChild = (_: number, nodeData: IActorInfoDto) => nodeData.children != null && nodeData.children.length > 0;
+
+  public onActivate(n: IActorInfoDto) {
     const selectedActor = new ActorGraphNode(n.path, n.path, n.name);
     this.selected.next(selectedActor);
   }
+  // End Material Tree Control
 
 }
