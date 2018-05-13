@@ -28,7 +28,7 @@ export class ActorsGraphComponent implements OnInit {
   view: any[];
   @Input() width = 700;
   @Input() height = 300;
-  @Input() fitContainer = false;
+  @Input() fitContainer = true;
   autoZoom = false;
 
   // options
@@ -76,16 +76,16 @@ export class ActorsGraphComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectChart(this.chartType);
 
-    setTimeout(() => {
-      this.refresh();
+    setTimeout(async () => {
+      await this.refresh();
+      // wait for the data to be available before rendering the graph
+      this.selectChart(this.chartType);
+      if (!this.fitContainer) {
+        this.applyDimensions();
+      }
     }, 1000);
-    setInterval(this.updateData.bind(this), 1000);
-
-    if (!this.fitContainer) {
-      this.applyDimensions();
-    }
+    setInterval(this.updateData.bind(this), 5000);
   }
 
   private updateData() {

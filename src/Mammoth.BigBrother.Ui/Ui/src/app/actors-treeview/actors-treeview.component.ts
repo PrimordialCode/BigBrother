@@ -32,8 +32,9 @@ export class ActorsTreeviewComponent implements OnInit {
 
   public async refresh() {
     const hierarchy = await this.endpoint.GetActorsHierarchy();
-    // let's exclude System/User cannot do anything with those
-    this.nestedDataSource.data = hierarchy.children[0].children;
+    // let's exclude System/User cannot do anything with those (should be done by the metrics plugin)
+    // this.nestedDataSource.data = hierarchy.children[0].children;
+    this.nestedDataSource.data = [hierarchy];
   }
 
   // Material Tree Control
