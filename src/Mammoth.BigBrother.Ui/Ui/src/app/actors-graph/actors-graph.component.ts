@@ -140,7 +140,7 @@ export class ActorsGraphComponent implements OnInit {
     }
   }
 
-  selectChart(chartSelector) {
+  selectChart(chartSelector: string) {
     this.chartType = chartSelector;
 
     for (const group of this.chartGroups) {
@@ -158,12 +158,12 @@ export class ActorsGraphComponent implements OnInit {
     this.selected.next(data);
   }
 
-  setColorScheme(name) {
+  setColorScheme(name: string) {
     this.selectedColorScheme = name;
-    this.colorScheme = this.colorSets.find(s => s.name === name);
+    this.colorScheme = this.colorSets.find((s: any) => s.name === name);
   }
 
-  setInterpolationType(curveType) {
+  setInterpolationType(curveType: string) {
     this.curveType = curveType;
     if (curveType === 'Bundle') {
       this.curve = shape.curveBundle.beta(1);
@@ -197,11 +197,11 @@ export class ActorsGraphComponent implements OnInit {
     }
   }
 
-  onLegendLabelClick(entry) {
+  onLegendLabelClick(entry: any) {
     console.log('Legend clicked', entry);
   }
 
-  toggleExpand(node) {
+  toggleExpand(node: any) {
     console.log('toggle expand', node);
   }
 

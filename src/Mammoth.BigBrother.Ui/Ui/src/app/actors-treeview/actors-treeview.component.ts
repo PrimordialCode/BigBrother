@@ -39,8 +39,8 @@ export class ActorsTreeviewComponent implements OnInit {
   }
 
   public onActivate(node: any) {
-    var n: IActorInfoDto = (<TreeNode>(node.node)).data;
-    var selectedActor = new ActorGraphNode(n.path, n.path, n.name);
+    const n: IActorInfoDto = (<TreeNode>(node.node)).data;
+    const selectedActor = new ActorGraphNode(n.path, n.path, n.name);
     this.selected.next(selectedActor);
   }
 
