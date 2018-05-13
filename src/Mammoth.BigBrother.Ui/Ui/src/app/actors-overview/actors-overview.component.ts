@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EndpointWebApiService, ICounterDto } from '../services/endpoint-web-api.service';
-import { Observable } from 'rxjs/Observable';
+import { timer } from 'rxjs';
 
 /**
  * displays some gauges that shows the current status of the application
@@ -26,7 +26,7 @@ export class ActorsOverviewComponent implements OnInit {
   }
 
   private refreshData() {
-    Observable.timer(0, 5000).subscribe(() => {
+    timer(0, 5000).subscribe(() => {
       this.endpoint.GetGlobalCounters().then(
         counters => this.counters = counters
       );
