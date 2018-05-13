@@ -26,7 +26,6 @@ import { ActorDetailComponent } from './actor-detail/actor-detail.component';
 import { EndpointWebApiService } from './services/endpoint-web-api.service';
 import { ActorsOverviewComponent } from './actors-overview/actors-overview.component';
 
-import './rxjs-operators';
 import { RouterModule } from '@angular/router';
 import { ConfigService } from './settings/config.service';
 import { environment } from '../environments/environment';
