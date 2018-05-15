@@ -4,7 +4,13 @@ using System.Linq;
 using Mammoth.BigBrother.Monitoring.Endpoint.Dto;
 using Mammoth.BigBrother.Monitoring.Endpoint.Services;
 using Mammoth.BigBrother.Monitoring.MonitoringSystems;
+#if NET45
+using System.Web.Http;
+#endif
+#if NETCOREAPP2_0
 using Microsoft.AspNetCore.Mvc;
+#endif
+
 
 namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
 {
@@ -30,7 +36,8 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
         /// Get all the global counters
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GlobalCounters")]
+        [Route("GlobalCounters")]
+        [HttpGet]
         public IEnumerable<CounterDto> GlobalCounters()
         {
             return InMemoryMonitoringData.Counters.Where(_ => MetricCounters.DefaultCounters.Contains(_.Key))
@@ -47,14 +54,16 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        [HttpPost("GetActorsCounter")]
+        [Route("GetActorsCounter")]
+        [HttpPost]
         public IEnumerable<CounterDto> GetActorsCounter([FromBody]ActorRequestDto args)
         {
             return CounterService.GetActorsCounters(args.Path);
         }
 
         // GET api/<controller>/name
-        [HttpGet("{id}")]
+        [Route("{id}")]
+        [HttpGet]
         public IEnumerable<CounterDto> Get(string id)
         {
             return InMemoryMonitoringData.Counters.Where(_ => _.Key.StartsWith(id, StringComparison.InvariantCultureIgnoreCase))

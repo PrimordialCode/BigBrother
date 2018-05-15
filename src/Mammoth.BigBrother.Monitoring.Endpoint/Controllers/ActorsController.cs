@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Mammoth.BigBrother.Monitoring.Endpoint.Dto;
 using Mammoth.BigBrother.Monitoring.Endpoint.Services;
 using Mammoth.BigBrother.Monitoring.MonitoringSystems;
 #if NET45
 using System.Web.Http;
 #endif
-#if NETSTANDARD2_0
+#if NETCOREAPP2_0
 using Microsoft.AspNetCore.Mvc;
 #endif
 

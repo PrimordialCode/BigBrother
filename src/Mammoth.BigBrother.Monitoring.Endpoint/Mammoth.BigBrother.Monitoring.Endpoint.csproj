@@ -7,10 +7,6 @@
     <StartupObject />
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-  </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="wwwroot\**" />
     <Content Remove="wwwroot\**" />
@@ -30,10 +26,12 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
+    <PackageReference Include="ConfigureAwaitChecker.Analyzer" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
     <PackageReference Include="Microsoft.AspNet.WebApi.SelfHost" Version="5.2.6" />
+    <PackageReference Include="ConfigureAwaitChecker.Analyzer" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
