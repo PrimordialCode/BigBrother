@@ -5,7 +5,12 @@ using System.Threading.Tasks;
 using Mammoth.BigBrother.Monitoring.Endpoint.Dto;
 using Mammoth.BigBrother.Monitoring.Endpoint.Services;
 using Mammoth.BigBrother.Monitoring.MonitoringSystems;
+#if NET45
+using System.Web.Http;
+#endif
+#if NETSTANDARD2_0
 using Microsoft.AspNetCore.Mvc;
+#endif
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,7 +25,8 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
         /// returns Tree structure listing all the actors (from the InMemory session)
         /// </summary>
         /// <returns></returns>
-        [HttpGet("gethierarchy")]
+        [Route("gethierarchy")]
+        [HttpGet]
         public ActorInfoDto GetHierarchy()
         {
             var actorsFullPaths = ListAllActors();
@@ -30,7 +36,8 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
             return root;
         }
 
-        [HttpPost("GetActorDetail")]
+        [Route("GetActorDetail")]
+        [HttpPost]
         public ActorDetailDto GetActorDetail([FromBody]ActorRequestDto args)
         {
             var detail = new ActorDetailDto();

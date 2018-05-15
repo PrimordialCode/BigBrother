@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore;
+﻿#if NETSTANDARD2_0
+
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -54,3 +56,5 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint
         //        .Build();
     }
 }
+
+#endif

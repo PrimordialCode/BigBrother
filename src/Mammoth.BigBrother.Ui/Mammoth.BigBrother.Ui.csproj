@@ -31,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Ui\.angular-cli.json" />
     <None Include="Ui\e2e\tsconfig.e2e.json" />
     <None Include="Ui\package-lock.json" />
     <None Include="Ui\package.json" />
