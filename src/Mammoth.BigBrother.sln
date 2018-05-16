@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mammoth.BigBrother.Monitori
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mammoth.BigBrother.Ui", "Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj", "{B23ADFEE-B922-4EDD-80BE-C234898A85B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frontend.net45", "Frontend.net45\Frontend.net45.csproj", "{CC03556A-1DEB-4A25-8FAC-B064221618C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{B23ADFEE-B922-4EDD-80BE-C234898A85B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B23ADFEE-B922-4EDD-80BE-C234898A85B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B23ADFEE-B922-4EDD-80BE-C234898A85B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC03556A-1DEB-4A25-8FAC-B064221618C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC03556A-1DEB-4A25-8FAC-B064221618C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC03556A-1DEB-4A25-8FAC-B064221618C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC03556A-1DEB-4A25-8FAC-B064221618C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{61BDDDF0-9412-4240-BE8A-E9B37B33EE60} = {A08C0284-EE6F-4DE5-93A3-2A8D7334510E}
 		{147B3EA9-5A23-49E2-BC4A-DDBF8CBF7256} = {A08C0284-EE6F-4DE5-93A3-2A8D7334510E}
 		{B23ADFEE-B922-4EDD-80BE-C234898A85B1} = {A08C0284-EE6F-4DE5-93A3-2A8D7334510E}
+		{CC03556A-1DEB-4A25-8FAC-B064221618C7} = {9E6F9DB4-DC2A-4F71-94B8-4AF7361787D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {63F07A42-B2CD-4632-BBEB-C9A0ADB1600E}

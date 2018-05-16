@@ -31,7 +31,7 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint
 
         private static HttpSelfHostServer BuildWebHost(string[] args)
         {
-            var config = new HttpSelfHostConfiguration(IPAddress.Loopback + ":" + _loopbackPort);
+            var config = new HttpSelfHostConfiguration("http://" + IPAddress.Loopback + ":" + _loopbackPort);
 
             var cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);

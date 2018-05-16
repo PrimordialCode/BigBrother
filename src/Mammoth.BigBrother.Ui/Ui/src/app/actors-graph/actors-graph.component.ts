@@ -105,6 +105,9 @@ export class ActorsGraphComponent implements OnInit {
   }
 
   private sanitizePath(path: string): string {
+    if (path == null || path === '') {
+      return path;
+    }
     return path.replace(/\//g, '_'); // does not like "/" in ids
   }
 
