@@ -76,14 +76,15 @@ export class ActorsGraphComponent implements OnInit {
   }
 
   ngOnInit() {
-
     setTimeout(async () => {
       await this.refresh();
       // wait for the data to be available before rendering the graph
-      this.selectChart(this.chartType);
       if (!this.fitContainer) {
         this.applyDimensions();
+      } else {
+        this.view = undefined;
       }
+      this.selectChart(this.chartType);
     }, 1000);
     setInterval(this.updateData.bind(this), 5000);
   }

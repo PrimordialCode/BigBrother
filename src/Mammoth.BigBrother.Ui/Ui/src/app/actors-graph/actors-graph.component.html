@@ -81,9 +81,10 @@
   </div>
   <div class="chart-col">
 
-    <ngx-graph class="chart-container" [view]="view" [autoZoom]="autoZoom" [legend]="showLegend" [links]="hierarchialGraph.links"
-      (legendLabelClick)="onLegendLabelClick($event)" [nodes]="hierarchialGraph.nodes" [scheme]="colorScheme" [orientation]="orientation"
-      [curve]="curve" (select)="select($event)">
+    <ngx-graph *ngIf="hierarchialGraph.nodes != null && hierarchialGraph.nodes.length > 0" class="chart-container" [view]="view"
+      [autoZoom]="autoZoom" [legend]="showLegend" [links]="hierarchialGraph.links" (legendLabelClick)="onLegendLabelClick($event)"
+      [nodes]="hierarchialGraph.nodes" [scheme]="colorScheme" [orientation]="orientation" [curve]="curve" (select)="select($event)"
+      [update$]="">
 
       <ng-template #defsTemplate>
         <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
