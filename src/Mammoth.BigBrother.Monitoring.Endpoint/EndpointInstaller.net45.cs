@@ -8,6 +8,7 @@ using System.Web.Cors;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.SelfHost;
+using Newtonsoft.Json.Serialization;
 
 namespace Mammoth.BigBrother.Monitoring.Endpoint
 {
@@ -32,6 +33,9 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint
         private static HttpSelfHostServer BuildWebHost(string[] args)
         {
             var config = new HttpSelfHostConfiguration("http://" + IPAddress.Loopback + ":" + _loopbackPort);
+
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
 
             var cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);

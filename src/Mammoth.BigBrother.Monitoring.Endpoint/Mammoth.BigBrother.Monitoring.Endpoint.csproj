@@ -31,8 +31,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
     <PackageReference Include="Microsoft.AspNet.WebApi.SelfHost" Version="5.2.6" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.6"/>
-    <PackageReference Include="ConfigureAwaitChecker.Analyzer" Version="1.0.1" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.6" />
   </ItemGroup>
 
   <ItemGroup>
