@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EndpointWebApiService, ICounterDto } from '../services/endpoint-web-api.service';
-import { timer } from 'rxjs';
+import { timer, Subscription } from 'rxjs';
 
 /**
  * displays some gauges that shows the current status of the application
@@ -13,9 +13,10 @@ import { timer } from 'rxjs';
   templateUrl: './actors-overview.component.html',
   styleUrls: ['./actors-overview.component.css']
 })
-export class ActorsOverviewComponent implements OnInit {
+export class ActorsOverviewComponent implements OnInit, OnDestroy {
 
   public counters: ICounterDto[] = [];
+  private timerSubscription: Subscription;
 
   constructor(
     private endpoint: EndpointWebApiService
@@ -25,8 +26,15 @@ export class ActorsOverviewComponent implements OnInit {
     this.refreshData();
   }
 
+  ngOnDestroy(): void {
+    if (this.timerSubscription != null) {
+      this.timerSubscription.unsubscribe();
+      this.timerSubscription = null;
+    }
+  }
+
   private refreshData() {
-    timer(0, 5000).subscribe(() => {
+    this.timerSubscription = timer(0, 5000).subscribe(() => {
       this.endpoint.GetGlobalCounters().then(
         counters => this.counters = counters
       );

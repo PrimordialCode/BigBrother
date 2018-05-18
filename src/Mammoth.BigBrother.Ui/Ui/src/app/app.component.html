@@ -18,7 +18,11 @@
       </button>
       <span [routerLink]="['/']" class="cursor-pointer">Big Brother</span>
       <span flex>
-        <app-actors-overview></app-actors-overview>
+        <div layout="row">
+          <div flex>
+            <!-- <app-actors-overview></app-actors-overview> -->
+          </div>
+        </div>
       </span>
       <!--<a mat-icon-button matTooltip="Docs" href="https://teradata.github.io/covalent/" target="_blank"><mat-icon>chrome_reader_mode</mat-icon></a>-->
       <a mat-icon-button matTooltip="Github" href="https://github.com/PrimordialCode/BigBrother" target="_blank">
@@ -29,11 +33,14 @@
     <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
       <div flex-gt-sm="50">
         <mat-card>
-          <mat-card-title>Actors
+          <mat-card-header>
+            <mat-card-title>Actors</mat-card-title>
             <button mat-icon-button (click)="refreshActors()">
               <mat-icon>refresh</mat-icon>
             </button>
-          </mat-card-title>
+            <app-actors-overview></app-actors-overview>
+          </mat-card-header>
+          <mat-divider></mat-divider>
           <!--
           <mat-card-subtitle>overview of actors</mat-card-subtitle>
           <mat-divider></mat-divider>
@@ -52,12 +59,13 @@
       </div>
       <div flex-gt-sm="50">
         <mat-card>
-          <mat-card-title>Actor Detail
+          <mat-card-header>
+            <mat-card-title>Actor Detail</mat-card-title>
+            <mat-card-subtitle>{{selectedActor?.path}}</mat-card-subtitle>
             <button mat-icon-button (click)="refreshActor()">
               <mat-icon>refresh</mat-icon>
             </button>
-          </mat-card-title>
-          <mat-card-subtitle>{{selectedActor?.path}}</mat-card-subtitle>
+          </mat-card-header>
           <mat-divider></mat-divider>
           <mat-card-content>
             <app-actor-detail #actorDetail [actor]="selectedActor"></app-actor-detail>
