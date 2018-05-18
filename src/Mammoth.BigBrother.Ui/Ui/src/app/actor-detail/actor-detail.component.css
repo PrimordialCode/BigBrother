@@ -1,3 +1,7 @@
 .stopped {
   background-color: red;
 }
+
+.countersHeight {
+  height: 80px;
+}
