@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Content Remove="Ui\.angular-cli.json" />
+    <Content Remove="Ui\angular.json" />
     <Content Remove="Ui\e2e\tsconfig.e2e.json" />
     <Content Remove="Ui\package-lock.json" />
     <Content Remove="Ui\package.json" />
+    <Content Remove="Ui\src\assets\config\config.json" />
+    <Content Remove="Ui\src\assets\ico\manifest.json" />
+    <Content Remove="Ui\src\assets\manifest.json" />
     <Content Remove="Ui\src\tsconfig.app.json" />
     <Content Remove="Ui\src\tsconfig.spec.json" />
     <Content Remove="Ui\tsconfig.json" />
@@ -31,9 +35,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Ui\angular.json" />
     <None Include="Ui\e2e\tsconfig.e2e.json" />
     <None Include="Ui\package-lock.json" />
     <None Include="Ui\package.json" />
+    <None Include="Ui\src\assets\config\config.json" />
+    <None Include="Ui\src\assets\ico\manifest.json" />
+    <None Include="Ui\src\assets\manifest.json" />
     <None Include="Ui\src\tsconfig.app.json" />
     <None Include="Ui\src\tsconfig.spec.json" />
     <None Include="Ui\tsconfig.json" />
