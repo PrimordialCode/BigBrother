@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import * as shape from 'd3-shape';
 
-import { EndpointWebApiService, IActorInfoDto } from '../services/endpoint-web-api.service';
+import { ActorsStateService } from '../services/actors-state.service';
+import { IActorInfoDto } from '../services/endpoint-web-api.service';
 import { ActorGraphLink, ActorGraphNode, ActorsGraphData } from './actprs-graph.models';
 import chartGroups from './chart-types';
 import { colorSets } from './color-sets';
@@ -23,7 +24,6 @@ export class ActorsGraphComponent implements OnInit {
   chartType = 'directed-graph';
   chartGroups: any;
   chart: any;
-  realTimeData = false;
 
   view: any[];
   @Input() width = 700;
@@ -64,7 +64,7 @@ export class ActorsGraphComponent implements OnInit {
   selectedColorScheme: string;
 
   constructor(
-    private endpoint: EndpointWebApiService
+    private _actorsStateService: ActorsStateService
   ) {
     Object.assign(this, {
       colorSets,
@@ -76,31 +76,23 @@ export class ActorsGraphComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(async () => {
-      await this.refresh();
-      // wait for the data to be available before rendering the graph
-      if (!this.fitContainer) {
-        this.applyDimensions();
-      } else {
-        this.view = undefined;
-      }
-      this.selectChart(this.chartType);
-    }, 1000);
-    setInterval(this.updateData.bind(this), 5000);
-  }
-
-  private updateData() {
-    if (!this.realTimeData) {
-      return;
+    if (!this.fitContainer) {
+      this.applyDimensions();
+    } else {
+      this.view = undefined;
     }
-    this.refresh();
+    this.selectChart(this.chartType);
+    this._actorsStateService.hierarchy$.subscribe(hierarchy => {
+      this.refresh(hierarchy);
+    });
   }
 
-  public async refresh() {
-    const data = await this.endpoint.GetActorsHierarchy();
+  private refresh(hierarchy: IActorInfoDto) {
     // build nodes and link traversing the tree
     const newGraph = new ActorsGraphData();
-    this.FillGraphData(data, newGraph);
+    if (hierarchy != null) {
+      this.FillGraphData(hierarchy, newGraph);
+    }
     this.hierarchialGraph.nodes = newGraph.nodes;
     this.hierarchialGraph.links = newGraph.links;
   }

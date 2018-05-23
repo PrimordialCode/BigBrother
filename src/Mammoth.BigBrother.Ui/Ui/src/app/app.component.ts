@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-
-import { ActorGraphNode } from './actors-graph/actprs-graph.models';
-import { ActorsGraphComponent } from './actors-graph/actors-graph.component';
-import { ActorDetailComponent } from './actor-detail/actor-detail.component';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+
+import { ActorDetailComponent } from './actor-detail/actor-detail.component';
+import { ActorGraphNode } from './actors-graph/actprs-graph.models';
+import { ActorsStateService } from './services/actors-state.service';
 
 
 @Component({
@@ -15,8 +15,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class AppComponent {
   public title = 'Actor System Inspector';
   public selectedActor: ActorGraphNode;
-  @ViewChild('actorsGraph')
-  public actorsGraphComponent: ActorsGraphComponent;
   @ViewChild('actorDetail')
   public actorDetailComponent: ActorDetailComponent;
 
@@ -57,8 +55,13 @@ export class AppComponent {
   },
   ];
 
-  constructor(private _iconRegistry: MatIconRegistry,
-    private _domSanitizer: DomSanitizer) {
+  constructor(
+    private _iconRegistry: MatIconRegistry,
+    private _domSanitizer: DomSanitizer,
+    private _actorsStateService: ActorsStateService
+  ) {
+    this.refreshActors();
+
     this._iconRegistry.addSvgIconInNamespace('assets', 'teradata',
       this._domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/teradata.svg'));
     this._iconRegistry.addSvgIconInNamespace('assets', 'github',
@@ -80,7 +83,7 @@ export class AppComponent {
   }
 
   public refreshActors() {
-    this.actorsGraphComponent.refresh();
+    this._actorsStateService.refresh();
   }
 
   public refreshActor() {
