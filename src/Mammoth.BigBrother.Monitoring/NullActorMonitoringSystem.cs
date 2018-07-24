@@ -19,6 +19,11 @@ namespace Mammoth.BigBrother.Monitoring
             this.InstanceName = instanceName;
         }
 
+        public void Dispose()
+        {
+            // Method intentionally left empty.
+        }
+
         public void UpdateCounter(string metricName, double delta, IDictionary<string, string> properties = null)
         {
             // Method intentionally left empty.
@@ -30,11 +35,6 @@ namespace Mammoth.BigBrother.Monitoring
         }
 
         public void TrackTiming(string metricName, long time, IDictionary<string, string> properties = null)
-        {
-            // Method intentionally left empty.
-        }
-
-        public void Dispose()
         {
             // Method intentionally left empty.
         }

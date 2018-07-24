@@ -10,12 +10,20 @@ namespace Mammoth.BigBrother.Monitoring
     public interface IActorMonitoringSystem : IDisposable
     {
         /// <summary>
-        /// Updates a counter, adds or subtracts the value
+        /// Updates a counter, adds or subtracts the value.
         /// </summary>
         /// <param name="metricName">the metric name</param>
         /// <param name="delta">amount to update the counter</param>
         /// <param name="properties">additional properties</param>
         void UpdateCounter(string metricName, double delta, IDictionary<string, string> properties = null);
+
+        /// <summary>
+        /// Updates a Gauge with the specified value. This is an instant value.
+        /// </summary>
+        /// <param name="metricName">the metric name</param>
+        /// <param name="value">the value to set</param>
+        /// <param name="properties">additional properties</param>
+        void UpdateGauge(string metricName, double value, IDictionary<string, string> properties = null);
 
         /// <summary>
         /// Updates a counter with the duration it took an operation to complete
@@ -26,15 +34,7 @@ namespace Mammoth.BigBrother.Monitoring
         void TrackTiming(string metricName, long time, IDictionary<string, string> properties = null);
 
         /// <summary>
-        /// Updates a Gauge with the specified value.
-        /// </summary>
-        /// <param name="metricName">the metric name</param>
-        /// <param name="value">the value to set</param>
-        /// <param name="properties">additional properties</param>
-        void UpdateGauge(string metricName, double value, IDictionary<string, string> properties = null);
-
-        /// <summary>
-        /// Track a specific event occuring in the system
+        /// Track a specific event that occurred in the system
         /// </summary>
         /// <param name="evt"></param>
         /// <param name=""></param>

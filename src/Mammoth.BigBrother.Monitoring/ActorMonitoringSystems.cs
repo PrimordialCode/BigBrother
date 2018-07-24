@@ -43,6 +43,17 @@ namespace Mammoth.BigBrother.Monitoring
         }
 
         /// <summary>
+        /// Dispose all of the monitoring clients
+        /// </summary>
+        public void RemoveAll()
+        {
+            var clients = _monitoringSystems.ToArray();
+            _monitoringSystems.Clear();
+            foreach (var client in clients)
+                client.Dispose();
+        }
+
+        /// <summary>
         /// Update a counter across all active monitoring systems
         /// </summary>
         public void UpdateCounter(string metricName, double delta = 1, IDictionary<string, string> properties = null)
@@ -67,17 +78,6 @@ namespace Mammoth.BigBrother.Monitoring
         {
             foreach (var client in _monitoringSystems)
                 client.UpdateGauge(metricName, value, properties);
-        }
-
-        /// <summary>
-        /// Dispose all of the monitoring clients
-        /// </summary>
-        public void RemoveAll()
-        {
-            var clients = _monitoringSystems.ToArray();
-            _monitoringSystems.Clear();
-            foreach (var client in clients)
-                client.Dispose();
         }
 
         public void TrackEvent(string evt, IDictionary<string, string> properties = null)

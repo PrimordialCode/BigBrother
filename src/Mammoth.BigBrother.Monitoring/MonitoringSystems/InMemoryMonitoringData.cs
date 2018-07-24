@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace Mammoth.BigBrother.Monitoring.MonitoringSystems
 {
-    // todo: provide some clean up methods
+    // todo: provide some clean up methods to remove older data, we should be able keep just a "small" timeframe of some data (maybe exceptions are an exception)
 
     /// <summary>
     /// In memory representation of the data.
     /// 
-    /// the first implementation is just a raw collection of data.
+    /// the first implementation is just a static raw collection of data.
     /// </summary>
     public static class InMemoryMonitoringData
     {
