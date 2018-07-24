@@ -14,6 +14,18 @@ USE IT AT YOUR OWN RISK.
 
 Steps to follow to run the application in develop mode:
 
-1- Open up the UI project in VSCode .\src\Mammoth.BigBrother.Ui\Ui)
-2- Compile the application with: npm run buildwatch
+1- Open up the UI project in VSCode .\src\Mammoth.BigBrother.Ui\Ui).
+
+2- Compile the application with: npm run buildwatch.
+
 3- Compile and run the C# UI Host application (Mammoth.BigBrother.Ui) and the demo app (Frontend).
+
+# Publish the Applications
+
+Each project will build its very own NuGet package to be deployed.
+
+To build the front-end application:
+
+1- Compile the Angular application in production mode: ng build --prod
+
+2- Publish the Web Application.
