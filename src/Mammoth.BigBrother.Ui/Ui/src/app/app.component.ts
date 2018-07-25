@@ -5,6 +5,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActorDetailComponent } from './actor-detail/actor-detail.component';
 import { ActorGraphNode } from './actors-graph/actprs-graph.models';
 import { ActorsStateService } from './services/actors-state.service';
+import { IAppState } from './store/state/app.state';
+import { Store } from '@ngrx/store';
+import { getConfiguration } from './store/reducers';
 
 
 @Component({
@@ -58,8 +61,11 @@ export class AppComponent {
   constructor(
     private _iconRegistry: MatIconRegistry,
     private _domSanitizer: DomSanitizer,
-    private _actorsStateService: ActorsStateService
+    private _actorsStateService: ActorsStateService,
+    private store: Store<IAppState>
   ) {
+    this.store.select(getConfiguration).subscribe(config => console.log(JSON.stringify(config)));
+
     this.refreshActors();
 
     this._iconRegistry.addSvgIconInNamespace('assets', 'teradata',

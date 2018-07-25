@@ -19,6 +19,9 @@ import { CovalentMenuModule } from '@covalent/core/menu';
 import { CovalentPagingModule } from '@covalent/core/paging';
 import { CovalentStepsModule } from '@covalent/core/steps';
 
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './store/reducers';
+
 import { AppComponent } from './app.component';
 import { ActorsGraphComponent } from './actors-graph/actors-graph.component';
 import { ActorDetailComponent } from './actor-detail/actor-detail.component';
@@ -29,6 +32,8 @@ import { RouterModule } from '@angular/router';
 import { ConfigService } from './settings/config.service';
 import { environment } from '../environments/environment';
 import { ActorsTreeviewComponent } from './actors-treeview/actors-treeview.component';
+import { initialAppState } from './store/state/app.state';
+
 
 const COVALENT_MODULES: any[] = [
   CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
@@ -59,7 +64,8 @@ export function ConfigLoader(configService: ConfigService) {
     COVALENT_MODULES,
     MaterialModule,
     NgxChartsModule,
-    NgxGraphModule
+    NgxGraphModule,
+    StoreModule.forRoot(reducers, { initialState: initialAppState })
   ],
   providers: [
     ConfigService,

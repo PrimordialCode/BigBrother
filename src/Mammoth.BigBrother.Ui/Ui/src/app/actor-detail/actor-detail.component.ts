@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ITdDataTableColumn } from '@covalent/core/data-table';
+import { ITdDataTableColumn } from '@covalent/core/data-table/covalent-core-data-table';
 
 import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
 import {
