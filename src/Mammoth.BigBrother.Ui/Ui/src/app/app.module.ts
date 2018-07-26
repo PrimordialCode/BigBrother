@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -25,16 +25,19 @@ import { reducers } from './store/reducers';
 import { AppComponent } from './app.component';
 import { ActorsGraphComponent } from './actors-graph/actors-graph.component';
 import { ActorDetailComponent } from './actor-detail/actor-detail.component';
-import { EndpointWebApiService } from './services/endpoint-web-api.service';
+import { EndpointWebApiService, endpointWebApiServiceFactory } from './services/endpoint-web-api.service';
 import { ActorsOverviewComponent } from './actors-overview/actors-overview.component';
 
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { ConfigService } from './settings/config.service';
 import { environment } from '../environments/environment';
 import { ActorsTreeviewComponent } from './actors-treeview/actors-treeview.component';
 import { initialAppState } from './store/state/app.state';
 import { MenuComponent } from './shell/menu/menu.component';
 import { DrawerMenuComponent } from './shell/drawer-menu/drawer-menu.component';
+import { routes } from './app.routes';
+import { HomePageComponent } from './home-page/home-page.component';
+import { ActorsPageComponent } from './actors/actors-page/actors-page.component';
 
 
 const COVALENT_MODULES: any[] = [
@@ -57,14 +60,16 @@ export function ConfigLoader(configService: ConfigService) {
     ActorsOverviewComponent,
     ActorsTreeviewComponent,
     MenuComponent,
-    DrawerMenuComponent
+    DrawerMenuComponent,
+    HomePageComponent,
+    ActorsPageComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot([]),
+    RouterModule.forRoot(routes),
     COVALENT_MODULES,
     MaterialModule,
     NgxChartsModule,
@@ -79,7 +84,11 @@ export function ConfigLoader(configService: ConfigService) {
       deps: [ConfigService],
       multi: true
     },
-    EndpointWebApiService
+    {
+      provide: EndpointWebApiService,
+      useFactory: endpointWebApiServiceFactory,
+      deps: [ConfigService, HttpClient, ActivatedRoute]
+    }
   ],
   bootstrap: [AppComponent]
 })

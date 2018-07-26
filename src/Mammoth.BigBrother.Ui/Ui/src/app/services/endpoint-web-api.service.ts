@@ -1,17 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from '../settings/config.service';
+import { ActivatedRoute } from '../../../node_modules/@angular/router';
 
 @Injectable()
 export class EndpointWebApiService {
   private static headers = new HttpHeaders().set('content-type', 'application/json');
   private baseAddress = ''; // 'http://localhost:5001/api/';
 
+  /*
   constructor(
     configService: ConfigService,
     private http: HttpClient
   ) {
     this.baseAddress = configService.getConfiguration().endpoint + '/api/';
+  }
+  */
+
+  constructor(
+    private http: HttpClient,
+    endpoint: string
+  ) {
+    this.baseAddress = endpoint + '/api/';
   }
 
   public GetActorsHierarchy(): Promise<IActorInfoDto> {
@@ -53,6 +63,13 @@ export class EndpointWebApiService {
     ).toPromise();
   }
 
+}
+
+export function endpointWebApiServiceFactory(configService: ConfigService, http: HttpClient, route: ActivatedRoute): EndpointWebApiService {
+  // get the config from the route parameter
+  console.log(route);
+  const endpoint = configService.getConfiguration().endpoint;
+  return new EndpointWebApiService(http, endpoint);
 }
 
 export interface IActorInfoDto {
