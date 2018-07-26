@@ -1,16 +1,11 @@
 <td-layout>
   <td-navigation-drawer flex sidenavTitle="Big Brother" logo="assets:mammoth" name="...is watching you" email="">
-    <mat-nav-list>
-      <a *ngFor="let item of routes" mat-list-item>
-        <mat-icon>{{item.icon}}</mat-icon>{{item.title}}</a>
-    </mat-nav-list>
+    <app-menu></app-menu>
     <div td-navigation-drawer-menu>
-      <mat-nav-list>
-        <a *ngFor="let item of usermenu" mat-list-item>
-          <mat-icon>{{item.icon}}</mat-icon>{{item.title}}</a>
-      </mat-nav-list>
+      <app-drawer-menu></app-drawer-menu>
     </div>
   </td-navigation-drawer>
+
   <td-layout-nav color="accent">
     <div td-toolbar-content layout="row" layout-align="start center" flex>
       <button mat-icon-button td-menu-button tdLayoutToggle>
@@ -89,15 +84,3 @@
     </td-layout-footer>
   </td-layout-nav>
 </td-layout>
-
-<!--
-<mat-grid-list cols="2" [rowHeight]="600">
-  <mat-grid-tile item-width="800">
-    <app-actors-graph [width]="800" [height]="600" (selected)="selectedActor = $event" [customize]="false" [debug]="false"></app-actors-graph>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <app-actors-overview></app-actors-overview>
-    <app-actor-detail [actor]="selectedActor"></app-actor-detail>
-  </mat-grid-tile>
-</mat-grid-list>
--->

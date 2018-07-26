@@ -1,3 +1,9 @@
 {
-  "endpoint": "http://localhost:5001"
+  "endpoint": "http://localhost:5001",
+  "endpoints": [
+    {
+      "name": "demo",
+      "endpoint": "http://localhost:5001"
+    }
+  ]
 }

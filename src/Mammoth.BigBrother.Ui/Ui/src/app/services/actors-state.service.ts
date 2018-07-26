@@ -3,7 +3,7 @@ import { EndpointWebApiService, IActorInfoDto } from './endpoint-web-api.service
 import { Observable, BehaviorSubject } from 'rxjs';
 
 /**
- * A service that will hold the actual actors hierarchi state
+ * A service that will hold the actual actors hierarchy state
  * that can be used by several components
  */
 @Injectable({

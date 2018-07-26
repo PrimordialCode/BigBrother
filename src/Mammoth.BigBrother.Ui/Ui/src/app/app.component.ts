@@ -21,50 +21,16 @@ export class AppComponent {
   @ViewChild('actorDetail')
   public actorDetailComponent: ActorDetailComponent;
 
-  routes = [{
-    icon: 'home',
-    route: '.',
-    title: 'Home',
-  }, {
-    icon: 'library_books',
-    route: '.',
-    title: 'Documentation',
-  }, {
-    icon: 'color_lens',
-    route: '.',
-    title: 'Style Guide',
-  }, {
-    icon: 'view_quilt',
-    route: '.',
-    title: 'Layouts',
-  }, {
-    icon: 'picture_in_picture',
-    route: '.',
-    title: 'Components & Addons',
-  },
-  ];
-  usermenu = [{
-    icon: 'swap_horiz',
-    route: '.',
-    title: 'Switch account',
-  }, {
-    icon: 'tune',
-    route: '.',
-    title: 'Account settings',
-  }, {
-    icon: 'exit_to_app',
-    route: '.',
-    title: 'Sign out',
-  },
-  ];
-
   constructor(
     private _iconRegistry: MatIconRegistry,
     private _domSanitizer: DomSanitizer,
     private _actorsStateService: ActorsStateService,
     private store: Store<IAppState>
   ) {
-    this.store.select(getConfiguration).subscribe(config => console.log(JSON.stringify(config)));
+    this.store.select(getConfiguration).subscribe(config => {
+      console.log("BigBrather UI started.");
+      console.log(JSON.stringify(config));
+    });
 
     this.refreshActors();
 

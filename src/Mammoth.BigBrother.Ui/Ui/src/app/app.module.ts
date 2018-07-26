@@ -33,6 +33,8 @@ import { ConfigService } from './settings/config.service';
 import { environment } from '../environments/environment';
 import { ActorsTreeviewComponent } from './actors-treeview/actors-treeview.component';
 import { initialAppState } from './store/state/app.state';
+import { MenuComponent } from './shell/menu/menu.component';
+import { DrawerMenuComponent } from './shell/drawer-menu/drawer-menu.component';
 
 
 const COVALENT_MODULES: any[] = [
@@ -53,7 +55,9 @@ export function ConfigLoader(configService: ConfigService) {
     ActorsGraphComponent,
     ActorDetailComponent,
     ActorsOverviewComponent,
-    ActorsTreeviewComponent
+    ActorsTreeviewComponent,
+    MenuComponent,
+    DrawerMenuComponent
   ],
   imports: [
     BrowserModule,
