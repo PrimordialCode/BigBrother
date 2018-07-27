@@ -28,7 +28,7 @@ export class AppComponent {
     private store: Store<IAppState>
   ) {
     this.store.select(getConfiguration).subscribe(config => {
-      console.log("BigBrather UI started.");
+      console.log("BigBrother UI started.");
       console.log(JSON.stringify(config));
     });
 

@@ -3,6 +3,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { MaterialModule } from './material/material.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
@@ -77,6 +78,7 @@ export function ConfigLoader(configService: ConfigService) {
     StoreModule.forRoot(reducers, { initialState: initialAppState })
   ],
   providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     ConfigService,
     {
       provide: APP_INITIALIZER,

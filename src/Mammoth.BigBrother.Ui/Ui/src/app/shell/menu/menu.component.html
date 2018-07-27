@@ -1,4 +1,4 @@
 <mat-nav-list>
-  <a *ngFor="let item of routes$ | async" mat-list-item [routerLink]="['/actors', item.title]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+  <a *ngFor="let item of routes$ | async" mat-list-item [routerLink]="item.route" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>{{item.icon}}</mat-icon>{{item.title}}</a>
 </mat-nav-list>

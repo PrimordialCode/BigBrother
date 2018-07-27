@@ -6,7 +6,8 @@ import { BehaviorSubject } from '../../../../node_modules/rxjs';
 
 interface IMenuRoute {
   icon: string;
-  route: string;
+  // parameter for [routerLink]
+  route: any[];
   title: string;
 }
 
@@ -26,14 +27,14 @@ export class MenuComponent implements OnInit {
     this.store.select(getConfiguration).subscribe(config => {
       const routes: IMenuRoute[] = [{
         icon: "home",
-        route: ".",
+        route: ["/home"],
         title: "Home"
       }];
       // buildup the new routes
       for (const endpoint of config.endpoints) {
         routes.push({
           icon: "library_books",
-          route: ".",
+          route: ["/actors", endpoint.name],
           title: endpoint.name
         });
       }
