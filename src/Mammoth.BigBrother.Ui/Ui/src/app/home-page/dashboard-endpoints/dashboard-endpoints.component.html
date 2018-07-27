@@ -1,0 +1,5 @@
+<mat-grid-list cols="4" rowHeight="100px">
+  <mat-grid-tile *ngFor="let tile of route$ | async" [colspan]="tile.cols" [rowspan]="tile.rows">
+    <a mat-raised-button color="primary" [routerLink]="tile.route">{{tile.title}}</a>
+  </mat-grid-tile>
+</mat-grid-list>

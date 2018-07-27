@@ -1,3 +1,13 @@
-<p>
-  home-page works!
-</p>
+<div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+  <div flex-gt-sm="100">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Home Dashboard</mat-card-title>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <app-dashboard-endpoints></app-dashboard-endpoints>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

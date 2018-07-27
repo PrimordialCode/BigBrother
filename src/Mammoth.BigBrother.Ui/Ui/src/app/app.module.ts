@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { MaterialModule } from './material/material.module';
@@ -26,10 +26,9 @@ import { reducers } from './store/reducers';
 import { AppComponent } from './app.component';
 import { ActorsGraphComponent } from './actors-graph/actors-graph.component';
 import { ActorDetailComponent } from './actor-detail/actor-detail.component';
-import { EndpointWebApiService, endpointWebApiServiceFactory } from './services/endpoint-web-api.service';
 import { ActorsOverviewComponent } from './actors-overview/actors-overview.component';
 
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ConfigService } from './settings/config.service';
 import { environment } from '../environments/environment';
 import { ActorsTreeviewComponent } from './actors-treeview/actors-treeview.component';
@@ -39,7 +38,7 @@ import { DrawerMenuComponent } from './shell/drawer-menu/drawer-menu.component';
 import { routes } from './app.routes';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ActorsPageComponent } from './actors/actors-page/actors-page.component';
-
+import { DashboardEndpointsComponent } from './home-page/dashboard-endpoints/dashboard-endpoints.component';
 
 const COVALENT_MODULES: any[] = [
   CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
@@ -63,7 +62,8 @@ export function ConfigLoader(configService: ConfigService) {
     MenuComponent,
     DrawerMenuComponent,
     HomePageComponent,
-    ActorsPageComponent
+    ActorsPageComponent,
+    DashboardEndpointsComponent
   ],
   imports: [
     BrowserModule,
@@ -85,11 +85,6 @@ export function ConfigLoader(configService: ConfigService) {
       useFactory: ConfigLoader,
       deps: [ConfigService],
       multi: true
-    },
-    {
-      provide: EndpointWebApiService,
-      useFactory: endpointWebApiServiceFactory,
-      deps: [ConfigService, HttpClient, ActivatedRoute]
     }
   ],
   bootstrap: [AppComponent]

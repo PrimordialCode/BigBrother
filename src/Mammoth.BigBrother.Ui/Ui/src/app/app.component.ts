@@ -1,14 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-
-import { ActorDetailComponent } from './actor-detail/actor-detail.component';
-import { ActorGraphNode } from './actors-graph/actprs-graph.models';
-import { ActorsStateService } from './services/actors-state.service';
-import { IAppState } from './store/state/app.state';
 import { Store } from '@ngrx/store';
 import { getConfiguration } from './store/reducers';
-
+import { IAppState } from './store/state/app.state';
 
 @Component({
   selector: 'app-root',
@@ -16,23 +11,16 @@ import { getConfiguration } from './store/reducers';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public title = 'Actor System Inspector';
-  public selectedActor: ActorGraphNode;
-  @ViewChild('actorDetail')
-  public actorDetailComponent: ActorDetailComponent;
 
   constructor(
     private _iconRegistry: MatIconRegistry,
     private _domSanitizer: DomSanitizer,
-    private _actorsStateService: ActorsStateService,
     private store: Store<IAppState>
   ) {
     this.store.select(getConfiguration).subscribe(config => {
       console.log("BigBrother UI started.");
       console.log(JSON.stringify(config));
     });
-
-    this.refreshActors();
 
     this._iconRegistry.addSvgIconInNamespace('assets', 'teradata',
       this._domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/teradata.svg'));
@@ -54,11 +42,4 @@ export class AppComponent {
       this._domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/mammoth.svg'));
   }
 
-  public refreshActors() {
-    this._actorsStateService.refresh();
-  }
-
-  public refreshActor() {
-    this.actorDetailComponent.refresh();
-  }
 }

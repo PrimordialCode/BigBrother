@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '../settings/config.service';
-import { ActivatedRoute } from '../../../node_modules/@angular/router';
 
 @Injectable()
 export class EndpointWebApiService {
@@ -67,8 +67,8 @@ export class EndpointWebApiService {
 
 export function endpointWebApiServiceFactory(configService: ConfigService, http: HttpClient, route: ActivatedRoute): EndpointWebApiService {
   // get the config from the route parameter
-  console.log(route);
-  const endpoint = configService.getConfiguration().endpoint;
+  const endpointName = route.snapshot.params["name"] as string;
+  const endpoint = configService.getConfiguration().endpoints.find(p => p.name === endpointName).endpoint;
   return new EndpointWebApiService(http, endpoint);
 }
 

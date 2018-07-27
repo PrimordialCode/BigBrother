@@ -1,3 +1,51 @@
-<p>
-  actors-page works!
-</p>
+<div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+  <div flex-gt-sm="50">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Actors</mat-card-title>
+        <button mat-icon-button (click)="refreshActors()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+        <app-actors-overview></app-actors-overview>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <!--
+      <mat-card-subtitle>overview of actors</mat-card-subtitle>
+      <mat-divider></mat-divider>
+      -->
+      <mat-card-content>
+        <mat-tab-group>
+          <mat-tab label="Tree">
+            <app-actors-treeview (selected)="selectedActor = $event"></app-actors-treeview>
+          </mat-tab>
+          <mat-tab label="Graph">
+            <app-actors-graph [height]="null" (selected)="selectedActor = $event" [customize]="false" [debug]="false"></app-actors-graph>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div flex-gt-sm="50">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Actor Detail</mat-card-title>
+        <mat-card-subtitle>{{selectedActor?.path}}</mat-card-subtitle>
+        <button mat-icon-button (click)="refreshActor()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <app-actor-detail #actorDetail [actor]="selectedActor"></app-actor-detail>
+      </mat-card-content>
+      <!--
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <a mat-button color="accent" class="text-upper" [routerLink]="['/logs']">
+          <span>View More</span>
+        </a>
+      </mat-card-actions>
+      -->
+    </mat-card>
+  </div>
+</div>

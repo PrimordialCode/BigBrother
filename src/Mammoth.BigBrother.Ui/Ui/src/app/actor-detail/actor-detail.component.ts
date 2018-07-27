@@ -1,19 +1,13 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ITdDataTableColumn } from '@covalent/core/data-table/covalent-core-data-table';
-
 import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
-import {
-  EndpointWebApiService,
-  IActorDetailDto,
-  ICounterDto,
-  IMonitoringEventData,
-  IMonitoringExceptionData,
-} from '../services/endpoint-web-api.service';
+import { EndpointWebApiService, IActorDetailDto, ICounterDto, IMonitoringEventData, IMonitoringExceptionData } from '../services/endpoint-web-api.service';
+
 
 @Component({
   selector: 'app-actor-detail',
   templateUrl: './actor-detail.component.html',
-  styleUrls: ['./actor-detail.component.css']
+  styleUrls: ['./actor-detail.component.css'],
 })
 export class ActorDetailComponent implements OnInit, OnChanges {
   @Input() actor: ActorGraphNode;
