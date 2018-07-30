@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
 import * as shape from 'd3-shape';
-
+import { Subscription } from 'rxjs';
 import { ActorsStateService } from '../services/actors-state.service';
 import { IActorInfoDto } from '../services/endpoint-web-api.service';
 import { ActorGraphLink, ActorGraphNode, ActorsGraphData } from './actprs-graph.models';
 import chartGroups from './chart-types';
 import { colorSets } from './color-sets';
+
 
 @Component({
   selector: 'app-actors-graph',
@@ -13,10 +14,12 @@ import { colorSets } from './color-sets';
   templateUrl: './actors-graph.component.html',
   styleUrls: ['./actors-graph.component.scss']
 })
-export class ActorsGraphComponent implements OnInit {
+export class ActorsGraphComponent implements OnInit, OnDestroy {
   @Input() customize = false;
   @Input() debug = false;
   @Output() selected = new EventEmitter<ActorGraphNode>();
+
+  private hierarchySubscription: Subscription;
 
   public hierarchialGraph = new ActorsGraphData();
 
@@ -82,9 +85,16 @@ export class ActorsGraphComponent implements OnInit {
       this.view = undefined;
     }
     this.selectChart(this.chartType);
-    this._actorsStateService.hierarchy$.subscribe(hierarchy => {
+    this.hierarchySubscription = this._actorsStateService.hierarchyStore$.subscribe(hierarchy => {
       this.refresh(hierarchy);
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.hierarchySubscription != null) {
+      this.hierarchySubscription.unsubscribe();
+      this.hierarchySubscription = null;
+    }
   }
 
   private refresh(hierarchy: IActorInfoDto) {

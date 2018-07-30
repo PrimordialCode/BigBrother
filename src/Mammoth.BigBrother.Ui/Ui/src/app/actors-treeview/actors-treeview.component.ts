@@ -29,7 +29,7 @@ export class ActorsTreeviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.hierarchySubscription = this._actorsStateService.hierarchy$.subscribe(hierarchy => {
+    this.hierarchySubscription = this._actorsStateService.hierarchyStore$.subscribe(hierarchy => {
       if (hierarchy != null) {
         // let's exclude System/User cannot do anything with those (should be done by the metrics plugin)
         // this.nestedDataSource.data = hierarchy.children[0].children;
@@ -50,7 +50,8 @@ export class ActorsTreeviewComponent implements OnInit, OnDestroy {
 
   private _getChildren = (node: IActorInfoDto) => of(node.children);
 
-  hasNestedChild = (_: number, nodeData: IActorInfoDto) => nodeData != null && nodeData.children != null && nodeData.children.length > 0;
+  public hasNestedChild =
+    (_: number, nodeData: IActorInfoDto) => nodeData != null && nodeData.children != null && nodeData.children.length > 0
 
   public onActivate(n: IActorInfoDto) {
     const selectedActor = new ActorGraphNode(n.path, n.path, n.name);

@@ -7,7 +7,10 @@ import { ConfigService } from '../settings/config.service';
 export class EndpointWebApiService {
   private static headers = new HttpHeaders().set('content-type', 'application/json');
   private baseAddress = ''; // 'http://localhost:5001/api/';
-
+  private _name: string;
+  public get name(): string {
+    return this._name;
+  }
   /*
   constructor(
     configService: ConfigService,
