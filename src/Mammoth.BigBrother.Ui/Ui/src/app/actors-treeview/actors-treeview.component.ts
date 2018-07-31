@@ -13,7 +13,6 @@ import { IActorInfoDto } from '../services/endpoint-web-api.service';
   styleUrls: ['./actors-treeview.component.css']
 })
 export class ActorsTreeviewComponent implements OnInit, OnDestroy {
-
   @Output() public selected = new EventEmitter<ActorGraphNode>();
   private hierarchySubscription: Subscription;
   // Material Tree Control
@@ -31,8 +30,16 @@ export class ActorsTreeviewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.hierarchySubscription = this._actorsStateService.hierarchyStore$.subscribe(hierarchy => {
       if (hierarchy != null) {
+        // save the actuale expansion model
+        const expanded = this.nestedTreeControl.expansionModel.selected;
+        this.nestedTreeControl.expansionModel.clear();
+
+        // try to expand the new nodes as the previous ones (we update the state of the expanded nodes before updating the datasource)
+        if (expanded != null && expanded.length > 0) {
+          this.selectNodes(expanded, hierarchy);
+        }
+
         // let's exclude System/User cannot do anything with those (should be done by the metrics plugin)
-        // this.nestedDataSource.data = hierarchy.children[0].children;
         this.nestedDataSource.data = [hierarchy];
       } else {
         this.nestedDataSource.data = [];
@@ -44,6 +51,23 @@ export class ActorsTreeviewComponent implements OnInit, OnDestroy {
     if (this.hierarchySubscription != null) {
       this.hierarchySubscription.unsubscribe();
     }
+  }
+
+  // quite inefficient
+  selectNodes(expanded: IActorInfoDto[], hierarchy: IActorInfoDto) {
+    // look the current node can be expanded
+    if (expanded.findIndex(e => e.path === hierarchy.path) > -1) {
+      this.nestedTreeControl.expand(hierarchy);
+      // if a node has to be expanded also check its children
+      for (const child of hierarchy.children) {
+        this.selectNodes(expanded, child);
+      }
+    }
+  }
+
+  trackByFn(index: number, item: IActorInfoDto): string {
+    console.log(index);
+    return item.path;
   }
 
   // Material Tree Control
