@@ -32,14 +32,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Akka, Version=1.3.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Akka.1.3.8\lib\net45\Akka.dll</HintPath>
+      <HintPath>..\..\packages\Akka.1.3.8\lib\net45\Akka.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+      <HintPath>..\..\packages\System.Collections.Immutable.1.5.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -73,15 +73,15 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mammoth.BigBrother.Akka.Monitoring\Mammoth.BigBrother.Akka.Monitoring.csproj">
+    <ProjectReference Include="..\..\Mammoth.BigBrother.Akka.Monitoring\Mammoth.BigBrother.Akka.Monitoring.csproj">
       <Project>{82861fa7-fb20-447b-8389-9a7d5356f326}</Project>
       <Name>Mammoth.BigBrother.Akka.Monitoring</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Mammoth.BigBrother.Monitoring.Endpoint\Mammoth.BigBrother.Monitoring.Endpoint.csproj">
+    <ProjectReference Include="..\..\Mammoth.BigBrother.Monitoring.Endpoint\Mammoth.BigBrother.Monitoring.Endpoint.csproj">
       <Project>{147b3ea9-5a23-49e2-bc4a-ddbf8cbf7256}</Project>
       <Name>Mammoth.BigBrother.Monitoring.Endpoint</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Mammoth.BigBrother.Monitoring\Mammoth.BigBrother.Monitoring.csproj">
+    <ProjectReference Include="..\..\Mammoth.BigBrother.Monitoring\Mammoth.BigBrother.Monitoring.csproj">
       <Project>{61BDDDF0-9412-4240-BE8A-E9B37B33EE60}</Project>
       <Name>Mammoth.BigBrother.Monitoring</Name>
     </ProjectReference>
