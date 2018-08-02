@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { EndpointWebApiService, endpointWebApiServiceFactory } from '../../services/endpoint-web-api.service';
-import { ConfigService } from '../../settings/config.service';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActorsStateService } from '../../services/actors-state.service';
-import { ActorGraphNode } from '../../actors-graph/actprs-graph.models';
-import { ActorDetailComponent } from '../../actor-detail/actor-detail.component';
+import { EndpointWebApiService, endpointWebApiServiceFactory } from '../../services/endpoint-web-api.service';
+import { ConfigService } from '../../settings/config.service';
+import { ActorDetailComponent } from '../actor-detail/actor-detail.component';
+import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
+
 
 @Component({
   selector: 'app-actors-page',

@@ -24,14 +24,14 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from './store/reducers';
 
 import { AppComponent } from './app.component';
-import { ActorsGraphComponent } from './actors-graph/actors-graph.component';
-import { ActorDetailComponent } from './actor-detail/actor-detail.component';
-import { ActorsOverviewComponent } from './actors-overview/actors-overview.component';
+import { ActorsGraphComponent } from './actors/actors-graph/actors-graph.component';
+import { ActorDetailComponent } from './actors/actor-detail/actor-detail.component';
+import { ActorsOverviewComponent } from './actors/actors-overview/actors-overview.component';
 
 import { RouterModule } from '@angular/router';
 import { ConfigService } from './settings/config.service';
 import { environment } from '../environments/environment';
-import { ActorsTreeviewComponent } from './actors-treeview/actors-treeview.component';
+import { ActorsTreeviewComponent } from './actors/actors-treeview/actors-treeview.component';
 import { initialAppState } from './store/state/app.state';
 import { MenuComponent } from './shell/menu/menu.component';
 import { DrawerMenuComponent } from './shell/drawer-menu/drawer-menu.component';

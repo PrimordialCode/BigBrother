@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import * as shape from 'd3-shape';
 import { Subscription } from 'rxjs';
-import { ActorsStateService } from '../services/actors-state.service';
-import { IActorInfoDto } from '../services/endpoint-web-api.service';
+import { ActorsStateService } from '../../services/actors-state.service';
+import { IActorInfoDto } from '../../services/endpoint-web-api.service';
 import { ActorGraphLink, ActorGraphNode, ActorsGraphData } from './actprs-graph.models';
 import chartGroups from './chart-types';
 import { colorSets } from './color-sets';
