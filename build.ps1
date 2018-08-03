@@ -27,7 +27,7 @@ Remove-Item ".\$artifactPath\*" -Recurse -ErrorAction Ignore
 
 & $msBuild ".\src" /t:restore
 & $msBuild ".\src" /t:build
-# run tests
+# todo: run tests
 & $msBuild ".\src\Mammoth.BigBrother.Monitoring\Mammoth.BigBrother.Monitoring.csproj" /t:pack /p:PackageOutputPath=$packageOutputPath
 & $msBuild ".\src\Mammoth.BigBrother.Akka.Monitoring\Mammoth.BigBrother.Akka.Monitoring.csproj" /t:pack /p:PackageOutputPath=$packageOutputPath
 & $msBuild ".\src\Mammoth.BigBrother.Monitoring.Endpoint\Mammoth.BigBrother.Monitoring.Endpoint.csproj" /t:pack /p:PackageOutputPath=$packageOutputPath

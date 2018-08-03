@@ -1,9 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '../settings/config.service';
 
-@Injectable()
 export class EndpointWebApiService {
   private static headers = new HttpHeaders().set('content-type', 'application/json');
   private baseAddress = ''; // 'http://localhost:5001/api/';
