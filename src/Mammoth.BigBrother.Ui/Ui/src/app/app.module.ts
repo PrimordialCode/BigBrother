@@ -47,6 +47,14 @@ const COVALENT_MODULES: any[] = [
   CovalentCommonModule, CovalentDialogsModule,
 ];
 
+/**
+ * This configuration loader will execute some code to load the application configuration before
+ * the actual application starts.
+ * A function of the injected service will be called, that function will retuen a promise that
+ * will be resolved once the configuration is loaded from the remote endpoint. The application initialization
+ * will wait for this promise to be resolved before rendering the UI.
+ * @param configService the application configuration service
+ */
 export function ConfigLoader(configService: ConfigService) {
   // Note: this factory need to return a function (that return a promise)
   return () => configService.load(environment.configFile);

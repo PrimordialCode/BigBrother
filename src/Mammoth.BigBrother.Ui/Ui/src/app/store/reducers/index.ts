@@ -13,4 +13,4 @@ export const getConfiguration = createSelector(getConfigurationState, (state) =>
 export const getConfigurationLoaded = createSelector(getConfigurationState, (state) => state.loaded);
 export const getConfigurationEndpoints = createSelector(getConfigurationState, (state) => state.configuration.endpoints);
 
-export const getActorsState = (state: IAppState) => state.actors;
+export const getActorsStateDictionary = (state: IAppState) => state.actors;
