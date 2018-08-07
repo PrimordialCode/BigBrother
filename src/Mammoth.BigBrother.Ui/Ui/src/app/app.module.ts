@@ -21,7 +21,9 @@ import { CovalentPagingModule } from '@covalent/core/paging';
 import { CovalentStepsModule } from '@covalent/core/steps';
 
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { reducers } from './store/reducers';
+import { effects } from './store/effects';
 
 import { AppComponent } from './app.component';
 import { ActorsGraphComponent } from './actors/actors-graph/actors-graph.component';
@@ -83,7 +85,8 @@ export function ConfigLoader(configService: ConfigService) {
     MaterialModule,
     NgxChartsModule,
     NgxGraphModule,
-    StoreModule.forRoot(reducers, { initialState: initialAppState })
+    StoreModule.forRoot(reducers, { initialState: initialAppState }),
+    EffectsModule.forRoot(effects)
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

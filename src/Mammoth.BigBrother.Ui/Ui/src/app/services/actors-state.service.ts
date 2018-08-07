@@ -2,16 +2,18 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, interval, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ActorsHierarchyLoaded } from '../store/actions/actors.actions';
+import { ActorsLoadHierarcy } from '../store/actions';
 import { getActorsStateDictionary } from '../store/reducers';
 import { IAppState } from '../store/state/app.state';
-import { EndpointWebApiService, IActorInfoDto } from './endpoint-web-api.service';
+import { EndpointWebApiService } from './endpoint-web-api.service';
+import { IActorInfoDto } from '../models/endpoint-web-api.models';
 
 /**
  * A service that will manage a single endpoint:
- * - it will wrap all the data for a specifc endpoint
+ * - it will wraps all the operations for a specifc endpoint
  * - it will expose the actual actors hierarchy state
  *   that can be used by several components.
+ * - the actual state of the service is held globally in ngrx/store
  */
 @Injectable()
 export class ActorsStateService implements OnDestroy {
@@ -30,7 +32,7 @@ export class ActorsStateService implements OnDestroy {
   private _intervalSubscription: Subscription;
 
   constructor(
-    private endpoint: EndpointWebApiService,
+    endpoint: EndpointWebApiService,
     private store: Store<IAppState>
   ) {
     this._endpointName = endpoint.name;
@@ -54,9 +56,13 @@ export class ActorsStateService implements OnDestroy {
   }
 
   public refresh() {
-    this.endpoint.GetActorsHierarchy().then(hierarchy => {
+    this.store.dispatch(new ActorsLoadHierarcy(this._endpointName));
+
+    /*
+    this.endpoint.GetActorsHierarchy().toPromise().then(hierarchy => {
       this.store.dispatch(new ActorsHierarchyLoaded(this._endpointName, hierarchy));
       this._hierarchy$.next(hierarchy);
     });
+    */
   }
 }

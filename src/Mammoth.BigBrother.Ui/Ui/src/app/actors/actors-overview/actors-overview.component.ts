@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
-import { EndpointWebApiService, ICounterDto } from '../../services/endpoint-web-api.service';
+import { EndpointWebApiService } from '../../services/endpoint-web-api.service';
+import { ICounterDto } from '../../models/endpoint-web-api.models';
 
 /**
  * displays some gauges that shows the current status of the application

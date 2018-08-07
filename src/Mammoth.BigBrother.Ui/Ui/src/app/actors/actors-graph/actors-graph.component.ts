@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsul
 import * as shape from 'd3-shape';
 import { Subscription } from 'rxjs';
 import { ActorsStateService } from '../../services/actors-state.service';
-import { IActorInfoDto } from '../../services/endpoint-web-api.service';
 import { ActorGraphLink, ActorGraphNode, ActorsGraphData } from './actprs-graph.models';
 import chartGroups from './chart-types';
 import { colorSets } from './color-sets';
+import { IActorInfoDto } from '../../models/endpoint-web-api.models';
 
 
 @Component({

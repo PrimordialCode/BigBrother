@@ -1,4 +1,4 @@
-import { IActorInfoDto } from "../../services/endpoint-web-api.service";
+import { IActorInfoDto } from "../../models/endpoint-web-api.models";
 
 export interface IActorsState {
   hierarchy: IActorInfoDto;

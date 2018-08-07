@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { of } from "rxjs";
-import { catchError } from "rxjs/operators";
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Configuration } from '../models/configuration.model';
 import { ConfigurationLoaded, ConfigurationLoadFailed } from '../store/actions/configuration.actions';
 import * as fromStore from "../store/reducers";

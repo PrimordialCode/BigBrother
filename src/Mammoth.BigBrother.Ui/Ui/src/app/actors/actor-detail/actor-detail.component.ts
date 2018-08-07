@@ -1,7 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ITdDataTableColumn } from '@covalent/core/data-table/covalent-core-data-table';
-import { EndpointWebApiService, IActorDetailDto, ICounterDto, IMonitoringEventData, IMonitoringExceptionData } from '../../services/endpoint-web-api.service';
+
 import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
+import { IActorDetailDto, ICounterDto, IMonitoringEventData, IMonitoringExceptionData } from '../../models/endpoint-web-api.models';
+import { EndpointWebApiService } from '../../services/endpoint-web-api.service';
 
 
 @Component({

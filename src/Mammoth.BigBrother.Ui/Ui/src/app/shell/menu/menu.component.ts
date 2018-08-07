@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IAppState } from '../../store/state/app.state';
 import { getConfiguration } from '../../store/reducers';
-import { BehaviorSubject } from '../../../../node_modules/rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 interface IMenuRoute {
   icon: string;

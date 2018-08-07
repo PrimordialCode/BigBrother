@@ -3,8 +3,8 @@ import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/cor
 import { MatTreeNestedDataSource } from '@angular/material';
 import { of, Subscription } from 'rxjs';
 import { ActorsStateService } from '../../services/actors-state.service';
-import { IActorInfoDto } from '../../services/endpoint-web-api.service';
 import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
+import { IActorInfoDto } from '../../models/endpoint-web-api.models';
 
 
 @Component({

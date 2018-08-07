@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { IActorInfoDto } from "../../services/endpoint-web-api.service";
+import { IActorInfoDto } from "../../models/endpoint-web-api.models";
 
 export const ACTORS_LOAD_HIERARCHY = "[actors] load hierarchy";
 export const ACTORS_LOAD_HIERARCHY_FAILED = "[actors] load hierarchy failed";
@@ -15,15 +15,15 @@ abstract class ActorsAction implements Action {
 export class ActorsLoadHierarcy extends ActorsAction {
   public readonly type = ACTORS_LOAD_HIERARCHY;
   constructor(
-    endpointName: string,
-    public payload: any
+    endpointName: string
   ) { super(endpointName); }
 }
 
 export class ActorsLoadHierarcyFailed extends ActorsAction {
   public readonly type = ACTORS_LOAD_HIERARCHY_FAILED;
   constructor(
-    endpointName: string
+    endpointName: string,
+    public payload: any
   ) { super(endpointName); }
 }
 

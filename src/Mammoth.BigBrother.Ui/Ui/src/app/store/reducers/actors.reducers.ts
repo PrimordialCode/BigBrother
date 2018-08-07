@@ -11,7 +11,8 @@ export function actorsReducer(
         ...state,
         [action.endpointName]: {
           ...state[action.endpointName],
-          loading: true
+          loading: true,
+          loaded: false
         }
       };
     case ACTORS_LOAD_HIERARCHY_FAILED:

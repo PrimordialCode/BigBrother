@@ -1,5 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { IActorDetailDto, IActorInfoDto, IActorRequestDto, ICounterDto, IMonitoringEventData, IMonitoringExceptionData } from '../models/endpoint-web-api.models';
 import { ConfigService } from '../settings/config.service';
 
 export class EndpointWebApiService {
@@ -25,8 +27,8 @@ export class EndpointWebApiService {
     this.baseAddress = endpoint + '/api/';
   }
 
-  public GetActorsHierarchy(): Promise<IActorInfoDto> {
-    return this.http.get<IActorInfoDto>(this.baseAddress + 'actors/gethierarchy').toPromise();
+  public GetActorsHierarchy(): Observable<IActorInfoDto> {
+    return this.http.get<IActorInfoDto>(this.baseAddress + 'actors/gethierarchy');
   }
 
   public GetActorDetail(args: IActorRequestDto): Promise<IActorDetailDto> {
@@ -73,34 +75,3 @@ export function endpointWebApiServiceFactory(configService: ConfigService, http:
   return new EndpointWebApiService(http, endpoint);
 }
 
-export interface IActorInfoDto {
-  name: string;
-  path: string;
-  children: IActorInfoDto[];
-}
-
-export interface IActorRequestDto {
-  path: string;
-}
-
-export interface ICounterDto {
-  name: string;
-  value: number;
-}
-
-export interface IMonitoringEventData {
-  timestamp: string;
-  event: string;
-  properties: { [key: string]: string };
-}
-
-export interface IMonitoringExceptionData {
-  timestamp: string;
-  exception: string;
-  properties: { [key: string]: string };
-}
-
-export interface IActorDetailDto {
-  // 0 = started, 1 = stopped
-  status: number;
-}
