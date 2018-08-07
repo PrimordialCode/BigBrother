@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ConfigurationEndpoint } from '../models/configuration.model';
 import { IActorDetailDto, IActorInfoDto, IActorRequestDto, ICounterDto, IMonitoringEventData, IMonitoringExceptionData } from '../models/endpoint-web-api.models';
 import { ConfigService } from '../settings/config.service';
 
@@ -13,56 +13,55 @@ import { ConfigService } from '../settings/config.service';
  */
 export class SingletonEndpointWebApiService {
   private static headers = new HttpHeaders().set('content-type', 'application/json');
-  private baseAddress = ''; // 'http://localhost:5001/api/';
-  private _name: string;
-  public get name(): string {
-    return this._name;
-  }
+  private endpoints: ConfigurationEndpoint[];
 
   constructor(
     configService: ConfigService,
     private http: HttpClient
   ) {
-    this.baseAddress = configService.getConfiguration().endpoint + '/api/';
+    configService.getConfiguration$().subscribe(endpoints => this.endpoints = endpoints.endpoints);
   }
 
-  public GetActorsHierarchy(): Observable<IActorInfoDto> {
-    return this.http.get<IActorInfoDto>(this.baseAddress + 'actors/gethierarchy');
+  private getEndpoinBaseAddress(endpointName: string): string {
+    return this.endpoints.find(e => e.name === endpointName).endpoint + '/api/';
   }
 
-  public GetActorDetail(args: IActorRequestDto): Promise<IActorDetailDto> {
-    return this.http.post<IActorDetailDto>(this.baseAddress + 'actors/getactordetail',
+  public GetActorsHierarchy(endpointName: string): Observable<IActorInfoDto> {
+    return this.http.get<IActorInfoDto>(this.getEndpoinBaseAddress(endpointName) + 'actors/gethierarchy');
+  }
+
+  public GetActorDetail(endpointName: string, args: IActorRequestDto): Promise<IActorDetailDto> {
+    return this.http.post<IActorDetailDto>(this.getEndpoinBaseAddress(endpointName) + 'actors/getactordetail',
       args,
       { headers: SingletonEndpointWebApiService.headers }).toPromise();
   }
 
-  public GetCounters(): Promise<ICounterDto[]> {
-    return this.http.get<ICounterDto[]>(this.baseAddress + 'counters').toPromise();
+  public GetCounters(endpointName: string): Promise<ICounterDto[]> {
+    return this.http.get<ICounterDto[]>(this.getEndpoinBaseAddress(endpointName) + 'counters').toPromise();
   }
 
-  public GetGlobalCounters(): Promise<ICounterDto[]> {
-    return this.http.get<ICounterDto[]>(this.baseAddress + 'counters/GlobalCounters').toPromise();
+  public GetGlobalCounters(endpointName: string): Promise<ICounterDto[]> {
+    return this.http.get<ICounterDto[]>(this.getEndpoinBaseAddress(endpointName) + 'counters/GlobalCounters').toPromise();
   }
 
-  public GetActorCounters(args: IActorRequestDto) {
-    return this.http.post<ICounterDto[]>(this.baseAddress + 'counters/GetActorsCounter', args, { headers: SingletonEndpointWebApiService.headers })
+  public GetActorCounters(endpointName: string, args: IActorRequestDto) {
+    return this.http.post<ICounterDto[]>(this.getEndpoinBaseAddress(endpointName) + 'counters/GetActorsCounter', args, { headers: SingletonEndpointWebApiService.headers })
       .toPromise();
   }
 
-  public GetEvents() {
-    return this.http.get(this.baseAddress + 'events').toPromise();
+  public GetEvents(endpointName: string) {
+    return this.http.get(this.getEndpoinBaseAddress(endpointName) + 'events').toPromise();
   }
 
-  public GetActorEvents(args: IActorRequestDto) {
+  public GetActorEvents(endpointName: string, args: IActorRequestDto) {
     return this.http.post<IMonitoringEventData[]>(
-      this.baseAddress + 'events/GetActorEvents', args, { headers: SingletonEndpointWebApiService.headers }
+      this.getEndpoinBaseAddress(endpointName) + 'events/GetActorEvents', args, { headers: SingletonEndpointWebApiService.headers }
     ).toPromise();
   }
 
-  public GetActorExceptions(args: IActorRequestDto) {
+  public GetActorExceptions(endpointName: string, args: IActorRequestDto) {
     return this.http.post<IMonitoringExceptionData[]>(
-      this.baseAddress + 'exceptions/GetActorExceptions', args, { headers: SingletonEndpointWebApiService.headers }
+      this.getEndpoinBaseAddress(endpointName) + 'exceptions/GetActorExceptions', args, { headers: SingletonEndpointWebApiService.headers }
     ).toPromise();
   }
-
 }
