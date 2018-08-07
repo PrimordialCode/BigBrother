@@ -41,6 +41,7 @@ import { routes } from './app.routes';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ActorsPageComponent } from './actors/actors-page/actors-page.component';
 import { DashboardEndpointsComponent } from './home-page/dashboard-endpoints/dashboard-endpoints.component';
+import { SingletonEndpointWebApiService } from './services/singleton-endpoint-web-api.service';
 
 const COVALENT_MODULES: any[] = [
   CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
@@ -96,7 +97,8 @@ export function ConfigLoader(configService: ConfigService) {
       useFactory: ConfigLoader,
       deps: [ConfigService],
       multi: true
-    }
+    },
+    SingletonEndpointWebApiService
   ],
   bootstrap: [AppComponent]
 })

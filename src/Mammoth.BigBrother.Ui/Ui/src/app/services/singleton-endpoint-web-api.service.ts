@@ -6,33 +6,24 @@ import { ConfigService } from '../settings/config.service';
 
 /**
  * Wraps the access to a single remote endpoint.
- * This implementation was designed to be resolved for each specific endpoint
- * given a value on the query string that identified the endpoint to which ask the data
- * instead of passing the parameter to each request.
+ * This implementation was designed to be registered as singleton
+ * and it's better suited to operate with ngrx/effects.
  *
- * It does not operate well with ngrx/effects.
+ * we need to pass the endpoint to which ask the data at each request
  */
-export class EndpointWebApiService {
+export class SingletonEndpointWebApiService {
   private static headers = new HttpHeaders().set('content-type', 'application/json');
   private baseAddress = ''; // 'http://localhost:5001/api/';
   private _name: string;
   public get name(): string {
     return this._name;
   }
-  /*
+
   constructor(
     configService: ConfigService,
     private http: HttpClient
   ) {
     this.baseAddress = configService.getConfiguration().endpoint + '/api/';
-  }
-  */
-
-  constructor(
-    private http: HttpClient,
-    endpoint: string
-  ) {
-    this.baseAddress = endpoint + '/api/';
   }
 
   public GetActorsHierarchy(): Observable<IActorInfoDto> {
@@ -42,7 +33,7 @@ export class EndpointWebApiService {
   public GetActorDetail(args: IActorRequestDto): Promise<IActorDetailDto> {
     return this.http.post<IActorDetailDto>(this.baseAddress + 'actors/getactordetail',
       args,
-      { headers: EndpointWebApiService.headers }).toPromise();
+      { headers: SingletonEndpointWebApiService.headers }).toPromise();
   }
 
   public GetCounters(): Promise<ICounterDto[]> {
@@ -54,7 +45,7 @@ export class EndpointWebApiService {
   }
 
   public GetActorCounters(args: IActorRequestDto) {
-    return this.http.post<ICounterDto[]>(this.baseAddress + 'counters/GetActorsCounter', args, { headers: EndpointWebApiService.headers })
+    return this.http.post<ICounterDto[]>(this.baseAddress + 'counters/GetActorsCounter', args, { headers: SingletonEndpointWebApiService.headers })
       .toPromise();
   }
 
@@ -64,22 +55,14 @@ export class EndpointWebApiService {
 
   public GetActorEvents(args: IActorRequestDto) {
     return this.http.post<IMonitoringEventData[]>(
-      this.baseAddress + 'events/GetActorEvents', args, { headers: EndpointWebApiService.headers }
+      this.baseAddress + 'events/GetActorEvents', args, { headers: SingletonEndpointWebApiService.headers }
     ).toPromise();
   }
 
   public GetActorExceptions(args: IActorRequestDto) {
     return this.http.post<IMonitoringExceptionData[]>(
-      this.baseAddress + 'exceptions/GetActorExceptions', args, { headers: EndpointWebApiService.headers }
+      this.baseAddress + 'exceptions/GetActorExceptions', args, { headers: SingletonEndpointWebApiService.headers }
     ).toPromise();
   }
 
 }
-
-export function endpointWebApiServiceFactory(configService: ConfigService, http: HttpClient, route: ActivatedRoute): EndpointWebApiService {
-  // get the config from the route parameter
-  const endpointName = route.snapshot.params["name"] as string;
-  const endpoint = configService.getConfiguration().endpoints.find(p => p.name === endpointName).endpoint;
-  return new EndpointWebApiService(http, endpoint);
-}
-
