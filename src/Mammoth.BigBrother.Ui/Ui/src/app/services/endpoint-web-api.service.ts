@@ -30,8 +30,10 @@ export class EndpointWebApiService {
 
   constructor(
     private http: HttpClient,
+    name: string,
     endpoint: string
   ) {
+    this._name = name;
     this.baseAddress = endpoint + '/api/';
   }
 
@@ -80,6 +82,6 @@ export function endpointWebApiServiceFactory(configService: ConfigService, http:
   // get the config from the route parameter
   const endpointName = route.snapshot.params["name"] as string;
   const endpoint = configService.getConfiguration().endpoints.find(p => p.name === endpointName).endpoint;
-  return new EndpointWebApiService(http, endpoint);
+  return new EndpointWebApiService(http, endpointName, endpoint);
 }
 

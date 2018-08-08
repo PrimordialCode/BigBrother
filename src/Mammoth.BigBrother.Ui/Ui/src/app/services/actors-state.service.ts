@@ -1,12 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, interval, Subscription } from 'rxjs';
+import { BehaviorSubject, interval, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { IActorInfoDto } from '../models/endpoint-web-api.models';
 import { ActorsLoadHierarcy } from '../store/actions';
 import { getActorsStateDictionary } from '../store/reducers';
 import { IAppState } from '../store/state/app.state';
 import { EndpointWebApiService } from './endpoint-web-api.service';
-import { IActorInfoDto } from '../models/endpoint-web-api.models';
 
 /**
  * A service that will manage a single endpoint:

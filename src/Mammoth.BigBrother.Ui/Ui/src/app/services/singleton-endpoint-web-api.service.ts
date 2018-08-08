@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { ConfigurationEndpoint } from '../models/configuration.model';
 import { IActorDetailDto, IActorInfoDto, IActorRequestDto, ICounterDto, IMonitoringEventData, IMonitoringExceptionData } from '../models/endpoint-web-api.models';
 import { ConfigService } from '../settings/config.service';
+import { Injectable } from '../../../node_modules/@angular/core';
 
 /**
  * Wraps the access to a single remote endpoint.
@@ -11,6 +12,7 @@ import { ConfigService } from '../settings/config.service';
  *
  * we need to pass the endpoint to which ask the data at each request
  */
+@Injectable()
 export class SingletonEndpointWebApiService {
   private static headers = new HttpHeaders().set('content-type', 'application/json');
   private endpoints: ConfigurationEndpoint[];
@@ -19,7 +21,11 @@ export class SingletonEndpointWebApiService {
     configService: ConfigService,
     private http: HttpClient
   ) {
-    configService.getConfiguration$().subscribe(endpoints => this.endpoints = endpoints.endpoints);
+    configService.getConfiguration$().subscribe(endpoints => {
+      if (endpoints != null) {
+        this.endpoints = endpoints.endpoints;
+      }
+    });
   }
 
   private getEndpoinBaseAddress(endpointName: string): string {
