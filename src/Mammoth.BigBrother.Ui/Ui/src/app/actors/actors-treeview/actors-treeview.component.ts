@@ -28,7 +28,7 @@ export class ActorsTreeviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.hierarchySubscription = this._actorsStateService.hierarchyStore$.subscribe(hierarchy => {
+    this.hierarchySubscription = this._actorsStateService.hierarchy$.subscribe(hierarchy => {
       if (hierarchy != null) {
         // save the actuale expansion model
         const expanded = this.nestedTreeControl.expansionModel.selected;

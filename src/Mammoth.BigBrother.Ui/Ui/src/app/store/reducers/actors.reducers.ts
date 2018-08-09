@@ -6,34 +6,49 @@ export function actorsReducer(
   action: ActorsActions
 ): IActorsStateDictionary {
   switch (action.type) {
-    case ActorsActionsTypes.ACTORS_LOAD_HIERARCHY:
+    case ActorsActionsTypes.ACTORS_LOAD_HIERARCHY: {
+      const endpoint = state[action.endpointName];
       return {
         ...state,
         [action.endpointName]: {
-          ...state[action.endpointName],
-          loading: true,
-          loaded: false
+          ...endpoint,
+          hierarchy: {
+            ...(endpoint != null ? endpoint.hierarchy : null),
+            loading: true,
+            loaded: false
+          }
         }
       };
-    case ActorsActionsTypes.ACTORS_LOAD_HIERARCHY_FAILED:
+    }
+    case ActorsActionsTypes.ACTORS_LOAD_HIERARCHY_FAILED: {
+      const endpoint = state[action.endpointName];
       return {
         ...state,
         [action.endpointName]: {
-          ...state[action.endpointName],
-          loading: false,
-          loaded: false
+          ...endpoint,
+          hierarchy: {
+            ...endpoint.hierarchy,
+            loading: false,
+            loaded: false
+          }
         }
       };
-    case ActorsActionsTypes.ACTORS_HIERARCHY_LOADED:
+    }
+    case ActorsActionsTypes.ACTORS_HIERARCHY_LOADED: {
+      const endpoint = state[action.endpointName];
       return {
         ...state,
         [action.endpointName]: {
-          ...state[action.endpointName],
-          hierarchy: action.payload,
-          loading: false,
-          loaded: true
+          ...endpoint,
+          hierarchy: {
+            ...endpoint.hierarchy,
+            hierarchy: action.payload,
+            loading: false,
+            loaded: true
+          }
         }
       };
+    }
   }
 
   return state;

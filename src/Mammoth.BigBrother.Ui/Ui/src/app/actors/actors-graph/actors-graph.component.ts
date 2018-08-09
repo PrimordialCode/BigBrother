@@ -85,7 +85,7 @@ export class ActorsGraphComponent implements OnInit, OnDestroy {
       this.view = undefined;
     }
     this.selectChart(this.chartType);
-    this.hierarchySubscription = this._actorsStateService.hierarchyStore$.subscribe(hierarchy => {
+    this.hierarchySubscription = this._actorsStateService.hierarchy$.subscribe(hierarchy => {
       this.refresh(hierarchy);
     });
   }

@@ -1,7 +1,7 @@
 import { OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, interval, Observable, Subscription } from 'rxjs';
+import { interval, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IActorInfoDto } from '../../models/endpoint-web-api.models';
 import { ActorsLoadHierarcy } from '../../store/actions';
@@ -21,14 +21,9 @@ import { IAppState } from '../../store/state/app.state';
 export class ActorsStateService implements OnDestroy {
   private _endpointName: string;
 
-  private _hierarchy$ = new BehaviorSubject<IActorInfoDto>(null);
-  public get hierarchy$(): Observable<IActorInfoDto> {
+  private _hierarchy$: Observable<IActorInfoDto>;
+  public get hierarchy$() {
     return this._hierarchy$;
-  }
-
-  private _hierarchyStore$: Observable<IActorInfoDto>;
-  public get hierarchyStore$() {
-    return this._hierarchyStore$;
   }
 
   private _intervalSubscription: Subscription;
@@ -38,9 +33,9 @@ export class ActorsStateService implements OnDestroy {
     private store: Store<IAppState>
   ) {
     this._endpointName = endpointName;
-    this._hierarchyStore$ = this.store.select(getActorsStateDictionary).pipe(
+    this._hierarchy$ = this.store.select(getActorsStateDictionary).pipe(
       map(data => {
-        const h = data[this._endpointName];
+        const h = data[this._endpointName].hierarchy;
         if (h != null) {
           return h.hierarchy;
         }
