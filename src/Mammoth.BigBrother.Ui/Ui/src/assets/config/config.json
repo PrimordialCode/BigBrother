@@ -2,8 +2,12 @@
   "endpoint": "http://localhost:5001",
   "endpoints": [
     {
-      "name": "demo",
+      "name": "demo .net core",
       "endpoint": "http://localhost:5001"
+    },
+    {
+      "name": "demo .net 4.5",
+      "endpoint": "http://localhost:5003"
     }
   ]
 }
