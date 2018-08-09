@@ -19,14 +19,6 @@ export class EndpointWebApiService {
   public get name(): string {
     return this._name;
   }
-  /*
-  constructor(
-    configService: ConfigService,
-    private http: HttpClient
-  ) {
-    this.baseAddress = configService.getConfiguration().endpoint + '/api/';
-  }
-  */
 
   constructor(
     private http: HttpClient,

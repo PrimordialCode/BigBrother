@@ -2,7 +2,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { of, Subscription } from 'rxjs';
-import { ActorsStateService } from '../../services/actors-state.service';
+import { ActorsStateService } from '../services/actors-state.service';
 import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
 import { IActorInfoDto } from '../../models/endpoint-web-api.models';
 

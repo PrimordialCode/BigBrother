@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ActorsStateService } from '../../services/actors-state.service';
+import { Store } from '@ngrx/store';
+import { ActorsStateService, actorsStateServiceFactory } from '../services/actors-state.service';
 import { EndpointWebApiService, endpointWebApiServiceFactory } from '../../services/endpoint-web-api.service';
 import { ConfigService } from '../../settings/config.service';
 import { ActorDetailComponent } from '../actor-detail/actor-detail.component';
@@ -18,7 +19,11 @@ import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
       useFactory: endpointWebApiServiceFactory,
       deps: [ConfigService, HttpClient, ActivatedRoute]
     },
-    ActorsStateService
+    {
+      provide: ActorsStateService,
+      useFactory: actorsStateServiceFactory,
+      deps: [ActivatedRoute, Store]
+    }
   ]
 })
 export class ActorsPageComponent implements OnInit {

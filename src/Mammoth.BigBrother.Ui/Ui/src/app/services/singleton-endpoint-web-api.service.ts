@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { ConfigurationEndpoint } from '../models/configuration.model';
 import { IActorDetailDto, IActorInfoDto, IActorRequestDto, ICounterDto, IMonitoringEventData, IMonitoringExceptionData } from '../models/endpoint-web-api.models';
 import { ConfigService } from '../settings/config.service';
-import { Injectable } from '../../../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
 
 /**
  * Wraps the access to a single remote endpoint.
