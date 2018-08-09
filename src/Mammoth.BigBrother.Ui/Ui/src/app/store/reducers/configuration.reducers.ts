@@ -1,5 +1,5 @@
-import { initialConfigurationState, IConfigurationState } from "../state/configuration.state";
-import { ConfigurationActions, CONFIGURATION_LOADED, CONFIGURATION_LOAD_FAILED } from "../actions/configuration.actions";
+import { ConfigurationActions, ConfigurationActionsTypes } from "../actions/configuration.actions";
+import { IConfigurationState, initialConfigurationState } from "../state/configuration.state";
 
 
 export function configurationReducer(
@@ -7,14 +7,14 @@ export function configurationReducer(
   action: ConfigurationActions
 ): IConfigurationState {
   switch (action.type) {
-    case CONFIGURATION_LOAD_FAILED:
+    case ConfigurationActionsTypes.CONFIGURATION_LOAD_FAILED:
       return {
         ...state,
         configuration: null,
         loading: false,
         loaded: false
       };
-    case CONFIGURATION_LOADED:
+    case ConfigurationActionsTypes.CONFIGURATION_LOADED:
       return {
         ...state,
         configuration: action.payload,

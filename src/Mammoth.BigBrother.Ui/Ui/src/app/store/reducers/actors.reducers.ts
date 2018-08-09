@@ -1,12 +1,12 @@
-import { initialActorsState, IActorsStateDictionary } from "../state/actors.state";
-import { ActorsActions, ACTORS_HIERARCHY_LOADED, ACTORS_LOAD_HIERARCHY, ACTORS_LOAD_HIERARCHY_FAILED } from "../actions/actors.actions";
+import { ActorsActions, ActorsActionsTypes } from "../actions/actors.actions";
+import { IActorsStateDictionary, initialActorsState } from "../state/actors.state";
 
 export function actorsReducer(
   state = initialActorsState,
   action: ActorsActions
 ): IActorsStateDictionary {
   switch (action.type) {
-    case ACTORS_LOAD_HIERARCHY:
+    case ActorsActionsTypes.ACTORS_LOAD_HIERARCHY:
       return {
         ...state,
         [action.endpointName]: {
@@ -15,7 +15,7 @@ export function actorsReducer(
           loaded: false
         }
       };
-    case ACTORS_LOAD_HIERARCHY_FAILED:
+    case ActorsActionsTypes.ACTORS_LOAD_HIERARCHY_FAILED:
       return {
         ...state,
         [action.endpointName]: {
@@ -24,7 +24,7 @@ export function actorsReducer(
           loaded: false
         }
       };
-    case ACTORS_HIERARCHY_LOADED:
+    case ActorsActionsTypes.ACTORS_HIERARCHY_LOADED:
       return {
         ...state,
         [action.endpointName]: {

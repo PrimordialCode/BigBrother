@@ -1,9 +1,11 @@
 import { Action } from "@ngrx/store";
 import { IActorInfoDto } from "../../models/endpoint-web-api.models";
 
-export const ACTORS_LOAD_HIERARCHY = "[actors] load hierarchy";
-export const ACTORS_LOAD_HIERARCHY_FAILED = "[actors] load hierarchy failed";
-export const ACTORS_HIERARCHY_LOADED = '[actors] hierarchy loaded';
+export enum ActorsActionsTypes {
+  ACTORS_LOAD_HIERARCHY = "[actors] load hierarchy",
+  ACTORS_LOAD_HIERARCHY_FAILED = "[actors] load hierarchy failed",
+  ACTORS_HIERARCHY_LOADED = '[actors] hierarchy loaded',
+}
 
 abstract class ActorsAction implements Action {
   public abstract readonly type: string;
@@ -13,14 +15,14 @@ abstract class ActorsAction implements Action {
 }
 
 export class ActorsLoadHierarcy extends ActorsAction {
-  public readonly type = ACTORS_LOAD_HIERARCHY;
+  public readonly type = ActorsActionsTypes.ACTORS_LOAD_HIERARCHY;
   constructor(
     endpointName: string
   ) { super(endpointName); }
 }
 
 export class ActorsLoadHierarcyFailed extends ActorsAction {
-  public readonly type = ACTORS_LOAD_HIERARCHY_FAILED;
+  public readonly type = ActorsActionsTypes.ACTORS_LOAD_HIERARCHY_FAILED;
   constructor(
     endpointName: string,
     public payload: any
@@ -28,7 +30,7 @@ export class ActorsLoadHierarcyFailed extends ActorsAction {
 }
 
 export class ActorsHierarchyLoaded extends ActorsAction {
-  public readonly type = ACTORS_HIERARCHY_LOADED;
+  public readonly type = ActorsActionsTypes.ACTORS_HIERARCHY_LOADED;
   constructor(
     endpointName: string,
     public payload: IActorInfoDto
