@@ -67,6 +67,12 @@ export class ActorsGraphComponent implements OnInit, OnDestroy {
   schemeType = 'ordinal';
   selectedColorScheme: string;
 
+  dataVisable = false;
+  realTimeData = false;
+  dimVisiable = false;
+  colorVisible = false;
+  optsVisible = false;
+
   constructor(
     private _actorsStateService: ActorsStateService
   ) {
