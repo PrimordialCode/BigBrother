@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription, timer } from 'rxjs';
-import { EndpointWebApiService } from '../../services/endpoint-web-api.service';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ICounterDto } from '../../models/endpoint-web-api.models';
+import { ActorsStateService } from '../services/actors-state.service';
 
 /**
  * displays some gauges that shows the current status of the application
@@ -12,33 +12,19 @@ import { ICounterDto } from '../../models/endpoint-web-api.models';
 @Component({
   selector: 'app-actors-overview',
   templateUrl: './actors-overview.component.html',
-  styleUrls: ['./actors-overview.component.css']
+  styleUrls: ['./actors-overview.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ActorsOverviewComponent implements OnInit, OnDestroy {
+export class ActorsOverviewComponent implements OnInit {
 
-  public counters: ICounterDto[] = [];
-  private timerSubscription: Subscription;
+  public readonly counters$: Observable<ICounterDto[]>;
 
   constructor(
-    private endpoint: EndpointWebApiService
-  ) { }
+    _actorsStateService: ActorsStateService,
+  ) {
+    this.counters$ = _actorsStateService.globalCounters$;
+  }
 
   ngOnInit() {
-    this.refreshData();
-  }
-
-  ngOnDestroy(): void {
-    if (this.timerSubscription != null) {
-      this.timerSubscription.unsubscribe();
-      this.timerSubscription = null;
-    }
-  }
-
-  private refreshData() {
-    this.timerSubscription = timer(0, 5000).subscribe(() => {
-      this.endpoint.GetGlobalCounters().then(
-        counters => this.counters = counters
-      );
-    });
   }
 }

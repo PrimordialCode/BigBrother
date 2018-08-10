@@ -1,9 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { ConfigurationEndpoint } from '../models/configuration.model';
 import { IActorDetailDto, IActorInfoDto, IActorRequestDto, ICounterDto, IMonitoringEventData, IMonitoringExceptionData } from '../models/endpoint-web-api.models';
 import { ConfigService } from '../settings/config.service';
-import { Injectable } from '@angular/core';
 
 /**
  * Wraps the access to a single remote endpoint.
@@ -32,7 +31,7 @@ export class SingletonEndpointWebApiService {
     return this.endpoints.find(e => e.name === endpointName).endpoint + '/api/';
   }
 
-  public GetActorsHierarchy(endpointName: string): Observable<IActorInfoDto> {
+  public GetActorsHierarchy(endpointName: string) {
     return this.http.get<IActorInfoDto>(this.getEndpoinBaseAddress(endpointName) + 'actors/gethierarchy');
   }
 
@@ -46,8 +45,8 @@ export class SingletonEndpointWebApiService {
     return this.http.get<ICounterDto[]>(this.getEndpoinBaseAddress(endpointName) + 'counters').toPromise();
   }
 
-  public GetGlobalCounters(endpointName: string): Promise<ICounterDto[]> {
-    return this.http.get<ICounterDto[]>(this.getEndpoinBaseAddress(endpointName) + 'counters/GlobalCounters').toPromise();
+  public GetGlobalCounters(endpointName: string) {
+    return this.http.get<ICounterDto[]>(this.getEndpoinBaseAddress(endpointName) + 'counters/GlobalCounters');
   }
 
   public GetActorCounters(endpointName: string, args: IActorRequestDto) {

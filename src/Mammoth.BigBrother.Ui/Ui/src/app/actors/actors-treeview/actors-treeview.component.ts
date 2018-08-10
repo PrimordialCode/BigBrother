@@ -1,5 +1,5 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { of, Subscription } from 'rxjs';
 import { ActorsStateService } from '../services/actors-state.service';
@@ -10,7 +10,8 @@ import { IActorInfoDto } from '../../models/endpoint-web-api.models';
 @Component({
   selector: 'app-actors-treeview',
   templateUrl: './actors-treeview.component.html',
-  styleUrls: ['./actors-treeview.component.css']
+  styleUrls: ['./actors-treeview.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActorsTreeviewComponent implements OnInit, OnDestroy {
   @Output() public selected = new EventEmitter<ActorGraphNode>();

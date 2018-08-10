@@ -14,3 +14,15 @@ export const getConfigurationLoaded = createSelector(getConfigurationState, (sta
 export const getConfigurationEndpoints = createSelector(getConfigurationState, (state) => state.configuration.endpoints);
 
 export const getActorsStateDictionary = (state: IAppState) => state.actors;
+export const getActorsState = (endpointName: string) => createSelector(
+  getActorsStateDictionary,
+  actorsStateDictionary => actorsStateDictionary[endpointName]
+);
+export const getActorsHierarchy = (endpointName: string) => createSelector(
+  getActorsState(endpointName),
+  state => state.hierarchy
+);
+export const getActorsGlobalCounters = (endpointName: string) => createSelector(
+  getActorsState(endpointName),
+  state => state.globalCounters
+);

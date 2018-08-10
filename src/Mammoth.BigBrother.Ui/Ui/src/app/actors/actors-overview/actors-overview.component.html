@@ -1,3 +1,3 @@
-<!-- <pre>{{counters | json}}</pre> -->
-<ngx-charts-number-card [view]="[500,72]" [innerPadding]="1" [results]="counters">
+<!-- <pre>{{counters$ | async | json}}</pre> -->
+<ngx-charts-number-card [view]="[500,72]" [innerPadding]="1" [results]="counters$ | async">
 </ngx-charts-number-card>

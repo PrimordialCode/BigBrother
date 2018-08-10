@@ -1,18 +1,19 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import * as shape from 'd3-shape';
 import { Subscription } from 'rxjs';
+import { IActorInfoDto } from '../../models/endpoint-web-api.models';
 import { ActorsStateService } from '../services/actors-state.service';
 import { ActorGraphLink, ActorGraphNode, ActorsGraphData } from './actprs-graph.models';
 import chartGroups from './chart-types';
 import { colorSets } from './color-sets';
-import { IActorInfoDto } from '../../models/endpoint-web-api.models';
 
 
 @Component({
   selector: 'app-actors-graph',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './actors-graph.component.html',
-  styleUrls: ['./actors-graph.component.scss']
+  styleUrls: ['./actors-graph.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush the ngx-graph will not work with OnPush
 })
 export class ActorsGraphComponent implements OnInit, OnDestroy {
   @Input() customize = false;

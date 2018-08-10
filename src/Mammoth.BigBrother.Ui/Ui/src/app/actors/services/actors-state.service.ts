@@ -2,10 +2,10 @@ import { OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { interval, Observable, Subscription } from 'rxjs';
-import { map, skipWhile, filter, share } from 'rxjs/operators';
-import { IActorInfoDto } from '../../models/endpoint-web-api.models';
-import { ActorsLoadHierarcy } from '../../store/actions';
-import { getActorsStateDictionary } from '../../store/reducers';
+import { filter, map, share } from 'rxjs/operators';
+import { IActorInfoDto, ICounterDto } from '../../models/endpoint-web-api.models';
+import { ActorsLoadHierarcy, ActorsGetGlobalCounters } from '../../store/actions';
+import { getActorsGlobalCounters, getActorsHierarchy } from '../../store/reducers';
 import { IAppState } from '../../store/state/app.state';
 
 /**
@@ -26,6 +26,11 @@ export class ActorsStateService implements OnDestroy {
     return this._hierarchy$;
   }
 
+  private _globalCounters$: Observable<ICounterDto[]>;
+  public get globalCounters$() {
+    return this._globalCounters$;
+  }
+
   private _intervalSubscription: Subscription;
 
   constructor(
@@ -33,27 +38,32 @@ export class ActorsStateService implements OnDestroy {
     private store: Store<IAppState>
   ) {
     this._endpointName = endpointName;
-    this.store.select(getActorsStateDictionary).pipe(
+    /*
+    this.store.select(getActorsState(this._endpointName)).pipe(
       map(data => {
-        const h = data[this._endpointName].hierarchy;
-        if (h != null) {
-          return h.hierarchy;
+        if (data != null) {
+          return data.hierarchy.hierarchy;
         }
         return null;
       }),
       filter(data => data != null),
       share()
+      // todo: emit to multiple observables
+    );
+    */
+
+    this._hierarchy$ = this.store.select(getActorsHierarchy(this._endpointName)).pipe(
+      filter(data => data != null),
+      map(data => data.hierarchy),
+      share()
     );
 
-    this._hierarchy$ = this.store.select(getActorsStateDictionary).pipe(
-      map(data => {
-        const h = data[this._endpointName].hierarchy;
-        if (h != null) {
-          return h.hierarchy;
-        }
-        return null;
-      })
+    this._globalCounters$ = this.store.select(getActorsGlobalCounters(this._endpointName)).pipe(
+      filter(data => data != null),
+      map(data => data.counters),
+      share()
     );
+
     this._intervalSubscription = interval(5000).subscribe(() => this.refresh());
   }
 
@@ -65,6 +75,7 @@ export class ActorsStateService implements OnDestroy {
   }
 
   public refresh() {
+    this.store.dispatch(new ActorsGetGlobalCounters(this._endpointName));
     this.store.dispatch(new ActorsLoadHierarcy(this._endpointName));
   }
 }
