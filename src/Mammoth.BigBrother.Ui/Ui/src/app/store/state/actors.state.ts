@@ -1,4 +1,4 @@
-import { IActorInfoDto } from "../../models/endpoint-web-api.models";
+import { IActorInfoDto, ICounterDto } from "../../models/endpoint-web-api.models";
 
 export interface IActorsHierarchyState {
   hierarchy: IActorInfoDto;
@@ -6,8 +6,15 @@ export interface IActorsHierarchyState {
   loaded: boolean;
 }
 
+export interface IActorsGlobalCountersState {
+  counters: ICounterDto[];
+  loading: boolean;
+  loaded: boolean;
+}
+
 export interface IActorsState {
   hierarchy: IActorsHierarchyState;
+  globalCounters: IActorsGlobalCountersState;
 }
 
 /**

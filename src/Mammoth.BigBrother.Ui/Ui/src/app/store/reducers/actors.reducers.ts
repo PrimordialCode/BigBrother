@@ -49,6 +49,49 @@ export function actorsReducer(
         }
       };
     }
+    case ActorsActionsTypes.ACTORS_GET_GLOBAL_COUNTERS: {
+      const endpoint = state[action.endpointName];
+      return {
+        ...state,
+        [action.endpointName]: {
+          ...endpoint,
+          globalCounters: {
+            ...(endpoint != null ? endpoint.globalCounters : null),
+            loading: true,
+            loaded: false
+          }
+        }
+      };
+    }
+    case ActorsActionsTypes.ACTORS_GET_GLOBAL_COUNTERS_FAILED: {
+      const endpoint = state[action.endpointName];
+      return {
+        ...state,
+        [action.endpointName]: {
+          ...endpoint,
+          globalCounters: {
+            ...endpoint.globalCounters,
+            loading: false,
+            loaded: false
+          }
+        }
+      };
+    }
+    case ActorsActionsTypes.ACTORS_GET_GLOBAL_COUNTERS_SUCCEDED: {
+      const endpoint = state[action.endpointName];
+      return {
+        ...state,
+        [action.endpointName]: {
+          ...endpoint,
+          globalCounters: {
+            ...endpoint.globalCounters,
+            counters: action.payload,
+            loading: false,
+            loaded: true
+          }
+        }
+      };
+    }
   }
 
   return state;

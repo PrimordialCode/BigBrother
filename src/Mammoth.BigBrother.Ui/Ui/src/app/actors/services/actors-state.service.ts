@@ -2,7 +2,7 @@ import { OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { interval, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, skipWhile, filter, share } from 'rxjs/operators';
 import { IActorInfoDto } from '../../models/endpoint-web-api.models';
 import { ActorsLoadHierarcy } from '../../store/actions';
 import { getActorsStateDictionary } from '../../store/reducers';
@@ -33,6 +33,18 @@ export class ActorsStateService implements OnDestroy {
     private store: Store<IAppState>
   ) {
     this._endpointName = endpointName;
+    this.store.select(getActorsStateDictionary).pipe(
+      map(data => {
+        const h = data[this._endpointName].hierarchy;
+        if (h != null) {
+          return h.hierarchy;
+        }
+        return null;
+      }),
+      filter(data => data != null),
+      share()
+    );
+
     this._hierarchy$ = this.store.select(getActorsStateDictionary).pipe(
       map(data => {
         const h = data[this._endpointName].hierarchy;
