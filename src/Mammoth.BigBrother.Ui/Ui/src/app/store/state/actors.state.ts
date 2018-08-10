@@ -1,4 +1,4 @@
-import { IActorInfoDto, ICounterDto } from "../../models/endpoint-web-api.models";
+import { IActorInfoDto, ICounterDto, IActorDetailDto, IMonitoringEventData, IMonitoringExceptionData } from "../../models/endpoint-web-api.models";
 
 export interface IActorsHierarchyState {
   hierarchy: IActorInfoDto;
@@ -12,9 +12,20 @@ export interface IActorsGlobalCountersState {
   loaded: boolean;
 }
 
+export interface IActorState {
+  actorDetail: IActorDetailDto;
+  actorCounters: ICounterDto[];
+  actorEvents: IMonitoringEventData[];
+  actorExceptions: IMonitoringExceptionData[];
+}
+
+/**
+ * the state of a single endpoint when it comes to display Actor System information
+ */
 export interface IActorsState {
   hierarchy: IActorsHierarchyState;
   globalCounters: IActorsGlobalCountersState;
+  selectedActor: IActorState;
 }
 
 /**

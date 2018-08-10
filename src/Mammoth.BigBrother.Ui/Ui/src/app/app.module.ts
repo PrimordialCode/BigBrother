@@ -22,6 +22,7 @@ import { CovalentStepsModule } from '@covalent/core/steps';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from './store/reducers';
 import { effects } from './store/effects';
 
@@ -87,7 +88,11 @@ export function ConfigLoader(configService: ConfigService) {
     NgxChartsModule,
     NgxGraphModule,
     StoreModule.forRoot(reducers, { initialState: initialAppState }),
-    EffectsModule.forRoot(effects)
+    EffectsModule.forRoot(effects),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    })
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
