@@ -3,6 +3,14 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <!--
+    Hack/Workaround for NuGet wrong package reference when creating packages:
+    - the version number will be read from the project file (defaults to 1.0.0) which will be assumed as the minimun constraint number
+    look for: GetPackageVersionDependsOn
+    https://github.com/NuGet/Home/issues/4790
+    https://github.com/NuGet/NuGet.Client/pull/1915
+    -->
+    <Version>0.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
