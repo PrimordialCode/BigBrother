@@ -26,6 +26,7 @@ export interface IActorsState {
   hierarchy: IActorsHierarchyState;
   globalCounters: IActorsGlobalCountersState;
   selectedActor: IActorState;
+  actors: { [index: string]: IActorState };
 }
 
 /**

@@ -4,9 +4,10 @@ import { Store } from '@ngrx/store';
 import { interval, Observable, Subscription } from 'rxjs';
 import { filter, map, share } from 'rxjs/operators';
 import { IActorInfoDto, ICounterDto } from '../../models/endpoint-web-api.models';
-import { ActorsLoadHierarcy, ActorsGetGlobalCounters } from '../../store/actions';
+import { ActorsLoadHierarcy, ActorsGetGlobalCounters, ActorsDisplayActor } from '../../store/actions';
 import { getActorsGlobalCounters, getActorsHierarchy } from '../../store/reducers';
 import { IAppState } from '../../store/state/app.state';
+import { ActorDetailService } from './actor-detail.service';
 
 /**
  * A service that will manage all the Actors information for a single endpoint:
@@ -77,6 +78,18 @@ export class ActorsStateService implements OnDestroy {
   public refresh() {
     this.store.dispatch(new ActorsGetGlobalCounters(this._endpointName));
     this.store.dispatch(new ActorsLoadHierarcy(this._endpointName));
+  }
+
+  public displayActor(id: string) {
+    this.store.dispatch(new ActorsDisplayActor(this._endpointName, id));
+  }
+
+  public getActorDetailService(id: string): ActorDetailService {
+    return new ActorDetailService(
+      this._endpointName,
+      id,
+      this.store
+    );
   }
 }
 

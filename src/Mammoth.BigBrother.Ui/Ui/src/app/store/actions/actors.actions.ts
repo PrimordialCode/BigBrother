@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { IActorInfoDto, ICounterDto } from "../../models/endpoint-web-api.models";
+import { IActorInfoDto, ICounterDto, IActorDetailDto } from "../../models/endpoint-web-api.models";
 
 export enum ActorsActionsTypes {
   ACTORS_GET_GLOBAL_COUNTERS = "[actors] get global counters",
@@ -8,6 +8,10 @@ export enum ActorsActionsTypes {
   ACTORS_LOAD_HIERARCHY = "[actors] load hierarchy",
   ACTORS_LOAD_HIERARCHY_FAILED = "[actors] load hierarchy failed",
   ACTORS_HIERARCHY_LOADED = '[actors] hierarchy loaded',
+  ACTORS_DISPLAY_ACTOR = "[actors] display actor",
+  ACTORS_GET_ACTOR_DETAIL = "[actors] get actor detail",
+  ACTORS_GET_ACTOR_DETAIL_FAILED = "[actors] get actor detail failed",
+  ACTORS_GET_ACTOR_DETAIL_SUCCEDED = "[actors] get actor detail succeded",
 }
 
 abstract class ActorsAction implements Action {
@@ -63,10 +67,48 @@ export class ActorsGetGlobalCountersSucceded extends ActorsAction {
   ) { super(endpointName); }
 }
 
+export class ActorsDisplayActor extends ActorsAction {
+  public readonly type = ActorsActionsTypes.ACTORS_DISPLAY_ACTOR;
+  constructor(
+    endpointName: string,
+    public id: string
+  ) { super(endpointName); }
+}
+
+export class ActorsGetActorDetail extends ActorsAction {
+  public readonly type = ActorsActionsTypes.ACTORS_GET_ACTOR_DETAIL;
+  constructor(
+    endpointName: string,
+    public id: string
+  ) { super(endpointName); }
+}
+
+export class ActorsGetActorDetailFailed extends ActorsAction {
+  public readonly type = ActorsActionsTypes.ACTORS_GET_ACTOR_DETAIL_FAILED;
+  constructor(
+    endpointName: string,
+    public id: string,
+    public payload: any
+  ) { super(endpointName); }
+}
+
+export class ActorsGetActorDetailSucceded extends ActorsAction {
+  public readonly type = ActorsActionsTypes.ACTORS_GET_ACTOR_DETAIL_SUCCEDED;
+  constructor(
+    endpointName: string,
+    public id: string,
+    public payload: IActorDetailDto
+  ) { super(endpointName); }
+}
+
 export type ActorsActions =
   ActorsLoadHierarcy
   | ActorsLoadHierarcyFailed
   | ActorsHierarchyLoaded
   | ActorsGetGlobalCounters
   | ActorsGetGlobalCountersFailed
-  | ActorsGetGlobalCountersSucceded;
+  | ActorsGetGlobalCountersSucceded
+  | ActorsDisplayActor
+  | ActorsGetActorDetail
+  | ActorsGetActorDetailFailed
+  | ActorsGetActorDetailSucceded;

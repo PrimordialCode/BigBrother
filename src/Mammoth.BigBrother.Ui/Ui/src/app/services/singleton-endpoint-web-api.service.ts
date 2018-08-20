@@ -35,10 +35,10 @@ export class SingletonEndpointWebApiService {
     return this.http.get<IActorInfoDto>(this.getEndpoinBaseAddress(endpointName) + 'actors/gethierarchy');
   }
 
-  public GetActorDetail(endpointName: string, args: IActorRequestDto): Promise<IActorDetailDto> {
+  public GetActorDetail(endpointName: string, args: IActorRequestDto) {
     return this.http.post<IActorDetailDto>(this.getEndpoinBaseAddress(endpointName) + 'actors/getactordetail',
       args,
-      { headers: SingletonEndpointWebApiService.headers }).toPromise();
+      { headers: SingletonEndpointWebApiService.headers });
   }
 
   public GetCounters(endpointName: string): Promise<ICounterDto[]> {
