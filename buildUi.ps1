@@ -29,6 +29,7 @@ Remove-Item "$artifactPath\*" -Recurse -ErrorAction Ignore
 
 Set-Location ".\src\Mammoth.BigBrother.Ui\Ui"
 npm install
+npm audit fix
 npm run build
 Set-Location "..\..\.."
 

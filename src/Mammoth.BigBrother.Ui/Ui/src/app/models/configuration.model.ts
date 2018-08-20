@@ -11,7 +11,6 @@ export class ConfigurationEndpoint {
 
 export class Configuration {
   constructor(
-    public endpoint: string,
     public endpoints: ConfigurationEndpoint[]
   ) { }
 }
