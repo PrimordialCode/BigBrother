@@ -1,5 +1,29 @@
 import { ActorsActions, ActorsActionsTypes } from "../actions/actors.actions";
-import { IActorsStateDictionary, initialActorsState } from "../state/actors.state";
+import { IActorsStateDictionary, initialActorsState, IActorsState, ActorsState, ActorState, IActorState } from "../state/actors.state";
+import { IActorDetailDto } from "../../models/endpoint-web-api.models";
+
+/**
+ * returns the current existing state or initialize a new state object
+ *
+ * @param {IActorsStateDictionary} state
+ * @param {string} endpointName
+ * @returns {IActorsState}
+ */
+function getEndpoint(state: IActorsStateDictionary, endpointName: string): IActorsState {
+  const endpoint = state[endpointName];
+  if (endpoint != null) {
+    return endpoint;
+  }
+  return new ActorsState();
+}
+
+function getActor(endpoint: ActorsState, id: string): IActorState {
+  const actor = endpoint.actors[id];
+  if (actor != null) {
+    return actor;
+  }
+  return new ActorState();
+}
 
 export function actorsReducer(
   state = initialActorsState,
@@ -7,13 +31,13 @@ export function actorsReducer(
 ): IActorsStateDictionary {
   switch (action.type) {
     case ActorsActionsTypes.ACTORS_LOAD_HIERARCHY: {
-      const endpoint = state[action.endpointName];
+      const endpoint = getEndpoint(state, action.endpointName);
       return {
         ...state,
         [action.endpointName]: {
           ...endpoint,
           hierarchy: {
-            ...(endpoint != null ? endpoint.hierarchy : null),
+            ...endpoint.hierarchy,
             loading: true,
             loaded: false
           }
@@ -21,7 +45,7 @@ export function actorsReducer(
       };
     }
     case ActorsActionsTypes.ACTORS_LOAD_HIERARCHY_FAILED: {
-      const endpoint = state[action.endpointName];
+      const endpoint = getEndpoint(state, action.endpointName);
       return {
         ...state,
         [action.endpointName]: {
@@ -35,7 +59,7 @@ export function actorsReducer(
       };
     }
     case ActorsActionsTypes.ACTORS_HIERARCHY_LOADED: {
-      const endpoint = state[action.endpointName];
+      const endpoint = getEndpoint(state, action.endpointName);
       return {
         ...state,
         [action.endpointName]: {
@@ -50,13 +74,13 @@ export function actorsReducer(
       };
     }
     case ActorsActionsTypes.ACTORS_GET_GLOBAL_COUNTERS: {
-      const endpoint = state[action.endpointName];
+      const endpoint = getEndpoint(state, action.endpointName);
       return {
         ...state,
         [action.endpointName]: {
           ...endpoint,
           globalCounters: {
-            ...(endpoint != null ? endpoint.globalCounters : null),
+            ...endpoint.globalCounters,
             loading: true,
             loaded: false
           }
@@ -64,7 +88,7 @@ export function actorsReducer(
       };
     }
     case ActorsActionsTypes.ACTORS_GET_GLOBAL_COUNTERS_FAILED: {
-      const endpoint = state[action.endpointName];
+      const endpoint = getEndpoint(state, action.endpointName);
       return {
         ...state,
         [action.endpointName]: {
@@ -78,7 +102,7 @@ export function actorsReducer(
       };
     }
     case ActorsActionsTypes.ACTORS_GET_GLOBAL_COUNTERS_SUCCEDED: {
-      const endpoint = state[action.endpointName];
+      const endpoint = getEndpoint(state, action.endpointName);
       return {
         ...state,
         [action.endpointName]: {
@@ -88,6 +112,40 @@ export function actorsReducer(
             counters: action.payload,
             loading: false,
             loaded: true
+          }
+        }
+      };
+    }
+    case ActorsActionsTypes.ACTORS_GET_ACTOR_DETAIL_FAILED: {
+      const endpoint = getEndpoint(state, action.endpointName);
+      const actor = getActor(endpoint, action.id);
+      return {
+        ...state,
+        [action.endpointName]: {
+          ...endpoint,
+          actors: {
+            ...endpoint.actors,
+            [action.id]: {
+              ...actor,
+              actorDetail: <IActorDetailDto>{}
+            }
+          }
+        }
+      };
+    }
+    case ActorsActionsTypes.ACTORS_GET_ACTOR_DETAIL_SUCCEDED: {
+      const endpoint = getEndpoint(state, action.endpointName);
+      const actor = getActor(endpoint, action.id);
+      return {
+        ...state,
+        [action.endpointName]: {
+          ...endpoint,
+          actors: {
+            ...endpoint.actors,
+            [action.id]: {
+              ...actor,
+              actorDetail: action.payload
+            }
           }
         }
       };

@@ -1,15 +1,16 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ITdDataTableColumn } from '@covalent/core/data-table/covalent-core-data-table';
-
-import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
 import { IActorDetailDto, ICounterDto, IMonitoringEventData, IMonitoringExceptionData } from '../../models/endpoint-web-api.models';
 import { EndpointWebApiService } from '../../services/endpoint-web-api.service';
-
+import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
+import { ActorDetailService } from '../services/actor-detail.service';
+import { ActorsStateService } from '../services/actors-state.service';
 
 @Component({
   selector: 'app-actor-detail',
   templateUrl: './actor-detail.component.html',
   styleUrls: ['./actor-detail.component.css'],
+  // changeDetection: ChangeDetectionStrategy.OnPush // cannot use this right now, all the bindings must be to observables
 })
 export class ActorDetailComponent implements OnInit, OnChanges {
   @Input() actor: ActorGraphNode;
@@ -18,6 +19,8 @@ export class ActorDetailComponent implements OnInit, OnChanges {
   public actorCounters: ICounterDto[] = [];
   public actorEvents: IMonitoringEventData[] = [];
   public actorExceptions: IMonitoringExceptionData[] = [];
+
+  public actorDetailService: ActorDetailService;
 
   view: any[] = [700, 200];
 
@@ -38,14 +41,16 @@ export class ActorDetailComponent implements OnInit, OnChanges {
   ];
 
   constructor(
-    private endpoint: EndpointWebApiService
+    private endpoint: EndpointWebApiService,
+    private actorsStateService: ActorsStateService
   ) { }
 
   ngOnInit() {
   }
 
-  async ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes.actor != null && changes.actor.currentValue != null) {
+      this.actorDetailService = this.actorsStateService.getActorDetailService(this.actor.path);
       this.refresh();
     }
   }

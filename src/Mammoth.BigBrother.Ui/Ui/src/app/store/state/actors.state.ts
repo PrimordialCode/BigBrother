@@ -47,3 +47,17 @@ export interface IActorsStateDictionary {
  * the initial state of the application
  */
 export const initialActorsState: IActorsStateDictionary = {};
+
+export class ActorsState implements IActorsState {
+  hierarchy: IActorsHierarchyState = <IActorsHierarchyState>{};
+  globalCounters: IActorsGlobalCountersState = <IActorsGlobalCountersState>{};
+  selectedActor: IActorState;
+  actors: { [index: string]: IActorState; } = {};
+}
+
+export class ActorState implements IActorState {
+  actorDetail: IActorDetailDto = <IActorDetailDto>{};
+  actorCounters: ICounterDto[] = [];
+  actorEvents: IMonitoringEventData[] = [];
+  actorExceptions: IMonitoringExceptionData[] = [];
+}

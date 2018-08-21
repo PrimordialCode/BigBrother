@@ -1,9 +1,9 @@
 import { Store } from "@ngrx/store";
-import { IAppState } from "../../store/state/app.state";
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 import { IActorDetailDto } from "../../models/endpoint-web-api.models";
-import { getActorsState } from "../../store/reducers";
-import { filter, map, share } from "rxjs/operators";
+import { getActorsActor } from "../../store/reducers";
+import { IAppState } from "../../store/state/app.state";
 
 /**
  * a convenience class used to wrap the access to the common state object
@@ -23,11 +23,8 @@ export class ActorDetailService {
     id: string,
     store: Store<IAppState>
   ) {
-    this._detail$ = store.select(getActorsState(endpointName)).pipe(
-      filter(data => data != null),
-      map(data => data.actors[id]),
-      map(data => data.actorDetail),
-      share()
+    this._detail$ = store.select(getActorsActor(endpointName, id)).pipe(
+      map(data => data != null ? data.actorDetail : null)
     );
   }
 }

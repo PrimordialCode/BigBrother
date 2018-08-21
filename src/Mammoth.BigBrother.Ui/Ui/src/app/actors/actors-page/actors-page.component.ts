@@ -45,6 +45,11 @@ export class ActorsPageComponent implements OnInit {
     this._actorsStateService.refresh();
   }
 
+  public selectActor(actor: ActorGraphNode) {
+    this.selectedActor = actor;
+    this._actorsStateService.displayActor(actor.path);
+  }
+
   public refreshActor() {
     this.actorDetailComponent.refresh();
   }

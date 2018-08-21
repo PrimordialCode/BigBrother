@@ -39,19 +39,6 @@ export class ActorsStateService implements OnDestroy {
     private store: Store<IAppState>
   ) {
     this._endpointName = endpointName;
-    /*
-    this.store.select(getActorsState(this._endpointName)).pipe(
-      map(data => {
-        if (data != null) {
-          return data.hierarchy.hierarchy;
-        }
-        return null;
-      }),
-      filter(data => data != null),
-      share()
-      // todo: emit to multiple observables
-    );
-    */
 
     this._hierarchy$ = this.store.select(getActorsHierarchy(this._endpointName)).pipe(
       filter(data => data != null),

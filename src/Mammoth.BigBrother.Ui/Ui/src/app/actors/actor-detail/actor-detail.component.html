@@ -6,8 +6,8 @@
 </div>
 -->
 <div layout="column">
-  <div flex *ngIf="actorDetail" [ngClass]="{ stopped: actorDetail.status === 1 }">
-    <span>Status: {{actorDetail.status === 0 ? 'Started' : 'Stopped'}}</span>
+  <div flex *ngIf="actorDetailService?.detail$ | async" [ngClass]="{ stopped: ((actorDetailService?.detail$ | async).status === 1) }">
+    <span>Status: {{(actorDetailService?.detail$ | async).status === 0 ? 'Started' : 'Stopped'}}</span>
   </div>
   <div flex *ngIf="actorCounters" class="countersHeight">
     <ngx-charts-number-card [results]="actorCounters">

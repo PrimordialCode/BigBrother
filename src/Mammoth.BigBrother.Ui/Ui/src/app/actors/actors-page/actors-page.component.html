@@ -16,10 +16,10 @@
       <mat-card-content>
         <mat-tab-group>
           <mat-tab label="Tree">
-            <app-actors-treeview (selected)="selectedActor = $event"></app-actors-treeview>
+            <app-actors-treeview (selected)="selectActor($event)"></app-actors-treeview>
           </mat-tab>
           <mat-tab label="Graph">
-            <app-actors-graph [height]="null" (selected)="selectedActor = $event" [customize]="false" [debug]="false"></app-actors-graph>
+            <app-actors-graph [height]="null" (selected)="selectActor($event)" [customize]="false" [debug]="false"></app-actors-graph>
           </mat-tab>
         </mat-tab-group>
       </mat-card-content>
