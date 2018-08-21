@@ -3,7 +3,7 @@ import { IActorsStateDictionary, initialActorsState, IActorsState, ActorsState, 
 import { IActorDetailDto } from "../../models/endpoint-web-api.models";
 
 /**
- * returns the current existing state or initialize a new state object
+ * returns the current existing state or initialize a new collection of actors endpoint object
  *
  * @param {IActorsStateDictionary} state
  * @param {string} endpointName
@@ -17,6 +17,13 @@ function getEndpoint(state: IActorsStateDictionary, endpointName: string): IActo
   return new ActorsState();
 }
 
+/**
+ * return the currently existing actor state or initialize a new actor's state object
+ *
+ * @param {ActorsState} endpoint
+ * @param {string} id
+ * @returns {IActorState}
+ */
 function getActor(endpoint: ActorsState, id: string): IActorState {
   const actor = endpoint.actors[id];
   if (actor != null) {

@@ -5,6 +5,7 @@ import { EndpointWebApiService } from '../../services/endpoint-web-api.service';
 import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
 import { ActorDetailService } from '../services/actor-detail.service';
 import { ActorsStateService } from '../services/actors-state.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-actor-detail',
@@ -15,12 +16,12 @@ import { ActorsStateService } from '../services/actors-state.service';
 export class ActorDetailComponent implements OnInit, OnChanges {
   @Input() actor: ActorGraphNode;
 
-  public actorDetail: IActorDetailDto;
-  public actorCounters: ICounterDto[] = [];
-  public actorEvents: IMonitoringEventData[] = [];
-  public actorExceptions: IMonitoringExceptionData[] = [];
+  public actorDetail$: Observable<IActorDetailDto>;
+  public actorCounters$: Observable<ICounterDto[]>;
+  public actorEvents$: Observable<IMonitoringEventData[]>;
+  public actorExceptions$: Observable<IMonitoringExceptionData[]>;
 
-  public actorDetailService: ActorDetailService;
+  private actorDetailService: ActorDetailService;
 
   view: any[] = [700, 200];
 
@@ -50,21 +51,24 @@ export class ActorDetailComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.actor != null && changes.actor.currentValue != null) {
-      this.actorDetailService = this.actorsStateService.getActorDetailService(this.actor.path);
       this.refresh();
+
+      this.actorDetailService = this.actorsStateService.getActorDetailService(this.actor.path);
+      this.actorDetail$ = this.actorDetailService.detail$;
     }
   }
 
-  public async refresh() {
+  // the "old-way" of doing things: call a service and mutate the local state
+  public refresh() {
     if (this.actor == null) {
       return;
     }
     const actorPath = this.actor.path;
     const requestArgs = { path: actorPath };
-    this.actorDetail = await this.endpoint.GetActorDetail(requestArgs);
-    this.actorCounters = await this.endpoint.GetActorCounters(requestArgs);
-    this.actorEvents = await this.endpoint.GetActorEvents(requestArgs);
-    this.actorExceptions = await this.endpoint.GetActorExceptions(requestArgs);
+    this.actorDetail$ = this.endpoint.GetActorDetail(requestArgs);
+    this.actorCounters$ = this.endpoint.GetActorCounters(requestArgs);
+    this.actorEvents$ = this.endpoint.GetActorEvents(requestArgs);
+    this.actorExceptions$ = this.endpoint.GetActorExceptions(requestArgs);
   }
 
 }

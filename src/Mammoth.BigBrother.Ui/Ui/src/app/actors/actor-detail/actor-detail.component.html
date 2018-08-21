@@ -1,37 +1,29 @@
-<!--
-  <div layout="row">
-  <div flex>
-    <h3>{{actor?.label}} ({{actor?.path}})</h3>
-  </div>
-</div>
--->
 <div layout="column">
-  <div flex *ngIf="actorDetailService?.detail$ | async" [ngClass]="{ stopped: ((actorDetailService?.detail$ | async).status === 1) }">
-    <span>Status: {{(actorDetailService?.detail$ | async).status === 0 ? 'Started' : 'Stopped'}}</span>
+  <div flex *ngIf="actorDetail$ | async" [ngClass]="{ stopped: ((actorDetail$ | async).status === 1) }">
+    <span>Status: {{(actorDetail$ | async).status === 0 ? 'Started' : 'Stopped'}}</span>
   </div>
-  <div flex *ngIf="actorCounters" class="countersHeight">
-    <ngx-charts-number-card [results]="actorCounters">
+  <div flex *ngIf="actorCounters$ | async" class="countersHeight">
+    <ngx-charts-number-card [results]="actorCounters$ | async">
     </ngx-charts-number-card>
   </div>
-  <div flex *ngIf="actorExceptions && actorExceptions.length > 0">
-    <td-data-table [data]="actorExceptions" [columns]="exceptionsTableColumns" [style.height.px]="400">
+  <div flex *ngIf="(actorExceptions$ | async)?.length > 0">
+    <td-data-table [data]="actorExceptions$ | async" [columns]="exceptionsTableColumns" [style.height.px]="400">
       <ng-template tdDataTableTemplate="timestamp" let-value="value">
         <span>{{value|date:'medium'}}</span>
       </ng-template>
     </td-data-table>
   </div>
-  <div flex *ngIf="actorEvents && actorEvents.length > 0">
-    <td-data-table [data]="actorEvents" [columns]="eventsTableColumns" [style.height.px]="400">
+  <div flex *ngIf="(actorEvents$ | async)?.length > 0">
+    <td-data-table [data]="actorEvents$ | async" [columns]="eventsTableColumns" [style.height.px]="400">
       <ng-template tdDataTableTemplate="timestamp" let-value="value">
         <span>{{value|date:'medium'}}</span>
       </ng-template>
     </td-data-table>
   </div>
 </div>
-<!--
-<pre>{{actor | json}}</pre>
-<pre>{{actorDetail | json}}</pre>
-<pre>{{actorCounters | json}}</pre>
-<pre>{{actorEvents | json}}</pre>
-<pre>{{actorExceptions | json}}</pre>
--->
+
+<pre>actor: {{actor | json}}</pre>
+<pre>detail: {{actorDetail$ | async | json}}</pre>
+<pre>counters: {{actorCounters$ | async | json}}</pre>
+<pre>events: {{actorEvents$ | async | json}}</pre>
+<pre>exceptions: {{actorExceptions$ | async | json}}</pre>

@@ -41,8 +41,8 @@ export class SingletonEndpointWebApiService {
       { headers: SingletonEndpointWebApiService.headers });
   }
 
-  public GetCounters(endpointName: string): Promise<ICounterDto[]> {
-    return this.http.get<ICounterDto[]>(this.getEndpoinBaseAddress(endpointName) + 'counters').toPromise();
+  public GetCounters(endpointName: string) {
+    return this.http.get<ICounterDto[]>(this.getEndpoinBaseAddress(endpointName) + 'counters');
   }
 
   public GetGlobalCounters(endpointName: string) {
@@ -50,23 +50,22 @@ export class SingletonEndpointWebApiService {
   }
 
   public GetActorCounters(endpointName: string, args: IActorRequestDto) {
-    return this.http.post<ICounterDto[]>(this.getEndpoinBaseAddress(endpointName) + 'counters/GetActorsCounter', args, { headers: SingletonEndpointWebApiService.headers })
-      .toPromise();
+    return this.http.post<ICounterDto[]>(this.getEndpoinBaseAddress(endpointName) + 'counters/GetActorsCounter', args, { headers: SingletonEndpointWebApiService.headers });
   }
 
   public GetEvents(endpointName: string) {
-    return this.http.get(this.getEndpoinBaseAddress(endpointName) + 'events').toPromise();
+    return this.http.get(this.getEndpoinBaseAddress(endpointName) + 'events');
   }
 
   public GetActorEvents(endpointName: string, args: IActorRequestDto) {
     return this.http.post<IMonitoringEventData[]>(
       this.getEndpoinBaseAddress(endpointName) + 'events/GetActorEvents', args, { headers: SingletonEndpointWebApiService.headers }
-    ).toPromise();
+    );
   }
 
   public GetActorExceptions(endpointName: string, args: IActorRequestDto) {
     return this.http.post<IMonitoringExceptionData[]>(
       this.getEndpoinBaseAddress(endpointName) + 'exceptions/GetActorExceptions', args, { headers: SingletonEndpointWebApiService.headers }
-    ).toPromise();
+    );
   }
 }

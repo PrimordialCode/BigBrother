@@ -33,39 +33,38 @@ export class EndpointWebApiService {
     return this.http.get<IActorInfoDto>(this.baseAddress + 'actors/gethierarchy');
   }
 
-  public GetActorDetail(args: IActorRequestDto): Promise<IActorDetailDto> {
+  public GetActorDetail(args: IActorRequestDto) {
     return this.http.post<IActorDetailDto>(this.baseAddress + 'actors/getactordetail',
       args,
-      { headers: EndpointWebApiService.headers }).toPromise();
+      { headers: EndpointWebApiService.headers });
   }
 
-  public GetCounters(): Promise<ICounterDto[]> {
-    return this.http.get<ICounterDto[]>(this.baseAddress + 'counters').toPromise();
+  public GetCounters() {
+    return this.http.get<ICounterDto[]>(this.baseAddress + 'counters');
   }
 
-  public GetGlobalCounters(): Promise<ICounterDto[]> {
-    return this.http.get<ICounterDto[]>(this.baseAddress + 'counters/GlobalCounters').toPromise();
+  public GetGlobalCounters() {
+    return this.http.get<ICounterDto[]>(this.baseAddress + 'counters/GlobalCounters');
   }
 
   public GetActorCounters(args: IActorRequestDto) {
-    return this.http.post<ICounterDto[]>(this.baseAddress + 'counters/GetActorsCounter', args, { headers: EndpointWebApiService.headers })
-      .toPromise();
+    return this.http.post<ICounterDto[]>(this.baseAddress + 'counters/GetActorsCounter', args, { headers: EndpointWebApiService.headers });
   }
 
   public GetEvents() {
-    return this.http.get(this.baseAddress + 'events').toPromise();
+    return this.http.get(this.baseAddress + 'events');
   }
 
   public GetActorEvents(args: IActorRequestDto) {
     return this.http.post<IMonitoringEventData[]>(
       this.baseAddress + 'events/GetActorEvents', args, { headers: EndpointWebApiService.headers }
-    ).toPromise();
+    );
   }
 
   public GetActorExceptions(args: IActorRequestDto) {
     return this.http.post<IMonitoringExceptionData[]>(
       this.baseAddress + 'exceptions/GetActorExceptions', args, { headers: EndpointWebApiService.headers }
-    ).toPromise();
+    );
   }
 
 }
