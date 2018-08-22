@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { IActorInfoDto, ICounterDto, IActorDetailDto } from "../../models/endpoint-web-api.models";
+import { IActorInfoDto, ICounterDto, IActorDetailDto, IMonitoringEventData, IMonitoringExceptionData } from "../../models/endpoint-web-api.models";
 
 export enum ActorsActionsTypes {
   ACTORS_GET_GLOBAL_COUNTERS = "[actors] get global counters",
@@ -12,6 +12,15 @@ export enum ActorsActionsTypes {
   ACTORS_GET_ACTOR_DETAIL = "[actors] get actor detail",
   ACTORS_GET_ACTOR_DETAIL_FAILED = "[actors] get actor detail failed",
   ACTORS_GET_ACTOR_DETAIL_SUCCEDED = "[actors] get actor detail succeded",
+  ACTORS_GET_ACTOR_COUNTERS = "[actors] get actor counters",
+  ACTORS_GET_ACTOR_COUNTERS_FAILED = "[actors] get actor counters failed",
+  ACTORS_GET_ACTOR_COUNTERS_SUCCEDED = "[actors] get actor counters succeded",
+  ACTORS_GET_ACTOR_EVENTS = "[actors] get actor events",
+  ACTORS_GET_ACTOR_EVENTS_FAILED = "[actors] get actor events failed",
+  ACTORS_GET_ACTOR_EVENTS_SUCCEDED = "[actors] get actor events succeded",
+  ACTORS_GET_ACTOR_EXCEPTIONS = "[actors] get actor exceptions",
+  ACTORS_GET_ACTOR_EXCEPTIONS_FAILED = "[actors] get actor exceptions failed",
+  ACTORS_GET_ACTOR_EXCEPTIONS_SUCCEDED = "[actors] get actor exceptions succeded",
 }
 
 abstract class ActorsAction implements Action {
@@ -101,6 +110,84 @@ export class ActorsGetActorDetailSucceded extends ActorsAction {
   ) { super(endpointName); }
 }
 
+export class ActorsGetActorCounters extends ActorsAction {
+  public readonly type = ActorsActionsTypes.ACTORS_GET_ACTOR_COUNTERS;
+  constructor(
+    endpointName: string,
+    public id: string
+  ) { super(endpointName); }
+}
+
+export class ActorsGetActorCountersFailed extends ActorsAction {
+  public readonly type = ActorsActionsTypes.ACTORS_GET_ACTOR_COUNTERS_FAILED;
+  constructor(
+    endpointName: string,
+    public id: string,
+    public payload: any
+  ) { super(endpointName); }
+}
+
+export class ActorsGetActorCountersSucceded extends ActorsAction {
+  public readonly type = ActorsActionsTypes.ACTORS_GET_ACTOR_COUNTERS_SUCCEDED;
+  constructor(
+    endpointName: string,
+    public id: string,
+    public payload: ICounterDto[]
+  ) { super(endpointName); }
+}
+
+export class ActorsGetActorEvents extends ActorsAction {
+  public readonly type = ActorsActionsTypes.ACTORS_GET_ACTOR_EVENTS;
+  constructor(
+    endpointName: string,
+    public id: string
+  ) { super(endpointName); }
+}
+
+export class ActorsGetActorEventsFailed extends ActorsAction {
+  public readonly type = ActorsActionsTypes.ACTORS_GET_ACTOR_EVENTS_FAILED;
+  constructor(
+    endpointName: string,
+    public id: string,
+    public payload: any
+  ) { super(endpointName); }
+}
+
+export class ActorsGetActorEventsSucceded extends ActorsAction {
+  public readonly type = ActorsActionsTypes.ACTORS_GET_ACTOR_EVENTS_SUCCEDED;
+  constructor(
+    endpointName: string,
+    public id: string,
+    public payload: IMonitoringEventData[]
+  ) { super(endpointName); }
+}
+
+export class ActorsGetActorExceptions extends ActorsAction {
+  public readonly type = ActorsActionsTypes.ACTORS_GET_ACTOR_EXCEPTIONS;
+  constructor(
+    endpointName: string,
+    public id: string
+  ) { super(endpointName); }
+}
+
+export class ActorsGetActorExceptionsFailed extends ActorsAction {
+  public readonly type = ActorsActionsTypes.ACTORS_GET_ACTOR_EXCEPTIONS_FAILED;
+  constructor(
+    endpointName: string,
+    public id: string,
+    public payload: any
+  ) { super(endpointName); }
+}
+
+export class ActorsGetActorExceptionsSucceded extends ActorsAction {
+  public readonly type = ActorsActionsTypes.ACTORS_GET_ACTOR_EXCEPTIONS_SUCCEDED;
+  constructor(
+    endpointName: string,
+    public id: string,
+    public payload: IMonitoringExceptionData[]
+  ) { super(endpointName); }
+}
+
 export type ActorsActions =
   ActorsLoadHierarcy
   | ActorsLoadHierarcyFailed
@@ -111,4 +198,13 @@ export type ActorsActions =
   | ActorsDisplayActor
   | ActorsGetActorDetail
   | ActorsGetActorDetailFailed
-  | ActorsGetActorDetailSucceded;
+  | ActorsGetActorDetailSucceded
+  | ActorsGetActorCounters
+  | ActorsGetActorCountersFailed
+  | ActorsGetActorCountersSucceded
+  | ActorsGetActorEvents
+  | ActorsGetActorEventsFailed
+  | ActorsGetActorEventsSucceded
+  | ActorsGetActorExceptions
+  | ActorsGetActorExceptionsFailed
+  | ActorsGetActorExceptionsSucceded;

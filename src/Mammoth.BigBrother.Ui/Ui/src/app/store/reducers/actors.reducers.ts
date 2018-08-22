@@ -157,6 +157,108 @@ export function actorsReducer(
         }
       };
     }
+    case ActorsActionsTypes.ACTORS_GET_ACTOR_COUNTERS_FAILED: {
+      const endpoint = getEndpoint(state, action.endpointName);
+      const actor = getActor(endpoint, action.id);
+      return {
+        ...state,
+        [action.endpointName]: {
+          ...endpoint,
+          actors: {
+            ...endpoint.actors,
+            [action.id]: {
+              ...actor,
+              actorCounters: []
+            }
+          }
+        }
+      };
+    }
+    case ActorsActionsTypes.ACTORS_GET_ACTOR_COUNTERS_SUCCEDED: {
+      const endpoint = getEndpoint(state, action.endpointName);
+      const actor = getActor(endpoint, action.id);
+      return {
+        ...state,
+        [action.endpointName]: {
+          ...endpoint,
+          actors: {
+            ...endpoint.actors,
+            [action.id]: {
+              ...actor,
+              actorCounters: action.payload
+            }
+          }
+        }
+      };
+    }
+    case ActorsActionsTypes.ACTORS_GET_ACTOR_EVENTS_FAILED: {
+      const endpoint = getEndpoint(state, action.endpointName);
+      const actor = getActor(endpoint, action.id);
+      return {
+        ...state,
+        [action.endpointName]: {
+          ...endpoint,
+          actors: {
+            ...endpoint.actors,
+            [action.id]: {
+              ...actor,
+              actorEvents: []
+            }
+          }
+        }
+      };
+    }
+    case ActorsActionsTypes.ACTORS_GET_ACTOR_EVENTS_SUCCEDED: {
+      const endpoint = getEndpoint(state, action.endpointName);
+      const actor = getActor(endpoint, action.id);
+      return {
+        ...state,
+        [action.endpointName]: {
+          ...endpoint,
+          actors: {
+            ...endpoint.actors,
+            [action.id]: {
+              ...actor,
+              actorEvents: action.payload
+            }
+          }
+        }
+      };
+    }
+    case ActorsActionsTypes.ACTORS_GET_ACTOR_EXCEPTIONS_FAILED: {
+      const endpoint = getEndpoint(state, action.endpointName);
+      const actor = getActor(endpoint, action.id);
+      return {
+        ...state,
+        [action.endpointName]: {
+          ...endpoint,
+          actors: {
+            ...endpoint.actors,
+            [action.id]: {
+              ...actor,
+              actorExceptions: []
+            }
+          }
+        }
+      };
+    }
+    case ActorsActionsTypes.ACTORS_GET_ACTOR_EXCEPTIONS_SUCCEDED: {
+      const endpoint = getEndpoint(state, action.endpointName);
+      const actor = getActor(endpoint, action.id);
+      return {
+        ...state,
+        [action.endpointName]: {
+          ...endpoint,
+          actors: {
+            ...endpoint.actors,
+            [action.id]: {
+              ...actor,
+              actorExceptions: action.payload
+            }
+          }
+        }
+      };
+    }
   }
 
   return state;

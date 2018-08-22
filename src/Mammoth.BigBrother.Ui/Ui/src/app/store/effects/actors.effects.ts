@@ -3,7 +3,7 @@ import { Actions, Effect } from "@ngrx/effects";
 import { of } from "rxjs";
 import { catchError, map, switchMap } from "rxjs/operators";
 import { SingletonEndpointWebApiService } from "../../services/singleton-endpoint-web-api.service";
-import { ActorsActionsTypes, ActorsDisplayActor, ActorsGetActorDetail, ActorsGetGlobalCounters, ActorsGetGlobalCountersFailed, ActorsGetGlobalCountersSucceded, ActorsHierarchyLoaded, ActorsLoadHierarcy, ActorsLoadHierarcyFailed, ActorsGetActorDetailSucceded, ActorsGetActorDetailFailed } from "../actions";
+import { ActorsActionsTypes, ActorsDisplayActor, ActorsGetActorDetail, ActorsGetGlobalCounters, ActorsGetGlobalCountersFailed, ActorsGetGlobalCountersSucceded, ActorsHierarchyLoaded, ActorsLoadHierarcy, ActorsLoadHierarcyFailed, ActorsGetActorDetailSucceded, ActorsGetActorDetailFailed, ActorsGetActorCounters, ActorsGetActorCountersSucceded, ActorsGetActorCountersFailed, ActorsGetActorEvents, ActorsGetActorEventsSucceded, ActorsGetActorEventsFailed, ActorsGetActorExceptions, ActorsGetActorExceptionsSucceded, ActorsGetActorExceptionsFailed } from "../actions";
 
 @Injectable()
 export class ActorsEffects {
@@ -34,7 +34,10 @@ export class ActorsEffects {
   displayActor$ = this.actions$.ofType(ActorsActionsTypes.ACTORS_DISPLAY_ACTOR)
     .pipe(
       switchMap((action: ActorsDisplayActor) => [
-        new ActorsGetActorDetail(action.endpointName, action.id)
+        new ActorsGetActorDetail(action.endpointName, action.id),
+        new ActorsGetActorCounters(action.endpointName, action.id),
+        new ActorsGetActorEvents(action.endpointName, action.id),
+        new ActorsGetActorExceptions(action.endpointName, action.id)
       ])
     );
 
@@ -45,6 +48,39 @@ export class ActorsEffects {
         return this.endpointService.GetActorDetail(action.endpointName, { path: action.id }).pipe(
           map(detail => new ActorsGetActorDetailSucceded(action.endpointName, action.id, detail)),
           catchError(error => of(new ActorsGetActorDetailFailed(action.endpointName, action.id, error)))
+        );
+      })
+    );
+
+  @Effect()
+  getActorCounters$ = this.actions$.ofType(ActorsActionsTypes.ACTORS_GET_ACTOR_COUNTERS)
+    .pipe(
+      switchMap((action: ActorsGetActorDetail) => {
+        return this.endpointService.GetActorCounters(action.endpointName, { path: action.id }).pipe(
+          map(detail => new ActorsGetActorCountersSucceded(action.endpointName, action.id, detail)),
+          catchError(error => of(new ActorsGetActorCountersFailed(action.endpointName, action.id, error)))
+        );
+      })
+    );
+
+  @Effect()
+  getActorEvents$ = this.actions$.ofType(ActorsActionsTypes.ACTORS_GET_ACTOR_EVENTS)
+    .pipe(
+      switchMap((action: ActorsGetActorDetail) => {
+        return this.endpointService.GetActorEvents(action.endpointName, { path: action.id }).pipe(
+          map(detail => new ActorsGetActorEventsSucceded(action.endpointName, action.id, detail)),
+          catchError(error => of(new ActorsGetActorEventsFailed(action.endpointName, action.id, error)))
+        );
+      })
+    );
+
+  @Effect()
+  getActorExceptions$ = this.actions$.ofType(ActorsActionsTypes.ACTORS_GET_ACTOR_EXCEPTIONS)
+    .pipe(
+      switchMap((action: ActorsGetActorDetail) => {
+        return this.endpointService.GetActorExceptions(action.endpointName, { path: action.id }).pipe(
+          map(detail => new ActorsGetActorExceptionsSucceded(action.endpointName, action.id, detail)),
+          catchError(error => of(new ActorsGetActorExceptionsFailed(action.endpointName, action.id, error)))
         );
       })
     );
