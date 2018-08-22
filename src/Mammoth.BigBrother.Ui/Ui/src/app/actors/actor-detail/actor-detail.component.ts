@@ -31,6 +31,8 @@ export class ActorDetailComponent implements OnInit, OnChanges {
   eventsTableColumns: ITdDataTableColumn[] = [
     { name: 'timestamp', label: 'Timestamp' },
     { name: 'event', label: 'Event' },
+    { name: 'properties.type', label: 'Type' },
+    { name: 'properties.message', label: 'Message' },
   ];
 
   exceptionsTableColumns: ITdDataTableColumn[] = [
