@@ -21,7 +21,7 @@ namespace Mammoth.BigBrother.Monitoring
             }
 
             MonitoringSystems.TrackEvent(MetricEvents.ActorCreated, MetricProperties.For().Actor(name).Type(type).ActorParent(parent).Build());
-            MonitoringSystems.UpdateCounter(MetricCounters.ActorsCreated, 1);
+            MonitoringSystems.UpdateCounter(MetricCounters.ActorsCreated);
             MonitoringSystems.UpdateCounter(MetricCounters.ActorCounter(MetricCounters.ActorCreated, name));
         }
 
@@ -33,7 +33,7 @@ namespace Mammoth.BigBrother.Monitoring
             }
 
             MonitoringSystems.TrackEvent(MetricEvents.ActorStarted, MetricProperties.For().Actor(name).Build());
-            MonitoringSystems.UpdateCounter(MetricCounters.ActorsStarted, 1);
+            MonitoringSystems.UpdateCounter(MetricCounters.ActorsStarted);
             MonitoringSystems.UpdateCounter(MetricCounters.ActorCounter(MetricCounters.ActorStarted, name));
         }
 
@@ -45,7 +45,7 @@ namespace Mammoth.BigBrother.Monitoring
             }
 
             MonitoringSystems.TrackEvent(MetricEvents.ActorStopped, MetricProperties.For().Actor(name).Build());
-            MonitoringSystems.UpdateCounter(MetricCounters.ActorsStopped, 1);
+            MonitoringSystems.UpdateCounter(MetricCounters.ActorsStopped);
             MonitoringSystems.UpdateCounter(MetricCounters.ActorCounter(MetricCounters.ActorStopped, name));
         }
 
@@ -60,7 +60,7 @@ namespace Mammoth.BigBrother.Monitoring
                 .Actor(name)
                 .Exception(ex)
                 .Build());
-            MonitoringSystems.UpdateCounter(MetricCounters.ActorsRestarted, 1);
+            MonitoringSystems.UpdateCounter(MetricCounters.ActorsRestarted);
             MonitoringSystems.UpdateCounter(MetricCounters.ActorCounter(MetricCounters.ActorRestarted, name));
         }
 
@@ -75,6 +75,8 @@ namespace Mammoth.BigBrother.Monitoring
                 .Actor(name)
                 .Message(message)
                 .Build());
+            MonitoringSystems.UpdateCounter(MetricCounters.ActorsExceptions);
+            MonitoringSystems.UpdateCounter(MetricCounters.ActorCounter(MetricCounters.ActorExceptions, name));
         }
 
         public static void TrackDeadLetter(string sender, string recipient, object message)
@@ -89,6 +91,7 @@ namespace Mammoth.BigBrother.Monitoring
                 .ActorRecipient(recipient)
                 .Message(message)
                 .Build());
+            MonitoringSystems.UpdateCounter(MetricCounters.ActorsDeadLetters);
         }
     }
 }

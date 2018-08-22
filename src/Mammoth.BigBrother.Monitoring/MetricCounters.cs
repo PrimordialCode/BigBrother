@@ -7,6 +7,7 @@
         public const string ActorsRestarted = "actors.restarted";
         public const string ActorsStopped = "actors.stopped";
         public const string ActorsExceptions = "actors.exceptions";
+        public const string ActorsDeadLetters = "actors.deadletters";
 
         public const string ActorCreated = "actor.created";
         public const string ActorStarted = "actor.started";
@@ -14,7 +15,7 @@
         public const string ActorStopped = "actor.stopped";
         public const string ActorExceptions = "actor.exceptions";
 
-        public readonly static string[] ActorsDefaultCounters = { ActorsCreated, ActorsStarted, ActorsRestarted, ActorsStopped, ActorsExceptions };
+        public readonly static string[] ActorsDefaultCounters = { ActorsCreated, ActorsStarted, ActorsRestarted, ActorsStopped, ActorsExceptions, ActorsDeadLetters };
 
         public static string ActorCounter(string counterPrefix, string actorName)
         {

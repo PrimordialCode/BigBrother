@@ -26,10 +26,13 @@ namespace Mammoth.BigBrother.Akka.Monitoring
             ActorMonitoring.TrackActorStopped(_friendlyName);
         }
 
-        //protected override void PreRestart(Exception reason, object message)
-        //{
-        //    base.PreRestart(reason, message);
-        //}
+        // specific to Akka.net, we do not have a general counter for this event
+        /*
+        protected override void PreRestart(Exception reason, object message)
+        {
+            base.PreRestart(reason, message);
+        }
+        */
 
         protected override void PostRestart(Exception reason)
         {
@@ -37,7 +40,7 @@ namespace Mammoth.BigBrother.Akka.Monitoring
             ActorMonitoring.TrackActorRestarted(_friendlyName, reason);
         }
 
-        // Not needed anymore, we use the custom logging Actor for tracing exceptions
+        // Not needed anymore, we use the custom logging Actor for tracking exceptions
         /*
         protected override bool AroundReceive(Receive receive, object message)
         {

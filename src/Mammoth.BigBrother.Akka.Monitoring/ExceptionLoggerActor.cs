@@ -12,6 +12,7 @@ namespace Mammoth.BigBrother.Akka.Monitoring
     public class ExceptionLoggerActor : ReceiveActor
     {
         private const string UserMarker = "user/";
+
         public ExceptionLoggerActor()
         {
             Receive<Error>(msg =>
