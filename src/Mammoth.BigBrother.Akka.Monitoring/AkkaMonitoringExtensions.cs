@@ -13,5 +13,10 @@ namespace Mammoth.BigBrother.Akka.Monitoring
         {
             return string.Join("/", actorRef.Path.Elements);
         }
+
+        public static string GetFriendlyName(this IActorContext context)
+        {
+            return GetFriendlyName(context.Self);
+        }
     }
 }

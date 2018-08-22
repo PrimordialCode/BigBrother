@@ -7,5 +7,6 @@
         public const string ActorRestarted = "actor.restarted";
         public const string ActorStopped = "actor.stopped";
         public const string ActorDeadLetter = "actor.deadletter";
+        public const string ActorReceivedMessage = "actor.receivedmessage";
     }
 }

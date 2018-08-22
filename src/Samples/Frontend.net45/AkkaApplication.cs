@@ -16,6 +16,7 @@ namespace Frontend.net45
         public void Initialize(string name)
         {
             MonitoringSystems.AddSystem(new InMemoryMonitoringSystem("InMemory"));
+            ActorMonitoring.TrackReceivedMessagesEnabled = true;
             EndpointInstaller.Start(5003);
 
             string hocon = System.IO.File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "hocon.cfg"));

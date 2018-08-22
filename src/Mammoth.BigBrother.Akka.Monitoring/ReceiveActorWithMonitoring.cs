@@ -11,7 +11,7 @@ namespace Mammoth.BigBrother.Akka.Monitoring
         protected ReceiveActorWithMonitoring()
         {
             _friendlyName = this.Self.GetFriendlyName();
-            ActorMonitoring.TrackActorCreated(_friendlyName, Context.Props.Type.Name, Context.Parent.GetFriendlyName());
+            ActorMonitoring.TrackActorCreated(_friendlyName, Context.Props.Type, Context.Parent.GetFriendlyName());
         }
 
         protected override void PreStart()
@@ -55,5 +55,17 @@ namespace Mammoth.BigBrother.Akka.Monitoring
             }
         }
         */
+
+        protected override bool AroundReceive(Receive receive, object message)
+        {
+            ActorMonitoring.TrackReceivedMessage(_friendlyName, message);
+
+            return base.AroundReceive(receive, message);
+        }
+
+        protected void TrackReceivedMessage(object message)
+        {
+            ActorMonitoring.TrackReceivedMessage(_friendlyName, message);
+        }
     }
 }

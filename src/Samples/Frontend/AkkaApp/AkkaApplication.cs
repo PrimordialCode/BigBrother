@@ -31,6 +31,7 @@ namespace Frontend.AkkaApp
             serviceCollection.AddTransient<RoomActor>();
 
             MonitoringSystems.AddSystem(new InMemoryMonitoringSystem("InMemory"));
+            ActorMonitoring.TrackReceivedMessagesEnabled = true;
             EndpointInstaller.Start(5001);
 
             string hocon = System.IO.File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"AkkaApp\hocon.cfg"));

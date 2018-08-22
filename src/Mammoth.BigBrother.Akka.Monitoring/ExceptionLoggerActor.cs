@@ -4,6 +4,8 @@ using Mammoth.BigBrother.Monitoring;
 
 namespace Mammoth.BigBrother.Akka.Monitoring
 {
+    // todo: also add monitoring for this actor ?
+
     /// <summary>
     /// An actor used to track errors and exceptions (also works for ReceiveAsync calls
     /// because every error will be intercepted and wrapped in an Error message).

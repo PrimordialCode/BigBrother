@@ -41,9 +41,9 @@ namespace Mammoth.BigBrother.Monitoring
             return this;
         }
 
-        public MetricPropertiesBuilder Type(string type)
+        public MetricPropertiesBuilder Type(Type type)
         {
-            _properties[MetricProperties.Type] = type;
+            _properties[MetricProperties.Type] = type.Name;
             return this;
         }
 

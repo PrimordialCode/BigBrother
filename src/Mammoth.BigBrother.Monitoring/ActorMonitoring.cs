@@ -13,14 +13,21 @@ namespace Mammoth.BigBrother.Monitoring
     /// </remarks>
     public static class ActorMonitoring
     {
-        public static void TrackActorCreated(string name, string type, string parent)
+        /// <summary>
+        /// Tracking received message is a time consuming activity, maybe we can reduce the details with more flags
+        /// to add or remove detailed serialization.
+        /// this kind of messages also should have a form of retention/aging
+        /// </summary>
+        public static bool TrackReceivedMessagesEnabled { get; set; }
+
+        public static void TrackActorCreated(string name, Type type, string parentName)
         {
             if (!MonitoringSystems.IsEnabled)
             {
                 return;
             }
 
-            MonitoringSystems.TrackEvent(MetricEvents.ActorCreated, MetricProperties.For().Actor(name).Type(type).ActorParent(parent).Build());
+            MonitoringSystems.TrackEvent(MetricEvents.ActorCreated, MetricProperties.For().Actor(name).Type(type).ActorParent(parentName).Build());
             MonitoringSystems.UpdateCounter(MetricCounters.ActorsCreated);
             MonitoringSystems.UpdateCounter(MetricCounters.ActorCounter(MetricCounters.ActorCreated, name));
         }
@@ -64,6 +71,20 @@ namespace Mammoth.BigBrother.Monitoring
             MonitoringSystems.UpdateCounter(MetricCounters.ActorCounter(MetricCounters.ActorRestarted, name));
         }
 
+        public static void TrackReceivedMessage(string name, object message)
+        {
+            if (!MonitoringSystems.IsEnabled || !TrackReceivedMessagesEnabled)
+            {
+                return;
+            }
+
+            MonitoringSystems.TrackEvent(MetricEvents.ActorReceivedMessage, MetricProperties.For()
+                .Actor(name)
+                .Type(message.GetType())
+                .Message(message)
+                .Build());
+        }
+
         public static void TrackException(string name, Exception exception, object message)
         {
             if (!MonitoringSystems.IsEnabled)
@@ -73,6 +94,7 @@ namespace Mammoth.BigBrother.Monitoring
 
             MonitoringSystems.TrackException(exception, MetricProperties.For()
                 .Actor(name)
+                .Type(message.GetType())
                 .Message(message)
                 .Build());
             MonitoringSystems.UpdateCounter(MetricCounters.ActorsExceptions);
@@ -89,6 +111,7 @@ namespace Mammoth.BigBrother.Monitoring
             MonitoringSystems.TrackEvent(MetricEvents.ActorDeadLetter, MetricProperties.For()
                 .Actor(sender)
                 .ActorRecipient(recipient)
+                .Type(message.GetType())
                 .Message(message)
                 .Build());
             MonitoringSystems.UpdateCounter(MetricCounters.ActorsDeadLetters);
