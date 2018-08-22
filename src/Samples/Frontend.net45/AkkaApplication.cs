@@ -4,21 +4,21 @@ using Akka.Event;
 using Mammoth.BigBrother.Akka.Monitoring;
 using Mammoth.BigBrother.Monitoring;
 using Mammoth.BigBrother.Monitoring.Endpoint;
-using Mammoth.BigBrother.Monitoring.MonitoringSystems;
+using Mammoth.BigBrother.Monitoring.Systems;
 using System;
 
 namespace Frontend.net45
 {
-    class AkkaApplication
+    internal class AkkaApplication
     {
         private ActorSystem _actorSystem;
 
         public void Initialize(string name)
         {
-            ActorMonitoring.AddSystem(new InMemoryActorMonitoringSystem("InMemory"));
+            MonitoringSystems.AddSystem(new InMemoryMonitoringSystem("InMemory"));
             EndpointInstaller.Start(5003);
 
-            string hocon = System.IO.File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"hocon.cfg"));
+            string hocon = System.IO.File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "hocon.cfg"));
             var config = ConfigurationFactory.ParseString(hocon);
             // .WithFallback();
             ColoredConsole.WriteLine("Creating the ActorSystem");

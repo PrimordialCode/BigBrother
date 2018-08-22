@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Mammoth.BigBrother.Monitoring
+namespace Mammoth.BigBrother.Monitoring.Systems
 {
 #pragma warning disable S3881 // "IDisposable" should be implemented correctly
     /// <summary>
     /// There should be just a single instance of this monitor
     /// </summary>
-    public class NullActorMonitoringSystem : IActorMonitoringSystem
+    public class NullMonitoringSystem : IMonitoringSystem
 #pragma warning restore S3881 // "IDisposable" should be implemented correctly
     {
-        public string Name => typeof(NullActorMonitoringSystem).Name;
+        public string Name => typeof(NullMonitoringSystem).Name;
 
         public string InstanceName { get; }
 
-        public NullActorMonitoringSystem(string instanceName)
+        public NullMonitoringSystem(string instanceName)
         {
             this.InstanceName = instanceName;
         }

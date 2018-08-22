@@ -1,7 +1,8 @@
 ﻿using System.Linq;
+using System.Text;
 using Mammoth.BigBrother.Monitoring.Endpoint.Dto;
 using Mammoth.BigBrother.Monitoring.Endpoint.Services;
-using Mammoth.BigBrother.Monitoring.MonitoringSystems;
+using Mammoth.BigBrother.Monitoring.Systems;
 #if NET45
 using System.Web.Http;
 #endif
@@ -16,7 +17,7 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
     [Route("api/[controller]")]
     public class ActorsController : Controller
     {
-        private const string ActorsCreated = MetricCounters.ActorCreated + ".";
+        private const string ActorCreated = MetricCounters.ActorCreated + ".";
 
         /// <summary>
         /// returns Tree structure listing all the actors (from the InMemory session)
@@ -40,7 +41,7 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
             var detail = new ActorDetailDto();
 
             // get the counters
-            var counters = CounterService.GetActorsCounters(args.Path);
+            var counters = CountersService.GetActorCounters(args.Path);
             var counterStarted = counters.Counter(MetricCounters.ActorCreated) ?? 0;
             var counterStopped = counters.Counter(MetricCounters.ActorStopped) ?? 0;
 
@@ -52,8 +53,8 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
         private string[] ListAllActors()
         {
             return InMemoryMonitoringData.Counters
-                .Where(c => c.Key.StartsWith(ActorsCreated))
-                .Select(c => c.Key.Replace(ActorsCreated, ""))
+                .Where(c => c.Key.StartsWith(ActorCreated))
+                .Select(c => c.Key.Replace(ActorCreated, ""))
                 .ToArray();
         }
 
@@ -64,10 +65,10 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
             {
                 var currentNode = rootNode;
                 var pathItems = path.Split(separator);
-                var partialPath = string.Empty;
+                var partialPath = new StringBuilder();
                 foreach (var item in pathItems)
                 {
-                    partialPath += item + separator;
+                    partialPath.Append(item).Append(separator);
                     var tmp = currentNode.Children.Where(x => x.Name.Equals(item));
                     if (tmp.Any())
                     {
@@ -76,7 +77,7 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
                     else
                     {
                         // create the new node
-                        ActorInfoDto node = new ActorInfoDto(item, partialPath.TrimEnd(separator));
+                        ActorInfoDto node = new ActorInfoDto(item, partialPath.ToString().TrimEnd(separator));
                         // add it to the children
                         currentNode.Children.Add(node);
                         // set it as the current node

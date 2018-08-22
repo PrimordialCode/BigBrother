@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Mammoth.BigBrother.Monitoring.Endpoint.Dto;
 using Mammoth.BigBrother.Monitoring.Endpoint.Services;
-using Mammoth.BigBrother.Monitoring.MonitoringSystems;
 #if NET45
 using System.Web.Http;
 #endif
@@ -11,25 +8,31 @@ using System.Web.Http;
 using Microsoft.AspNetCore.Mvc;
 #endif
 
-
 namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
 {
     [Route("api/[controller]")]
     public class CountersController : Controller
     {
         /// <summary>
-        /// Get all the counters
+        /// Get all the counters sorted by name
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         public IEnumerable<CounterDto> Get()
         {
-            return InMemoryMonitoringData.Counters.Select(_ => new CounterDto
-            {
-                Name = _.Key,
-                Value = _.Value
-            })
-            .OrderBy(_ => _.Name);
+            return CountersService.GetAllCounters();
+        }
+
+        /// <summary>
+        /// returns a specific counter
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("{id}")]
+        [HttpGet]
+        public IEnumerable<CounterDto> Get(string id)
+        {
+            return CountersService.GetById(id);
         }
 
         /// <summary>
@@ -40,15 +43,10 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
         [HttpGet]
         public IEnumerable<CounterDto> GlobalCounters()
         {
-            return InMemoryMonitoringData.Counters.Where(_ => MetricCounters.DefaultCounters.Contains(_.Key))
-                .Select(_ => new CounterDto
-                {
-                    Name = _.Key,
-                    Value = _.Value
-                })
-                .OrderBy(_ => _.Name);
+            return CountersService.GetActorsDefaultCounters();
         }
 
+        // todo: rename in GetActorCounters
         /// <summary>
         /// Get all the counters related to a single actor
         /// </summary>
@@ -58,21 +56,7 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
         [HttpPost]
         public IEnumerable<CounterDto> GetActorsCounter([FromBody]ActorRequestDto args)
         {
-            return CounterService.GetActorsCounters(args.Path);
-        }
-
-        // GET api/<controller>/name
-        [Route("{id}")]
-        [HttpGet]
-        public IEnumerable<CounterDto> Get(string id)
-        {
-            return InMemoryMonitoringData.Counters.Where(_ => _.Key.StartsWith(id, StringComparison.InvariantCultureIgnoreCase))
-                .Select(_ => new CounterDto
-                {
-                    Name = _.Key,
-                    Value = _.Value
-                })
-                .OrderBy(_ => _.Name);
+            return CountersService.GetActorCounters(args.Path);
         }
     }
 }

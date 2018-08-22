@@ -8,7 +8,7 @@ using Frontend.Shared;
 using Mammoth.BigBrother.Akka.Monitoring;
 using Mammoth.BigBrother.Monitoring;
 using Mammoth.BigBrother.Monitoring.Endpoint;
-using Mammoth.BigBrother.Monitoring.MonitoringSystems;
+using Mammoth.BigBrother.Monitoring.Systems;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -30,7 +30,7 @@ namespace Frontend.AkkaApp
             serviceCollection.AddTransient<ProjectionActorV2>();
             serviceCollection.AddTransient<RoomActor>();
 
-            ActorMonitoring.AddSystem(new InMemoryActorMonitoringSystem("InMemory"));
+            MonitoringSystems.AddSystem(new InMemoryMonitoringSystem("InMemory"));
             EndpointInstaller.Start(5001);
 
             string hocon = System.IO.File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"AkkaApp\hocon.cfg"));

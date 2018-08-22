@@ -8,31 +8,31 @@ namespace Mammoth.BigBrother.Monitoring
     /// A collection of all of the monitoring system implementations used for tracking and forwaring the
     /// counters update calls
     /// </summary>
-    internal class ActorMonitoringSystems : IActorMonitoringSystems
+    public static class MonitoringSystems // : IMonitoringSystems
     {
         /// <summary>
         /// The list of active clients who are available for broadcast
         /// </summary>
-        private readonly List<IActorMonitoringSystem> _monitoringSystems = new List<IActorMonitoringSystem>();
+        private static readonly List<IMonitoringSystem> _monitoringSystems = new List<IMonitoringSystem>();
 
-        public bool IsEnabled => _monitoringSystems.Count > 0;
+        public static bool IsEnabled => _monitoringSystems.Count > 0;
 
         /// <summary>
-        /// Add a new <see cref="IActorMonitoringSystem"/> to be used
+        /// Add a new <see cref="IMonitoringSystem"/> to be used
         /// when reporting Actor metrics
         /// </summary>
         /// <param name="monitoringSystem">the monitoring system to add</param>
-        public void AddSystem(IActorMonitoringSystem monitoringSystem)
+        public static void AddSystem(IMonitoringSystem monitoringSystem)
         {
             _monitoringSystems.Add(monitoringSystem);
         }
 
         /// <summary>
-        /// Remove a <see cref="IActorMonitoringSystem"/>
+        /// Remove a <see cref="IMonitoringSystem"/>
         /// </summary>
         /// <param name="monitoringSystemName">the monitoring system to remove</param>
         /// <returns>true if the monitoring was successfully removed, false otherwise</returns>
-        public void RemoveSystem(string monitoringSystemName)
+        public static void RemoveSystem(string monitoringSystemName)
         {
             var system = _monitoringSystems.SingleOrDefault(e => e.InstanceName == monitoringSystemName);
             if (system != null)
@@ -45,7 +45,7 @@ namespace Mammoth.BigBrother.Monitoring
         /// <summary>
         /// Dispose all of the monitoring clients
         /// </summary>
-        public void RemoveAll()
+        public static void RemoveAll()
         {
             var clients = _monitoringSystems.ToArray();
             _monitoringSystems.Clear();
@@ -56,7 +56,10 @@ namespace Mammoth.BigBrother.Monitoring
         /// <summary>
         /// Update a counter across all active monitoring systems
         /// </summary>
-        public void UpdateCounter(string metricName, double delta = 1, IDictionary<string, string> properties = null)
+        /// <param name="metricName"></param>
+        /// <param name="delta"></param>
+        /// <param name="properties"></param>
+        public static void UpdateCounter(string metricName, double delta = 1, IDictionary<string, string> properties = null)
         {
             foreach (var client in _monitoringSystems)
                 client.UpdateCounter(metricName, delta, properties);
@@ -65,7 +68,10 @@ namespace Mammoth.BigBrother.Monitoring
         /// <summary>
         /// Update a timer across all active monitoring clients
         /// </summary>
-        public void TrackTiming(string metricName, long time, IDictionary<string, string> properties = null)
+        /// <param name="metricName"></param>
+        /// <param name="time"></param>
+        /// <param name="properties"></param>
+        public static void TrackTiming(string metricName, long time, IDictionary<string, string> properties = null)
         {
             foreach (var client in _monitoringSystems)
                 client.TrackTiming(metricName, time, properties);
@@ -74,19 +80,22 @@ namespace Mammoth.BigBrother.Monitoring
         /// <summary>
         /// Update a gauge across all active monitoring clients
         /// </summary>
-        public void UpdateGauge(string metricName, int value, IDictionary<string, string> properties = null)
+        /// <param name="metricName"></param>
+        /// <param name="value"></param>
+        /// <param name="properties"></param>
+        public static void UpdateGauge(string metricName, int value, IDictionary<string, string> properties = null)
         {
             foreach (var client in _monitoringSystems)
                 client.UpdateGauge(metricName, value, properties);
         }
 
-        public void TrackEvent(string evt, IDictionary<string, string> properties = null)
+        public static void TrackEvent(string evt, IDictionary<string, string> properties = null)
         {
             foreach (var client in _monitoringSystems)
                 client.TrackEvent(evt, properties);
         }
 
-        public void TrackException(Exception exception, IDictionary<string, string> properties = null)
+        public static void TrackException(Exception exception, IDictionary<string, string> properties = null)
         {
             foreach (var client in _monitoringSystems)
                 client.TrackException(exception, properties);

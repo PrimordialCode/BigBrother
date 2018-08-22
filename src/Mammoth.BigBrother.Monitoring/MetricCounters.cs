@@ -2,42 +2,23 @@
 {
     public static class MetricCounters
     {
+        public const string ActorsCreated = "actors.created";
+        public const string ActorsStarted = "actors.started";
+        public const string ActorsRestarted = "actors.restarted";
+        public const string ActorsStopped = "actors.stopped";
+        public const string ActorsExceptions = "actors.exceptions";
+
         public const string ActorCreated = "actor.created";
         public const string ActorStarted = "actor.started";
         public const string ActorRestarted = "actor.restarted";
         public const string ActorStopped = "actor.stopped";
-        public const string ActorException = "actor.exception";
+        public const string ActorExceptions = "actor.exceptions";
 
-        public static readonly string[] DefaultCounters = { ActorCreated, ActorStarted, ActorRestarted, ActorStopped, ActorException };
+        public readonly static string[] ActorsDefaultCounters = { ActorsCreated, ActorsStarted, ActorsRestarted, ActorsStopped, ActorsExceptions };
 
-        private static string ActorSpecificCounter(string counterPrefix, string actorName)
+        public static string ActorCounter(string counterPrefix, string actorName)
         {
             return $"{counterPrefix}.{actorName}";
-        }
-
-        public static string ActorCreated_Specific(string name)
-        {
-            return ActorSpecificCounter(MetricCounters.ActorCreated, name);
-        }
-
-        public static string ActorStarted_Specific(string name)
-        {
-            return ActorSpecificCounter(MetricCounters.ActorStarted, name);
-        }
-
-        public static string ActorRestarted_Specific(string name)
-        {
-            return ActorSpecificCounter(MetricCounters.ActorRestarted, name);
-        }
-
-        public static string ActorStopped_Specific(string name)
-        {
-            return ActorSpecificCounter(MetricCounters.ActorStopped, name);
-        }
-
-        public static string ActorException_Specific(string name)
-        {
-            return ActorSpecificCounter(MetricCounters.ActorException, name);
         }
     }
 }

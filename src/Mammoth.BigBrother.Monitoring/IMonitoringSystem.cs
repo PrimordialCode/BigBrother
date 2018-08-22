@@ -7,7 +7,7 @@ namespace Mammoth.BigBrother.Monitoring
     /// Abstracts the external target monitoring system used to further process and render the
     /// information coming from the metrics
     /// </summary>
-    public interface IActorMonitoringSystem : IDisposable
+    public interface IMonitoringSystem : IDisposable
     {
         /// <summary>
         /// Updates a counter, adds or subtracts the value.

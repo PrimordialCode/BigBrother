@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Mammoth.BigBrother.Monitoring.MonitoringSystems
+namespace Mammoth.BigBrother.Monitoring.Systems
 {
     /// <summary>
     /// Fills in an In process / In memory static collection of data.
     /// The information is availabe from the static methods of the class <see cref="InMemoryMonitoringData"/>
     /// </summary>
 #pragma warning disable S3881 // "IDisposable" should be implemented correctly
-    public class InMemoryActorMonitoringSystem : IActorMonitoringSystem
+    public class InMemoryMonitoringSystem : IMonitoringSystem
 #pragma warning restore S3881 // "IDisposable" should be implemented correctly
     {
-        public string Name => typeof(InMemoryActorMonitoringSystem).Name;
+        public string Name => typeof(InMemoryMonitoringSystem).Name;
 
         public string InstanceName { get; }
 
-        public InMemoryActorMonitoringSystem(string instanceName)
+        public InMemoryMonitoringSystem(string instanceName)
         {
             this.InstanceName = instanceName;
         }
