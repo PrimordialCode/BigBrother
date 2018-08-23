@@ -1,0 +1,27 @@
+<table mat-table multiTemplateDataRows [dataSource]="actorExceptions$">
+  <ng-container matColumnDef="timestamp">
+    <th mat-header-cell *matHeaderCellDef>Timestamp</th>
+    <td mat-cell *matCellDef="let row">{{row.timestamp|date:'medium'}}</td>
+  </ng-container>
+  <ng-container matColumnDef="exception">
+    <th mat-header-cell *matHeaderCellDef>Exception</th>
+    <td mat-cell *matCellDef="let row">{{row.exception.ClassName}}</td>
+  </ng-container>
+  <ng-container matColumnDef="message">
+    <th mat-header-cell *matHeaderCellDef>Message</th>
+    <td mat-cell *matCellDef="let row">{{row.exception.Message}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="exceptionsTableColumnsToDisplay.length">
+      <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+        <code>{{element.exception.StackTraceString}}</code>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="exceptionsTableColumnsToDisplay; sticky: true"></tr>
+  <tr mat-row *matRowDef="let row; columns: exceptionsTableColumnsToDisplay" class="example-element-row" [class.example-expanded-row]="expandedElement === row"
+    (click)="expandedElement = row"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>

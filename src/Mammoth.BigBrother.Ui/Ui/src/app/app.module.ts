@@ -43,6 +43,8 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { ActorsPageComponent } from './actors/actors-page/actors-page.component';
 import { DashboardEndpointsComponent } from './home-page/dashboard-endpoints/dashboard-endpoints.component';
 import { SingletonEndpointWebApiService } from './services/singleton-endpoint-web-api.service';
+import { ActorDetailExceptionsComponent } from './actors/actor-detail/actor-detail-exceptions/actor-detail-exceptions.component';
+import { ActorDetailEventsComponent } from './actors/actor-detail/actor-detail-events/actor-detail-events.component';
 
 const COVALENT_MODULES: any[] = [
   CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
@@ -75,7 +77,9 @@ export function ConfigLoader(configService: ConfigService) {
     DrawerMenuComponent,
     HomePageComponent,
     ActorsPageComponent,
-    DashboardEndpointsComponent
+    DashboardEndpointsComponent,
+    ActorDetailExceptionsComponent,
+    ActorDetailEventsComponent
   ],
   imports: [
     BrowserModule,
