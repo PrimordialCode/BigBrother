@@ -1,15 +1,22 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ITdDataTableColumn } from '@covalent/core/data-table/covalent-core-data-table';
 import { Observable } from 'rxjs';
 import { IActorDetailDto, ICounterDto, IMonitoringEventData, IMonitoringExceptionData } from '../../models/endpoint-web-api.models';
 import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
 import { ActorDetailService } from '../services/actor-detail.service';
 import { ActorsStateService } from '../services/actors-state.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-actor-detail',
   templateUrl: './actor-detail.component.html',
   styleUrls: ['./actor-detail.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
   // changeDetection: ChangeDetectionStrategy.OnPush // cannot use this right now, all the bindings must be to observables
 })
 export class ActorDetailComponent implements OnInit, OnChanges {
@@ -28,19 +35,10 @@ export class ActorDetailComponent implements OnInit, OnChanges {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
-  eventsTableColumns: ITdDataTableColumn[] = [
-    { name: 'timestamp', label: 'Timestamp' },
-    { name: 'event', label: 'Event' },
-    { name: 'properties.type', label: 'Type' },
-    { name: 'properties.message', label: 'Message' },
-  ];
+  eventsTableColumnsToDisplay = ['timestamp', 'event', 'type', 'message'];
+  exceptionsTableColumnsToDisplay = ['timestamp', 'exception', 'message'];
 
-  exceptionsTableColumns: ITdDataTableColumn[] = [
-    { name: 'timestamp', label: 'Timestamp' },
-    { name: 'exception.ClassName', label: 'Exception' },
-    { name: 'exception.Message', label: 'Message' },
-    { name: 'exception.StackTraceString', label: 'Stacktrace' }
-  ];
+  expandedElement: IMonitoringExceptionData;
 
   constructor(
     // private endpoint: EndpointWebApiService,

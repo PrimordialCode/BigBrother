@@ -35,7 +35,7 @@ Set-Location "..\..\.."
 
 # publish the app
 & $msbuild ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" /verbosity:normal /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=".\src\Mammoth.BigBrother.Ui\Properties\PublishProfiles\FolderProfile.pubxml"
-Move-Item -Path ".\src\Mammoth.BigBrother.Ui\bin\publish\*" $artifactPath
+Move-Item -Path ".\src\Mammoth.BigBrother.Ui\bin\Release\PublishOutput\*" $artifactPath
 
 Set-Content -Path "$artifactPath\run.cmd" -Value "dotnet Mammoth.BigBrother.Ui.dll"
 
