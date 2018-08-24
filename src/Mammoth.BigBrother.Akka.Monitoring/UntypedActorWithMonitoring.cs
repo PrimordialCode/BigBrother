@@ -58,14 +58,14 @@ namespace Mammoth.BigBrother.Akka.Monitoring
 
         protected override bool AroundReceive(Receive receive, object message)
         {
-            ActorMonitoring.TrackReceivedMessage(_friendlyName, message);
+            ActorMonitoring.TrackReceivedMessage(_friendlyName, message, true);
 
             return base.AroundReceive(receive, message);
         }
 
-        protected void TrackReceivedMessage(object message)
+        protected void TrackReceivedMessage(object message, bool expires)
         {
-            ActorMonitoring.TrackReceivedMessage(_friendlyName, message);
+            ActorMonitoring.TrackReceivedMessage(_friendlyName, message, expires);
         }
     }
 }

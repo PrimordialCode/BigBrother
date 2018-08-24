@@ -71,7 +71,7 @@ namespace Mammoth.BigBrother.Monitoring
             MonitoringSystems.UpdateCounter(MetricCounters.ActorCounter(MetricCounters.ActorRestarted, name));
         }
 
-        public static void TrackReceivedMessage(string name, object message)
+        public static void TrackReceivedMessage(string name, object message, bool expires)
         {
             if (!MonitoringSystems.IsEnabled || !TrackReceivedMessagesEnabled)
             {
@@ -82,7 +82,8 @@ namespace Mammoth.BigBrother.Monitoring
                 .Actor(name)
                 .Type(message.GetType())
                 .Message(message)
-                .Build());
+                .Build(),
+                expires);
         }
 
         public static void TrackException(string name, Exception exception, object message)

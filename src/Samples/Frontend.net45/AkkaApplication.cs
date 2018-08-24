@@ -4,7 +4,9 @@ using Akka.Event;
 using Mammoth.BigBrother.Akka.Monitoring;
 using Mammoth.BigBrother.Monitoring;
 using Mammoth.BigBrother.Monitoring.Endpoint;
-using Mammoth.BigBrother.Monitoring.Systems;
+using Mammoth.BigBrother.Monitoring.Housekeeping;
+using Mammoth.BigBrother.Monitoring.Systems.InMemory;
+using Mammoth.BigBrother.Monitoring.Systems.InMemory.Housekeeping;
 using System;
 
 namespace Frontend.net45
@@ -17,6 +19,11 @@ namespace Frontend.net45
         {
             MonitoringSystems.AddSystem(new InMemoryMonitoringSystem("InMemory"));
             ActorMonitoring.TrackReceivedMessagesEnabled = true;
+            MetricsHousekeeper.Configure(new[]
+            {
+                new InMemoryEventsExpirationRule(TimeSpan.FromMinutes(5))
+            });
+            MetricsHousekeeper.Schedule(TimeSpan.FromMinutes(1));
             EndpointInstaller.Start(5003);
 
             string hocon = System.IO.File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "hocon.cfg"));

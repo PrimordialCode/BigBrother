@@ -13,14 +13,16 @@ namespace Frontend
     /// ProjectionActors - will create the projections (if we use an EventSourcing approach)
     /// ProcessManagers - will use information from other actors to emit commands
     /// </summary>
-    static class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        internal static void Main(string[] args)
         {
             Console.Title = "DOTNET CORE - Starting Application";
             ColoredConsole.WriteLine(Console.Title);
-            var settings = new ApplicationSettings();
-            settings.ActorFramework = ActorFramework.Akka;
+            var settings = new ApplicationSettings
+            {
+                ActorFramework = ActorFramework.Akka
+            };
             var application = new Application();
             application.Init(settings);
             application.WaitForShutdown();

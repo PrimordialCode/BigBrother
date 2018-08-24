@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Mammoth.BigBrother.Monitoring.Endpoint.Dto;
-using Mammoth.BigBrother.Monitoring.Systems;
+using Mammoth.BigBrother.Monitoring.Metrics;
+using Mammoth.BigBrother.Monitoring.Systems.InMemory;
 #if NET45
 using System.Web.Http;
 #endif

@@ -1,5 +1,6 @@
 ﻿using Mammoth.BigBrother.Monitoring.Endpoint.Dto;
 using Mammoth.BigBrother.Monitoring.Systems;
+using Mammoth.BigBrother.Monitoring.Systems.InMemory;
 using System;
 using System.Collections.Generic;
 using System.Linq;

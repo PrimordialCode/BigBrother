@@ -36,10 +36,10 @@ namespace Mammoth.BigBrother.Monitoring
         /// <summary>
         /// Track a specific event that occurred in the system
         /// </summary>
-        /// <param name="evt"></param>
-        /// <param name=""></param>
-        /// <param name="properties"></param>
-        void TrackEvent(string evt, IDictionary<string, string> properties = null);
+        /// <param name="evt">the event to store</param>
+        /// <param name="properties">additional properties</param>
+        /// <param name="expires">true if this metric can expire</param>
+        void TrackEvent(string evt, IDictionary<string, string> properties = null, bool expires = false);
 
         /// <summary>
         /// Track an exception

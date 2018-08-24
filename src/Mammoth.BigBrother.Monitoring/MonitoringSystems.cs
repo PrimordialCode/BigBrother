@@ -1,14 +1,18 @@
-﻿using System;
+﻿using Mammoth.BigBrother.Monitoring.Metrics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Mammoth.BigBrother.Monitoring
 {
     /// <summary>
-    /// A collection of all of the monitoring system implementations used for tracking and forwaring the
+    /// <para>The main class used to track and store Metrics in the system.</para>
+    /// <para>
+    /// It will manage a collection of all of the monitoring system implementations used for tracking and forwaring the
     /// counters update calls
+    /// </para>
     /// </summary>
-    public static class MonitoringSystems // : IMonitoringSystems
+    public static class MonitoringSystems
     {
         /// <summary>
         /// The list of active clients who are available for broadcast
@@ -89,10 +93,10 @@ namespace Mammoth.BigBrother.Monitoring
                 client.UpdateGauge(metricName, value, properties);
         }
 
-        public static void TrackEvent(string evt, IDictionary<string, string> properties = null)
+        public static void TrackEvent(string evt, IDictionary<string, string> properties = null, bool expires = false)
         {
             foreach (var client in _monitoringSystems)
-                client.TrackEvent(evt, properties);
+                client.TrackEvent(evt, properties, expires);
         }
 
         public static void TrackException(Exception exception, IDictionary<string, string> properties = null)

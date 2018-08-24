@@ -39,7 +39,7 @@ namespace Mammoth.BigBrother.Monitoring.Systems
             // Method intentionally left empty.
         }
 
-        public void TrackEvent(string evt, IDictionary<string, string> properties = null)
+        public void TrackEvent(string evt, IDictionary<string, string> properties = null, bool expires = false)
         {
             // Method intentionally left empty.
         }
