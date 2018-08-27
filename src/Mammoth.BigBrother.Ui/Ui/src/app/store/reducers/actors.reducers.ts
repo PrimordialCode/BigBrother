@@ -123,6 +123,16 @@ export function actorsReducer(
         }
       };
     }
+    case ActorsActionsTypes.ACTORS_DISPLAY_ACTOR: {
+      const endpoint = getEndpoint(state, action.endpointName);
+      return {
+        ...state,
+        [action.endpointName]: {
+          ...endpoint,
+          selectedActor: action.id
+        }
+      };
+    }
     case ActorsActionsTypes.ACTORS_GET_ACTOR_DETAIL_FAILED: {
       const endpoint = getEndpoint(state, action.endpointName);
       const actor = getActor(endpoint, action.id);

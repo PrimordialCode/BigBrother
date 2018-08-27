@@ -5,7 +5,7 @@ import { interval, Observable, Subscription } from 'rxjs';
 import { filter, map, share } from 'rxjs/operators';
 import { IActorInfoDto, ICounterDto } from '../../models/endpoint-web-api.models';
 import { ActorsDisplayActor, ActorsGetGlobalCounters, ActorsLoadHierarcy } from '../../store/actions';
-import { getActorsGlobalCounters, getActorsHierarchy } from '../../store/selectors';
+import { getActorsGlobalCounters, getActorsHierarchy, getSelectedActor } from '../../store/selectors';
 import { IAppState } from '../../store/state';
 import { ActorDetailService } from './actor-detail.service';
 
@@ -32,6 +32,11 @@ export class ActorsStateService implements OnDestroy {
     return this._globalCounters$;
   }
 
+  private _selectedActor$: Observable<string>;
+  public get selectedActor$() {
+    return this._selectedActor$;
+  }
+
   private _intervalSubscription: Subscription;
 
   constructor(
@@ -51,6 +56,8 @@ export class ActorsStateService implements OnDestroy {
       map(data => data.counters),
       share()
     );
+
+    this._selectedActor$ = this.store.select(getSelectedActor(this._endpointName));
 
     this._intervalSubscription = interval(5000).subscribe(() => this.refresh());
   }

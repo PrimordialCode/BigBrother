@@ -14,6 +14,10 @@ export const getActorsGlobalCounters = (endpointName: string) => createSelector(
   getActorsState(endpointName),
   state => state.globalCounters
 );
+export const getSelectedActor = (endpointName: string) => createSelector(
+  getActorsState(endpointName),
+  state => state.selectedActor
+);
 export const getActorsActor = (endpointName: string, id: string) => createSelector(
   getActorsState(endpointName),
   state => state.actors != null ? state.actors[id] : null

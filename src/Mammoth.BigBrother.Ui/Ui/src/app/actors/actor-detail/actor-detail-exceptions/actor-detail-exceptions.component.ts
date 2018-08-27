@@ -1,12 +1,12 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { IMonitoringExceptionData } from '../../../models/endpoint-web-api.models';
 
 @Component({
   selector: 'app-actor-detail-exceptions',
   templateUrl: './actor-detail-exceptions.component.html',
   styleUrls: ['./actor-detail-exceptions.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
@@ -17,7 +17,7 @@ import { IMonitoringExceptionData } from '../../../models/endpoint-web-api.model
 })
 export class ActorDetailExceptionsComponent implements OnInit {
 
-  @Input() actorExceptions$: Observable<IMonitoringExceptionData[]>;
+  @Input() actorExceptions$: IMonitoringExceptionData[];
   exceptionsTableColumnsToDisplay = ['timestamp', 'exception', 'message'];
   expandedElement: IMonitoringExceptionData;
 

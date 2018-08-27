@@ -23,9 +23,13 @@ export interface IActorState {
  * the state of a single endpoint when it comes to display Actor System information
  */
 export interface IActorsState {
+  // the hierarchy of all the actors in the system/endpoint
   hierarchy: IActorsHierarchyState;
+  // show some global counters/statistics for the system/endpoint
   globalCounters: IActorsGlobalCountersState;
-  selectedActor: IActorState;
+  // path to the actor we are currntly viewing
+  selectedActor: string;
+  // the detailed information for every actor the user has inpected
   actors: { [index: string]: IActorState };
 }
 
@@ -51,7 +55,7 @@ export const initialActorsState: IActorsStateDictionary = {};
 export class ActorsState implements IActorsState {
   hierarchy: IActorsHierarchyState = <IActorsHierarchyState>{};
   globalCounters: IActorsGlobalCountersState = <IActorsGlobalCountersState>{};
-  selectedActor: IActorState;
+  selectedActor: string;
   actors: { [index: string]: IActorState; } = {};
 }
 

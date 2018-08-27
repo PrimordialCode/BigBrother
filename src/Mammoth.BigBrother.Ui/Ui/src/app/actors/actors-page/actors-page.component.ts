@@ -7,7 +7,8 @@ import { EndpointWebApiService, endpointWebApiServiceFactory } from '../../servi
 import { ConfigService } from '../../settings/config.service';
 import { ActorDetailComponent } from '../actor-detail/actor-detail.component';
 import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
-
+import { Observable } from 'rxjs';
+import { IActorInfoDto } from '../../models/endpoint-web-api.models';
 
 @Component({
   selector: 'app-actors-page',
@@ -28,13 +29,15 @@ import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
 })
 export class ActorsPageComponent implements OnInit {
 
-  public title = 'Actor System Inspector';
-  public selectedActor: ActorGraphNode;
+  public hierarchy$: Observable<IActorInfoDto>;
+  public selectedActor$: Observable<string>;
   @ViewChild('actorDetail') public actorDetailComponent: ActorDetailComponent;
 
   constructor(
     private _actorsStateService: ActorsStateService,
   ) {
+    this.hierarchy$ = _actorsStateService.hierarchy$;
+    this.selectedActor$ = _actorsStateService.selectedActor$;
     this.refreshActors();
   }
 
@@ -46,7 +49,6 @@ export class ActorsPageComponent implements OnInit {
   }
 
   public selectActor(actor: ActorGraphNode) {
-    this.selectedActor = actor;
     this._actorsStateService.displayActor(actor.path);
   }
 

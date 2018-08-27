@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IActorDetailDto, ICounterDto, IMonitoringEventData, IMonitoringExceptionData } from '../../models/endpoint-web-api.models';
-import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
 import { ActorDetailService } from '../services/actor-detail.service';
 import { ActorsStateService } from '../services/actors-state.service';
 
@@ -12,7 +11,8 @@ import { ActorsStateService } from '../services/actors-state.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActorDetailComponent implements OnInit, OnChanges {
-  @Input() actor: ActorGraphNode;
+  // the Id of the actor to display inside this component
+  @Input() actor: string;
 
   public actorDetail$: Observable<IActorDetailDto>;
   public actorCounters$: Observable<ICounterDto[]>;
@@ -34,7 +34,7 @@ export class ActorDetailComponent implements OnInit, OnChanges {
       // no need to get the data here, we've already sent a message to the store
       // this.refresh();
 
-      this.actorDetailService = this.actorsStateService.getActorDetailService(this.actor.path);
+      this.actorDetailService = this.actorsStateService.getActorDetailService(this.actor);
       this.actorDetail$ = this.actorDetailService.detail$;
       this.actorCounters$ = this.actorDetailService.counters$;
       this.actorEvents$ = this.actorDetailService.events$;
@@ -47,11 +47,11 @@ export class ActorDetailComponent implements OnInit, OnChanges {
       return;
     }
 
-    this.actorsStateService.displayActor(this.actor.path);
+    this.actorsStateService.displayActor(this.actor);
 
     // the "old-way" of doing things: call a service and mutate the local state
     /*
-    const actorPath = this.actor.path;
+    const actorPath = this.actor;
     const requestArgs = { path: actorPath };
     this.actorDetail$ = this.endpoint.GetActorDetail(requestArgs);
     this.actorCounters$ = this.endpoint.GetActorCounters(requestArgs);

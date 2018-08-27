@@ -1,11 +1,9 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { Component, EventEmitter, OnDestroy, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { of, Subscription } from 'rxjs';
-import { ActorsStateService } from '../services/actors-state.service';
-import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
 import { IActorInfoDto } from '../../models/endpoint-web-api.models';
-
+import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
 
 @Component({
   selector: 'app-actors-treeview',
@@ -13,7 +11,8 @@ import { IActorInfoDto } from '../../models/endpoint-web-api.models';
   styleUrls: ['./actors-treeview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ActorsTreeviewComponent implements OnInit, OnDestroy {
+export class ActorsTreeviewComponent implements OnInit, OnChanges, OnDestroy {
+  @Input() hierarchy$: IActorInfoDto;
   @Output() public selected = new EventEmitter<ActorGraphNode>();
   private hierarchySubscription: Subscription;
   // Material Tree Control
@@ -21,15 +20,17 @@ export class ActorsTreeviewComponent implements OnInit, OnDestroy {
   public nestedDataSource: MatTreeNestedDataSource<IActorInfoDto>;
   // End Material Tree Control
 
-  constructor(
-    private _actorsStateService: ActorsStateService
-  ) {
+  constructor() {
     this.nestedTreeControl = new NestedTreeControl<IActorInfoDto>(this._getChildren);
     this.nestedDataSource = new MatTreeNestedDataSource();
   }
 
   ngOnInit() {
-    this.hierarchySubscription = this._actorsStateService.hierarchy$.subscribe(hierarchy => {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.hierarchy$) {
+      const hierarchy = changes.hierarchy$.currentValue;
       if (hierarchy != null) {
         // save the actuale expansion model
         const expanded = this.nestedTreeControl.expansionModel.selected;
@@ -45,7 +46,7 @@ export class ActorsTreeviewComponent implements OnInit, OnDestroy {
       } else {
         this.nestedDataSource.data = [];
       }
-    });
+    }
   }
 
   ngOnDestroy(): void {

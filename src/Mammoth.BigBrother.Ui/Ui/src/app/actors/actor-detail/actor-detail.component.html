@@ -8,12 +8,12 @@
   </div>
   <div flex *ngIf="(actorExceptions$ | async)?.length > 0">
     <div style="height: 400px;overflow: auto;">
-      <app-actor-detail-exceptions [actorExceptions$]="actorExceptions$"></app-actor-detail-exceptions>
+      <app-actor-detail-exceptions [actorExceptions$]="actorExceptions$ | async"></app-actor-detail-exceptions>
     </div>
   </div>
   <div flex *ngIf="(actorEvents$ | async)?.length > 0">
     <div style="height: 400px;overflow: auto;">
-      <app-actor-detail-events [actorEvents$]="actorEvents$"></app-actor-detail-events>
+      <app-actor-detail-events [actorEvents$]="actorEvents$ | async"></app-actor-detail-events>
     </div>
   </div>
 </div>

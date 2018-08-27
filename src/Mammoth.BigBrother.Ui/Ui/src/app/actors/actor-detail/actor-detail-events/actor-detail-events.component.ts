@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { IMonitoringEventData } from '../../../models/endpoint-web-api.models';
 
 @Component({
@@ -10,7 +9,7 @@ import { IMonitoringEventData } from '../../../models/endpoint-web-api.models';
 })
 export class ActorDetailEventsComponent implements OnInit {
 
-  @Input() actorEvents$: Observable<IMonitoringEventData[]>;
+  @Input() actorEvents$: IMonitoringEventData[];
   public eventsTableColumnsToDisplay = ['timestamp', 'event', 'type', 'message'];
 
   constructor() { }

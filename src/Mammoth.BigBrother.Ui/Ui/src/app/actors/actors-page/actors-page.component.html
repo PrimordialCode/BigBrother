@@ -16,10 +16,10 @@
       <mat-card-content>
         <mat-tab-group>
           <mat-tab label="Tree">
-            <app-actors-treeview (selected)="selectActor($event)"></app-actors-treeview>
+            <app-actors-treeview [hierarchy$]="hierarchy$ | async" (selected)="selectActor($event)"></app-actors-treeview>
           </mat-tab>
           <mat-tab label="Graph">
-            <app-actors-graph [height]="null" (selected)="selectActor($event)" [customize]="false" [debug]="false"></app-actors-graph>
+            <app-actors-graph [hierarchy$]="hierarchy$ | async" [height]="null" (selected)="selectActor($event)" [customize]="false" [debug]="false"></app-actors-graph>
           </mat-tab>
         </mat-tab-group>
       </mat-card-content>
@@ -29,14 +29,14 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>Actor Detail</mat-card-title>
-        <mat-card-subtitle>{{selectedActor?.path}}</mat-card-subtitle>
+        <mat-card-subtitle>{{selectedActor$ | async}}</mat-card-subtitle>
         <button mat-icon-button (click)="refreshActor()">
           <mat-icon>refresh</mat-icon>
         </button>
       </mat-card-header>
       <mat-divider></mat-divider>
       <mat-card-content>
-        <app-actor-detail #actorDetail [actor]="selectedActor"></app-actor-detail>
+        <app-actor-detail #actorDetail [actor]="selectedActor$ | async"></app-actor-detail>
       </mat-card-content>
       <!--
       <mat-divider></mat-divider>

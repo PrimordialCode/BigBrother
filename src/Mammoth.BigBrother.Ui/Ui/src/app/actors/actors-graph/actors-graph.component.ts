@@ -1,12 +1,10 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import * as shape from 'd3-shape';
 import { Subscription } from 'rxjs';
 import { IActorInfoDto } from '../../models/endpoint-web-api.models';
-import { ActorsStateService } from '../services/actors-state.service';
 import { ActorGraphLink, ActorGraphNode, ActorsGraphData } from './actprs-graph.models';
 import chartGroups from './chart-types';
 import { colorSets } from './color-sets';
-
 
 @Component({
   selector: 'app-actors-graph',
@@ -15,7 +13,8 @@ import { colorSets } from './color-sets';
   styleUrls: ['./actors-graph.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush the ngx-graph will not work with OnPush
 })
-export class ActorsGraphComponent implements OnInit, OnDestroy {
+export class ActorsGraphComponent implements OnInit, OnChanges, OnDestroy {
+  @Input() hierarchy$: IActorInfoDto;
   @Input() customize = false;
   @Input() debug = false;
   @Output() selected = new EventEmitter<ActorGraphNode>();
@@ -73,9 +72,7 @@ export class ActorsGraphComponent implements OnInit, OnDestroy {
   colorVisible = false;
   optsVisible = false;
 
-  constructor(
-    private _actorsStateService: ActorsStateService
-  ) {
+  constructor() {
     Object.assign(this, {
       colorSets,
       chartGroups
@@ -92,9 +89,12 @@ export class ActorsGraphComponent implements OnInit, OnDestroy {
       this.view = undefined;
     }
     this.selectChart(this.chartType);
-    this.hierarchySubscription = this._actorsStateService.hierarchy$.subscribe(hierarchy => {
-      this.refresh(hierarchy);
-    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.hierarchy$) {
+      this.refresh(changes.hierarchy$.currentValue);
+    }
   }
 
   ngOnDestroy(): void {
