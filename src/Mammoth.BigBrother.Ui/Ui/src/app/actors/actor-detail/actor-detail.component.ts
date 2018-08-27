@@ -30,15 +30,23 @@ export class ActorDetailComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.actor != null && changes.actor.currentValue != null) {
-      // no need to get the data here, we've already sent a message to the store
-      // this.refresh();
+    if (changes.actor != null) {
+      if (changes.actor.currentValue != null) {
+        // no need to get the data here, we've already sent a message to the store
+        // this.refresh();
 
-      this.actorDetailService = this.actorsStateService.getActorDetailService(this.actor);
-      this.actorDetail$ = this.actorDetailService.detail$;
-      this.actorCounters$ = this.actorDetailService.counters$;
-      this.actorEvents$ = this.actorDetailService.events$;
-      this.actorExceptions$ = this.actorDetailService.exceptions$;
+        this.actorDetailService = this.actorsStateService.getActorDetailService(this.actor);
+        this.actorDetail$ = this.actorDetailService.detail$;
+        this.actorCounters$ = this.actorDetailService.counters$;
+        this.actorEvents$ = this.actorDetailService.events$;
+        this.actorExceptions$ = this.actorDetailService.exceptions$;
+      } else {
+        this.actorDetailService = null;
+        this.actorDetail$ = null;
+        this.actorCounters$ = null;
+        this.actorEvents$ = null;
+        this.actorExceptions$ = null;
+      }
     }
   }
 

@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { ActorsStateService, actorsStateServiceFactory } from '../services/actors-state.service';
+import { Observable, Subscription } from 'rxjs';
+import { IActorInfoDto } from '../../models/endpoint-web-api.models';
 import { EndpointWebApiService, endpointWebApiServiceFactory } from '../../services/endpoint-web-api.service';
 import { ConfigService } from '../../settings/config.service';
 import { ActorDetailComponent } from '../actor-detail/actor-detail.component';
 import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
-import { Observable } from 'rxjs';
-import { IActorInfoDto } from '../../models/endpoint-web-api.models';
+import { ActorsStateService, actorsStateServiceFactory } from '../services/actors-state.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-actors-page',
@@ -23,25 +23,33 @@ import { IActorInfoDto } from '../../models/endpoint-web-api.models';
     {
       provide: ActorsStateService,
       useFactory: actorsStateServiceFactory,
-      deps: [ActivatedRoute, Store]
+      deps: [Store]
     }
   ]
 })
-export class ActorsPageComponent implements OnInit {
-
+export class ActorsPageComponent implements OnInit, OnDestroy {
   public hierarchy$: Observable<IActorInfoDto>;
   public selectedActor$: Observable<string>;
   @ViewChild('actorDetail') public actorDetailComponent: ActorDetailComponent;
+  private routeSubscription: Subscription;
 
   constructor(
     private _actorsStateService: ActorsStateService,
+    route: ActivatedRoute
   ) {
+    this.routeSubscription = route.params.subscribe(params => this._actorsStateService.init(params.name));
+
     this.hierarchy$ = _actorsStateService.hierarchy$;
     this.selectedActor$ = _actorsStateService.selectedActor$;
-    this.refreshActors();
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy(): void {
+    if (this.routeSubscription != null) {
+      this.routeSubscription.unsubscribe();
+    }
   }
 
   public refreshActors() {

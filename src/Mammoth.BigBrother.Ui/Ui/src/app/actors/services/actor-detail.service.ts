@@ -1,4 +1,4 @@
-import { Store } from "@ngrx/store";
+import { Store, select } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { IActorDetailDto, ICounterDto, IMonitoringEventData, IMonitoringExceptionData } from "../../models/endpoint-web-api.models";
@@ -38,19 +38,27 @@ export class ActorDetailService {
     id: string,
     store: Store<IAppState>
   ) {
-    this._detail$ = store.select(getActorsActor(endpointName, id)).pipe(
+    this._detail$ = store.pipe(
+      select(getActorsActor),
+      map(f => f(endpointName, id)),
       map(data => data != null ? data.actorDetail : null)
     );
 
-    this._counters$ = store.select(getActorsActor(endpointName, id)).pipe(
+    this._counters$ = store.pipe(
+      select(getActorsActor),
+      map(f => f(endpointName, id)),
       map(data => data != null ? data.actorCounters : null)
     );
 
-    this._events$ = store.select(getActorsActor(endpointName, id)).pipe(
+    this._events$ = store.pipe(
+      select(getActorsActor),
+      map(f => f(endpointName, id)),
       map(data => data != null ? data.actorEvents : null)
     );
 
-    this._exceptions$ = store.select(getActorsActor(endpointName, id)).pipe(
+    this._exceptions$ = store.pipe(
+      select(getActorsActor),
+      map(f => f(endpointName, id)),
       map(data => data != null ? data.actorExceptions : null)
     );
   }

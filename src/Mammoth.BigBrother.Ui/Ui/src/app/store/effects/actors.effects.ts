@@ -33,12 +33,12 @@ export class ActorsEffects {
   @Effect()
   displayActor$ = this.actions$.ofType(ActorsActionsTypes.ACTORS_DISPLAY_ACTOR)
     .pipe(
-      switchMap((action: ActorsDisplayActor) => [
+      switchMap((action: ActorsDisplayActor) => action.id != null ? [
         new ActorsGetActorDetail(action.endpointName, action.id),
         new ActorsGetActorCounters(action.endpointName, action.id),
         new ActorsGetActorEvents(action.endpointName, action.id),
         new ActorsGetActorExceptions(action.endpointName, action.id)
-      ])
+      ] : [])
     );
 
   @Effect()

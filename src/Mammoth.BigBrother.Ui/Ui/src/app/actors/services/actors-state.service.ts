@@ -1,6 +1,5 @@
 import { OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { interval, Observable, Subscription } from 'rxjs';
 import { filter, map, share } from 'rxjs/operators';
 import { IActorInfoDto, ICounterDto } from '../../models/endpoint-web-api.models';
@@ -40,24 +39,28 @@ export class ActorsStateService implements OnDestroy {
   private _intervalSubscription: Subscription;
 
   constructor(
-    endpointName: string,
     private store: Store<IAppState>
   ) {
-    this._endpointName = endpointName;
-
-    this._hierarchy$ = this.store.select(getActorsHierarchy(this._endpointName)).pipe(
+    this._hierarchy$ = this.store.pipe(
+      select(getActorsHierarchy),
+      map(data => data(this._endpointName)),
       filter(data => data != null),
       map(data => data.hierarchy),
       share()
     );
 
-    this._globalCounters$ = this.store.select(getActorsGlobalCounters(this._endpointName)).pipe(
+    this._globalCounters$ = this.store.pipe(
+      select(getActorsGlobalCounters),
+      map(data => data(this._endpointName)),
       filter(data => data != null),
       map(data => data.counters),
       share()
     );
 
-    this._selectedActor$ = this.store.select(getSelectedActor(this._endpointName));
+    this._selectedActor$ = this.store.pipe(
+      select(getSelectedActor),
+      map(data => data(this._endpointName))
+    );
 
     this._intervalSubscription = interval(5000).subscribe(() => this.refresh());
   }
@@ -67,6 +70,12 @@ export class ActorsStateService implements OnDestroy {
       this._intervalSubscription.unsubscribe();
       this._intervalSubscription = null;
     }
+  }
+
+  public init(endpointName: string) {
+    this._endpointName = endpointName;
+    this.refresh();
+    this.displayActor(null);
   }
 
   public refresh() {
@@ -87,8 +96,6 @@ export class ActorsStateService implements OnDestroy {
   }
 }
 
-export function actorsStateServiceFactory(route: ActivatedRoute, store: Store<IAppState>): ActorsStateService {
-  // get the config from the route parameter
-  const endpointName = route.snapshot.params["name"] as string;
-  return new ActorsStateService(endpointName, store);
+export function actorsStateServiceFactory(store: Store<IAppState>): ActorsStateService {
+  return new ActorsStateService(store);
 }
