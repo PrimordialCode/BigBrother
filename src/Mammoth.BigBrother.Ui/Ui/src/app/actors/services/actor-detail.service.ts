@@ -39,27 +39,23 @@ export class ActorDetailService {
     store: Store<IAppState>
   ) {
     this._detail$ = store.pipe(
-      select(getActorsActor),
-      map(f => f(endpointName, id)),
-      map(data => data != null ? data.actorDetail : null)
+      select(getActorsActor, { endpointName: endpointName, actorId: id }),
+      map(data => data != null && data.actorDetail)
     );
 
     this._counters$ = store.pipe(
-      select(getActorsActor),
-      map(f => f(endpointName, id)),
-      map(data => data != null ? data.actorCounters : null)
+      select(getActorsActor, { endpointName: endpointName, actorId: id }),
+      map(data => data != null && data.actorCounters)
     );
 
     this._events$ = store.pipe(
-      select(getActorsActor),
-      map(f => f(endpointName, id)),
-      map(data => data != null ? data.actorEvents : null)
+      select(getActorsActor, { endpointName: endpointName, actorId: id }),
+      map(data => data != null && data.actorEvents)
     );
 
     this._exceptions$ = store.pipe(
-      select(getActorsActor),
-      map(f => f(endpointName, id)),
-      map(data => data != null ? data.actorExceptions : null)
+      select(getActorsActor, { endpointName: endpointName, actorId: id }),
+      map(data => data != null && data.actorExceptions)
     );
   }
 }

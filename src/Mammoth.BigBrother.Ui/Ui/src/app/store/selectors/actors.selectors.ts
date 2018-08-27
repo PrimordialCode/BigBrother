@@ -1,27 +1,32 @@
-import { IAppState } from "../state";
 import { createSelector } from "@ngrx/store";
+import { IActorsStateDictionary, IAppState } from "../state";
+
+export interface IActorsSelectorsProps {
+  endpointName: string;
+  actorId?: string;
+}
 
 export const getActorsStateDictionary = (state: IAppState) => state.actors;
 export const getActorsState = createSelector(
   getActorsStateDictionary,
-  actorsStateDictionary => (endpointName: string) => actorsStateDictionary[endpointName]
+  (state: IActorsStateDictionary, props: IActorsSelectorsProps) => state[props.endpointName]
 );
 export const getActorsHierarchy = createSelector(
   getActorsState,
-  state => (endpointName: string) => state(endpointName).hierarchy
+  state => state != null && state.hierarchy
 );
 export const getActorsGlobalCounters = createSelector(
   getActorsState,
-  state => (endpointName: string) => state(endpointName).globalCounters
+  state => state != null && state.globalCounters
 );
 export const getSelectedActor = createSelector(
   getActorsState,
-  state => (endpointName: string) => state(endpointName).selectedActor
+  state => state != null && state.selectedActor
 );
 export const getActorsActor = createSelector(
   getActorsState,
-  state => (endpointName: string, id: string) => {
-    const actors = state(endpointName).actors;
-    return actors != null ? actors[id] : null;
+  (state, props) => {
+    const actors = state != null && state.actors;
+    return actors != null ? actors[props.actorId] : null;
   }
 );

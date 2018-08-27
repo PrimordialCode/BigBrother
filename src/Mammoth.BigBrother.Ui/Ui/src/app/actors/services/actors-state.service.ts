@@ -1,7 +1,7 @@
 import { OnDestroy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { interval, Observable, Subscription } from 'rxjs';
-import { filter, map, share } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { interval, Observable, Subscription, of } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { IActorInfoDto, ICounterDto } from '../../models/endpoint-web-api.models';
 import { ActorsDisplayActor, ActorsGetGlobalCounters, ActorsLoadHierarcy } from '../../store/actions';
 import { getActorsGlobalCounters, getActorsHierarchy, getSelectedActor } from '../../store/selectors';
@@ -42,24 +42,19 @@ export class ActorsStateService implements OnDestroy {
     private store: Store<IAppState>
   ) {
     this._hierarchy$ = this.store.pipe(
-      select(getActorsHierarchy),
-      map(data => data(this._endpointName)),
+      select(getActorsHierarchy, { endpointName: this._endpointName }),
       filter(data => data != null),
-      map(data => data.hierarchy),
-      share()
+      switchMap(data => of(data.hierarchy))
     );
 
     this._globalCounters$ = this.store.pipe(
-      select(getActorsGlobalCounters),
-      map(data => data(this._endpointName)),
+      select(getActorsGlobalCounters, { endpointName: this._endpointName }),
       filter(data => data != null),
-      map(data => data.counters),
-      share()
+      map(data => data.counters)
     );
 
     this._selectedActor$ = this.store.pipe(
-      select(getSelectedActor),
-      map(data => data(this._endpointName))
+      select(getSelectedActor, { endpointName: this._endpointName })
     );
 
     this._intervalSubscription = interval(5000).subscribe(() => this.refresh());
@@ -74,6 +69,25 @@ export class ActorsStateService implements OnDestroy {
 
   public init(endpointName: string) {
     this._endpointName = endpointName;
+
+    /*
+    this._hierarchy$ = this.store.pipe(
+      select(getActorsHierarchy, { endpointName: this._endpointName }),
+      filter(data => data != null),
+      switchMap(data => of(data.hierarchy))
+    );
+
+    this._globalCounters$ = this.store.pipe(
+      select(getActorsGlobalCounters, { endpointName: this._endpointName }),
+      filter(data => data != null),
+      map(data => data.counters)
+    );
+
+    this._selectedActor$ = this.store.pipe(
+      select(getSelectedActor, { endpointName: this._endpointName })
+    );
+    */
+
     this.refresh();
     this.displayActor(null);
   }
