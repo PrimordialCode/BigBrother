@@ -2,8 +2,8 @@ import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { IActorDetailDto, ICounterDto, IMonitoringEventData, IMonitoringExceptionData } from "../../models/endpoint-web-api.models";
-import { getActorsActor } from "../../store";
-import { IAppState } from "../../store/state/app.state";
+import { getActorsActor } from "../../store/selectors";
+import { IAppState } from "../../store/state";
 
 /**
  * a convenience class used to wrap the access to the common state object
