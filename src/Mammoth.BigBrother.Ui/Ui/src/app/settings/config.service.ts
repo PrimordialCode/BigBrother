@@ -4,10 +4,17 @@ import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Configuration } from '../models/configuration.model';
-import { ConfigurationLoaded, ConfigurationLoadFailed } from '../store/actions/configuration.actions';
-import * as fromStore from "../store/reducers";
-import { IAppState } from '../store/state/app.state';
+import { IAppState } from '../store/state';
+import { getConfiguration } from '../store/selectors';
+import { ConfigurationLoaded, ConfigurationLoadFailed } from '../store/actions';
 
+/**
+ * A Service used to request some configuration informations before the Application Starts.
+ * We can then call .load() function again to refresh the configuration information.
+ *
+ * @export
+ * @class ConfigService
+ */
 @Injectable()
 export class ConfigService {
 
@@ -43,6 +50,6 @@ export class ConfigService {
   }
 
   getConfiguration$() {
-    return this.store.select(fromStore.getConfiguration);
+    return this.store.select(getConfiguration);
   }
 }

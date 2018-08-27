@@ -3,7 +3,7 @@ import { Actions, Effect } from "@ngrx/effects";
 import { of } from "rxjs";
 import { catchError, map, switchMap } from "rxjs/operators";
 import { SingletonEndpointWebApiService } from "../../services/singleton-endpoint-web-api.service";
-import { ActorsActionsTypes, ActorsDisplayActor, ActorsGetActorDetail, ActorsGetGlobalCounters, ActorsGetGlobalCountersFailed, ActorsGetGlobalCountersSucceded, ActorsHierarchyLoaded, ActorsLoadHierarcy, ActorsLoadHierarcyFailed, ActorsGetActorDetailSucceded, ActorsGetActorDetailFailed, ActorsGetActorCounters, ActorsGetActorCountersSucceded, ActorsGetActorCountersFailed, ActorsGetActorEvents, ActorsGetActorEventsSucceded, ActorsGetActorEventsFailed, ActorsGetActorExceptions, ActorsGetActorExceptionsSucceded, ActorsGetActorExceptionsFailed } from "../actions";
+import { ActorsActionsTypes, ActorsDisplayActor, ActorsGetActorCounters, ActorsGetActorCountersFailed, ActorsGetActorCountersSucceded, ActorsGetActorDetail, ActorsGetActorDetailFailed, ActorsGetActorDetailSucceded, ActorsGetActorEvents, ActorsGetActorEventsFailed, ActorsGetActorEventsSucceded, ActorsGetActorExceptions, ActorsGetActorExceptionsFailed, ActorsGetActorExceptionsSucceded, ActorsGetGlobalCounters, ActorsGetGlobalCountersFailed, ActorsGetGlobalCountersSucceded, ActorsHierarchyLoaded, ActorsLoadHierarcy, ActorsLoadHierarcyFailed } from "../actions";
 
 @Injectable()
 export class ActorsEffects {

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { getConfiguration } from './store/reducers';
+import { getConfiguration } from './store/selectors';
 import { IAppState } from './store/state/app.state';
 
 @Component({

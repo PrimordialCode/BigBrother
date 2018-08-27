@@ -1,32 +1,15 @@
-import { ActionReducerMap, createSelector } from "@ngrx/store";
-import { IAppState } from "../state/app.state";
-import { configurationReducer } from "./configuration.reducers";
+import { routerReducer } from "@ngrx/router-store";
+import { ActionReducerMap } from "@ngrx/store";
+import { IAppState } from "../state";
 import { actorsReducer } from "./actors.reducers";
+import { configurationReducer } from "./configuration.reducers";
 
 export const reducers: ActionReducerMap<IAppState> = {
   configuration: configurationReducer,
-  actors: actorsReducer
+  actors: actorsReducer,
+  router: routerReducer,
 };
 
-export const getConfigurationState = (state: IAppState) => state.configuration;
-export const getConfiguration = createSelector(getConfigurationState, (state) => state.configuration);
-export const getConfigurationLoaded = createSelector(getConfigurationState, (state) => state.loaded);
-export const getConfigurationEndpoints = createSelector(getConfigurationState, (state) => state.configuration.endpoints);
+export * from "./actors.reducers";
+export * from "./configuration.reducers";
 
-export const getActorsStateDictionary = (state: IAppState) => state.actors;
-export const getActorsState = (endpointName: string) => createSelector(
-  getActorsStateDictionary,
-  actorsStateDictionary => actorsStateDictionary[endpointName]
-);
-export const getActorsHierarchy = (endpointName: string) => createSelector(
-  getActorsState(endpointName),
-  state => state.hierarchy
-);
-export const getActorsGlobalCounters = (endpointName: string) => createSelector(
-  getActorsState(endpointName),
-  state => state.globalCounters
-);
-export const getActorsActor = (endpointName: string, id: string) => createSelector(
-  getActorsState(endpointName),
-  state => state.actors != null ? state.actors[id] : null
-);

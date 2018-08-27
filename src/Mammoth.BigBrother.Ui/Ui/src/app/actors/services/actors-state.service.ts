@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 import { interval, Observable, Subscription } from 'rxjs';
 import { filter, map, share } from 'rxjs/operators';
 import { IActorInfoDto, ICounterDto } from '../../models/endpoint-web-api.models';
-import { ActorsLoadHierarcy, ActorsGetGlobalCounters, ActorsDisplayActor } from '../../store/actions';
-import { getActorsGlobalCounters, getActorsHierarchy } from '../../store/reducers';
-import { IAppState } from '../../store/state/app.state';
+import { ActorsDisplayActor, ActorsGetGlobalCounters, ActorsLoadHierarcy } from '../../store/actions';
+import { getActorsGlobalCounters, getActorsHierarchy } from '../../store/selectors';
+import { IAppState } from '../../store/state';
 import { ActorDetailService } from './actor-detail.service';
 
 /**

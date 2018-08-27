@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IAppState } from '../../store/state/app.state';
-import { getConfiguration } from '../../store/reducers';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { getConfiguration } from '../../store/selectors';
 
 interface IMenuRoute {
   // parameter for [routerLink]
