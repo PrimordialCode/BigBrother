@@ -1,4 +1,4 @@
-import { OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { interval, Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -18,6 +18,7 @@ import { ActorDetailService } from './actor-detail.service';
  * the service will be injected using a factory function because the constructor
  * requires the endpoint name which can be retrieved at runtime from the url.
  */
+@Injectable()
 export class ActorsStateService implements OnDestroy {
   private _endpointName: string;
 

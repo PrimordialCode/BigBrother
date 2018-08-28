@@ -1,12 +1,15 @@
 import { Injectable } from "@angular/core";
 import { Params, RouterStateSnapshot } from "@angular/router";
 import { RouterStateSerializer } from "@ngrx/router-store";
+import { IAppState } from "../state";
 
 export interface IRouterStateUrl {
   url: string;
   params: Params;
   queryParams: Params;
 }
+
+export const getRouterState = (state: IAppState) => state.router;
 
 @Injectable()
 export class CustomRouterStateSerializer implements RouterStateSerializer<IRouterStateUrl> {

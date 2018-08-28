@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ActorDetailComponent } from '../actor-detail/actor-detail.component';
 import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
-import { ActorsStateService, actorsStateServiceFactory } from '../services/actors-state.service';
+import { ActorsStateService } from '../services/actors-state.service';
 
 @Component({
   selector: 'app-actors-page',
@@ -18,11 +17,14 @@ import { ActorsStateService, actorsStateServiceFactory } from '../services/actor
       deps: [ConfigService, HttpClient, ActivatedRoute]
     },
     */
+   ActorsStateService,
+    /*
     {
       provide: ActorsStateService,
       useFactory: actorsStateServiceFactory,
       deps: [Store]
     }
+    */
   ]
 })
 export class ActorsPageComponent implements OnInit, OnDestroy {
