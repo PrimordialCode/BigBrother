@@ -47,6 +47,8 @@ import { ActorDetailExceptionsComponent } from './actors/actor-detail/actor-deta
 import { ActorDetailEventsComponent } from './actors/actor-detail/actor-detail-events/actor-detail-events.component';
 import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
 import { CustomRouterStateSerializer } from './store/router/router';
+import { StorageService, LocalStorageService } from './services/storage.service';
+import { NgrxStorageService } from './services/ngrx-storage.service';
 
 const COVALENT_MODULES: any[] = [
   CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
@@ -64,8 +66,15 @@ const COVALENT_MODULES: any[] = [
  * @param configService the application configuration service
  */
 export function ConfigLoader(configService: ConfigService) {
-  // Note: this factory need to return a function (that return a promise)
+  // Note: this factory needs to return a function (that returns a promise)
   return () => configService.load(environment.configFile);
+}
+
+// load the state from the local storage (in case of refresh)
+const stateFromStorage = localStorage.getItem("ngrxstate");
+const loadedInitalAppState = stateFromStorage != null ? JSON.parse(stateFromStorage) : {};
+export function getStoreInitialState() {
+  return { ...initialAppState, ...loadedInitalAppState };
 }
 
 @NgModule({
@@ -93,7 +102,7 @@ export function ConfigLoader(configService: ConfigService) {
     MaterialModule,
     NgxChartsModule,
     NgxGraphModule,
-    StoreModule.forRoot(reducers, { initialState: initialAppState }),
+    StoreModule.forRoot(reducers, { initialState: getStoreInitialState }),
     EffectsModule.forRoot(effects),
     StoreRouterConnectingModule,
     StoreDevtoolsModule.instrument({
@@ -103,6 +112,8 @@ export function ConfigLoader(configService: ConfigService) {
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
+    { provide: StorageService, useClass: LocalStorageService },
     ConfigService,
     {
       provide: APP_INITIALIZER,
@@ -110,9 +121,14 @@ export function ConfigLoader(configService: ConfigService) {
       deps: [ConfigService],
       multi: true
     },
-    { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
-    SingletonEndpointWebApiService
+    SingletonEndpointWebApiService,
+    NgrxStorageService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(
+    _ngrxStorageService: NgrxStorageService
+  ) {
+  }
+}

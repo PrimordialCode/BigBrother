@@ -80,7 +80,19 @@ export class ActorsStateService implements OnDestroy {
     );
 
     this.refresh();
-    this.displayActor(null);
+
+    // Saving the state in the local storage there's no need to reset or reload the information
+    // again, the snapshot of the last displayed actor will be reloaded again
+    // we should instead check if the selected actor still exists in the updated actor system.
+    // Actually if the actor does not exists anymore, no data will be returned
+    /*
+    // if there's a selected actor in the store use that to load the existing data instead of asking for a new one
+    this.store.pipe(
+      select(getSelectedActor(), props),
+      tap(selectedActor => this.displayActor(selectedActor))
+    );
+    */
+    // this.displayActor(null);
 
     this._intervalSubscription = interval(5000).subscribe(() => this.refresh());
   }
