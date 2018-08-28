@@ -1,25 +1,23 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { IActorInfoDto } from '../../models/endpoint-web-api.models';
-import { EndpointWebApiService, endpointWebApiServiceFactory } from '../../services/endpoint-web-api.service';
-import { ConfigService } from '../../settings/config.service';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { ActorDetailComponent } from '../actor-detail/actor-detail.component';
 import { ActorGraphNode } from '../actors-graph/actprs-graph.models';
 import { ActorsStateService, actorsStateServiceFactory } from '../services/actors-state.service';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-actors-page',
   templateUrl: './actors-page.component.html',
   styleUrls: ['./actors-page.component.css'],
   providers: [
+    /*
     {
       provide: EndpointWebApiService,
       useFactory: endpointWebApiServiceFactory,
       deps: [ConfigService, HttpClient, ActivatedRoute]
     },
+    */
     {
       provide: ActorsStateService,
       useFactory: actorsStateServiceFactory,
@@ -28,8 +26,12 @@ import { Store } from '@ngrx/store';
   ]
 })
 export class ActorsPageComponent implements OnInit, OnDestroy {
-  public hierarchy$: Observable<IActorInfoDto>;
-  public selectedActor$: Observable<string>;
+  public get hierarchy$() {
+    return this._actorsStateService.hierarchy$;
+  }
+  public get selectedActor$() {
+    return this._actorsStateService.selectedActor$;
+  }
   @ViewChild('actorDetail') public actorDetailComponent: ActorDetailComponent;
   private routeSubscription: Subscription;
 
@@ -38,9 +40,6 @@ export class ActorsPageComponent implements OnInit, OnDestroy {
     route: ActivatedRoute
   ) {
     this.routeSubscription = route.params.subscribe(params => this._actorsStateService.init(params.name));
-
-    this.hierarchy$ = _actorsStateService.hierarchy$;
-    this.selectedActor$ = _actorsStateService.selectedActor$;
   }
 
   ngOnInit() {

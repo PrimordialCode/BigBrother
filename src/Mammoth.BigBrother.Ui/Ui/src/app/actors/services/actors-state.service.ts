@@ -1,7 +1,7 @@
 import { OnDestroy } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { interval, Observable, Subscription, of } from 'rxjs';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { interval, Observable, Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { IActorInfoDto, ICounterDto } from '../../models/endpoint-web-api.models';
 import { ActorsDisplayActor, ActorsGetGlobalCounters, ActorsLoadHierarcy } from '../../store/actions';
 import { getActorsGlobalCounters, getActorsHierarchy, getSelectedActor } from '../../store/selectors';
@@ -41,26 +41,13 @@ export class ActorsStateService implements OnDestroy {
   constructor(
     private store: Store<IAppState>
   ) {
-    this._hierarchy$ = this.store.pipe(
-      select(getActorsHierarchy, { endpointName: this._endpointName }),
-      filter(data => data != null),
-      switchMap(data => of(data.hierarchy))
-    );
-
-    this._globalCounters$ = this.store.pipe(
-      select(getActorsGlobalCounters, { endpointName: this._endpointName }),
-      filter(data => data != null),
-      map(data => data.counters)
-    );
-
-    this._selectedActor$ = this.store.pipe(
-      select(getSelectedActor, { endpointName: this._endpointName })
-    );
-
-    this._intervalSubscription = interval(5000).subscribe(() => this.refresh());
   }
 
   ngOnDestroy(): void {
+    this.resetIntervalSubscription();
+  }
+
+  private resetIntervalSubscription() {
     if (this._intervalSubscription != null) {
       this._intervalSubscription.unsubscribe();
       this._intervalSubscription = null;
@@ -68,28 +55,33 @@ export class ActorsStateService implements OnDestroy {
   }
 
   public init(endpointName: string) {
+    this.resetIntervalSubscription();
+
     this._endpointName = endpointName;
 
-    /*
+    // pass the same argument to have the memoization work!
+    const props = { endpointName: this._endpointName };
+
     this._hierarchy$ = this.store.pipe(
-      select(getActorsHierarchy, { endpointName: this._endpointName }),
+      select(getActorsHierarchy(), props),
       filter(data => data != null),
-      switchMap(data => of(data.hierarchy))
+      map(data => data.hierarchy)
     );
 
     this._globalCounters$ = this.store.pipe(
-      select(getActorsGlobalCounters, { endpointName: this._endpointName }),
+      select(getActorsGlobalCounters(), props),
       filter(data => data != null),
       map(data => data.counters)
     );
 
     this._selectedActor$ = this.store.pipe(
-      select(getSelectedActor, { endpointName: this._endpointName })
+      select(getSelectedActor(), props)
     );
-    */
 
     this.refresh();
     this.displayActor(null);
+
+    this._intervalSubscription = interval(5000).subscribe(() => this.refresh());
   }
 
   public refresh() {
@@ -101,7 +93,7 @@ export class ActorsStateService implements OnDestroy {
     this.store.dispatch(new ActorsDisplayActor(this._endpointName, id));
   }
 
-  public getActorDetailService(id: string): ActorDetailService {
+  public createActorDetailService(id: string): ActorDetailService {
     return new ActorDetailService(
       this._endpointName,
       id,

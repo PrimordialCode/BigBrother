@@ -35,7 +35,7 @@ export class ActorDetailComponent implements OnInit, OnChanges {
         // no need to get the data here, we've already sent a message to the store
         // this.refresh();
 
-        this.actorDetailService = this.actorsStateService.getActorDetailService(this.actor);
+        this.actorDetailService = this.actorsStateService.createActorDetailService(this.actor);
         this.actorDetail$ = this.actorDetailService.detail$;
         this.actorCounters$ = this.actorDetailService.counters$;
         this.actorEvents$ = this.actorDetailService.events$;
