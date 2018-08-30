@@ -26,20 +26,24 @@ export const getActorsState = () => createSelector(
 );
 export const getActorsHierarchy = () => createSelector(
   getActorsState(),
-  state => state != null && state.hierarchy
+  state => state && state.hierarchy // the same as: state != null ?? state.hierarchy : null
+);
+export const getActorsHierarchyLoaded = () => createSelector(
+  getActorsHierarchy(),
+  state => state != null ? state.loaded : false
 );
 export const getActorsGlobalCounters = () => createSelector(
   getActorsState(),
-  state => state != null && state.globalCounters
+  state => state && state.globalCounters
 );
 export const getSelectedActor = () => createSelector(
   getActorsState(),
-  state => state != null && state.selectedActor
+  state => state && state.selectedActor
 );
 export const getActorsActor = () => createSelector(
   getActorsState(),
   (state, props) => {
-    const actors = state != null && state.actors;
-    return actors != null ? actors[props.actorId] : null;
+    const actors = state && state.actors;
+    return actors && actors[props.actorId];
   }
 );
