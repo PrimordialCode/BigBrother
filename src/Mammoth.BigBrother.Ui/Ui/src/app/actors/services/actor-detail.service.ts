@@ -38,24 +38,27 @@ export class ActorDetailService {
     id: string,
     store: Store<IAppState>
   ) {
+    // create a single instance of the props, so memoization works better
+    const props = { endpointName: endpointName, actorId: id };
+
     this._detail$ = store.pipe(
-      select(getActorsActor(), { endpointName: endpointName, actorId: id }),
-      map(data => data != null && data.actorDetail)
+      select(getActorsActor(), props),
+      map(data => data && data.actorDetail)
     );
 
     this._counters$ = store.pipe(
-      select(getActorsActor(), { endpointName: endpointName, actorId: id }),
-      map(data => data != null && data.actorCounters)
+      select(getActorsActor(), props),
+      map(data => data && data.actorCounters)
     );
 
     this._events$ = store.pipe(
-      select(getActorsActor(), { endpointName: endpointName, actorId: id }),
-      map(data => data != null && data.actorEvents)
+      select(getActorsActor(), props),
+      map(data => data && data.actorEvents)
     );
 
     this._exceptions$ = store.pipe(
-      select(getActorsActor(), { endpointName: endpointName, actorId: id }),
-      map(data => data != null && data.actorExceptions)
+      select(getActorsActor(), props),
+      map(data => data && data.actorExceptions)
     );
   }
 }

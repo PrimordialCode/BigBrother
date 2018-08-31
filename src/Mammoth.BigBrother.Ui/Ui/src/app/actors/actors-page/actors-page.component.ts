@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ActorDetailComponent } from '../actor-detail/actor-detail.component';
@@ -9,6 +9,7 @@ import { ActorsStateService } from '../services/actors-state.service';
   selector: 'app-actors-page',
   templateUrl: './actors-page.component.html',
   styleUrls: ['./actors-page.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     /*
     {

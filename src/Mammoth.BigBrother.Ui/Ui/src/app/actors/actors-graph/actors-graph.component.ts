@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import * as shape from 'd3-shape';
 import { Subscription } from 'rxjs';
 import { IActorInfoDto } from '../../models/endpoint-web-api.models';
@@ -11,7 +11,7 @@ import { colorSets } from './color-sets';
   encapsulation: ViewEncapsulation.None,
   templateUrl: './actors-graph.component.html',
   styleUrls: ['./actors-graph.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush the ngx-graph will not work with OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActorsGraphComponent implements OnInit, OnChanges, OnDestroy {
   @Input() hierarchy$: IActorInfoDto;
