@@ -51,7 +51,16 @@ namespace Mammoth.BigBrother.Monitoring
         {
             if (message != null)
             {
-                _properties[MetricProperties.Message] = JsonConvert.SerializeObject(message);
+                string messageAsString;
+                try
+                {
+                    messageAsString = JsonConvert.SerializeObject(message);
+                }
+                catch
+                {
+                    messageAsString = message.ToString();
+                }
+                _properties[MetricProperties.Message] = messageAsString;
             }
             return this;
         }
@@ -60,7 +69,7 @@ namespace Mammoth.BigBrother.Monitoring
         {
             if (exception != null)
             {
-                _properties[MetricProperties.Exception] = JsonConvert.SerializeObject(exception);
+                _properties[MetricProperties.Exception] = exception.ToString(); // JsonConvert.SerializeObject(exception);
             }
             return this;
         }
