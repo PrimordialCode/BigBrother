@@ -31,7 +31,8 @@
         </h3>
         <div [hidden]="!dimVisiable" style="margin-left: 10px;">
           <label>
-            <input type="checkbox" [checked]="fitContainer" (change)="toggleFitContainer($event.target.checked, autoZoom)"> Fit Container
+            <input type="checkbox" [checked]="fitContainer"
+              (change)="toggleFitContainer($event.target.checked, autoZoom)"> Fit Container
           </label>
           <br />
           <div *ngIf="!fitContainer">
@@ -47,7 +48,8 @@
           </div>
           <br />
           <label>
-            <input type="checkbox" [checked]="autoZoom" (change)="toggleFitContainer(fitContainer, $event.target.checked)"> Auto Zoom
+            <input type="checkbox" [checked]="autoZoom"
+              (change)="toggleFitContainer(fitContainer, $event.target.checked)"> Auto Zoom
           </label>
         </div>
       </div>
@@ -56,7 +58,8 @@
         </span>
         <strong>Color Scheme</strong>
       </h3>
-      <select [hidden]="!colorVisible" style="margin-left: 10px;" [ngModel]="selectedColorScheme" (ngModelChange)="setColorScheme($event)">
+      <select [hidden]="!colorVisible" style="margin-left: 10px;" [ngModel]="selectedColorScheme"
+        (ngModelChange)="setColorScheme($event)">
         <option *ngFor="let scheme of colorSets" [value]="scheme.name">{{scheme.name}}</option>
       </select>
       <h3 (click)="optsVisible = !optsVisible" style="cursor: pointer">
@@ -81,9 +84,10 @@
   </div>
   <div class="chart-col">
 
-    <ngx-graph *ngIf="hierarchialGraph.nodes != null && hierarchialGraph.nodes.length > 0" class="chart-container" [view]="view"
-      [autoZoom]="autoZoom" [legend]="showLegend" [links]="hierarchialGraph.links" (legendLabelClick)="onLegendLabelClick($event)"
-      [nodes]="hierarchialGraph.nodes" [scheme]="colorScheme" [orientation]="orientation" [curve]="curve" (select)="select($event)"
+    <ngx-graph *ngIf="hierarchialGraph.nodes != null && hierarchialGraph.nodes.length > 0" class="chart-container"
+      [view]="view" [autoZoom]="autoZoom" [legend]="showLegend" [links]="hierarchialGraph.links"
+      (legendLabelClick)="onLegendLabelClick($event)" [nodes]="hierarchialGraph.nodes" [scheme]="colorScheme"
+      [curve]="curve" (select)="select($event)" layout="dagre" [layoutSettings]="{ orientation: orientation }"
       [update$]="">
 
       <ng-template #defsTemplate>
@@ -93,9 +97,12 @@
       </ng-template>
 
       <ng-template #nodeTemplate let-node>
-        <svg:g class="node" ngx-tooltip [tooltipPlacement]="'top'" [tooltipType]="'tooltip'" [tooltipTitle]="node.label">
-          <svg:rect [attr.width]="node.width" [attr.height]="node.height" [attr.fill]="node.options.color" />
-          <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.height / 2">{{node.label}}</svg:text>
+        <svg:g class="node" ngx-tooltip [tooltipPlacement]="'top'" [tooltipType]="'tooltip'"
+          [tooltipTitle]="node.label">
+          <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height"
+            [attr.fill]="node.data.color" />
+          <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2">{{node.label}}
+          </svg:text>
         </svg:g>
       </ng-template>
 
@@ -104,7 +111,8 @@
           <svg:path class="line" stroke-width="2" marker-end="url(#arrow)">
           </svg:path>
           <svg:text class="edge-label" text-anchor="middle">
-            <textPath class="text-path" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline" startOffset="50%">
+            <textPath class="text-path" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline"
+              startOffset="50%">
               {{link.label}}
             </textPath>
           </svg:text>

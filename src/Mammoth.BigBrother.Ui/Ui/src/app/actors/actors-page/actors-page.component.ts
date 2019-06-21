@@ -35,7 +35,7 @@ export class ActorsPageComponent implements OnInit, OnDestroy {
   public get selectedActor$() {
     return this._actorsStateService.selectedActor$;
   }
-  @ViewChild('actorDetail') public actorDetailComponent: ActorDetailComponent;
+  @ViewChild('actorDetail', { static: true }) public actorDetailComponent: ActorDetailComponent;
   private routeSubscription: Subscription;
 
   constructor(

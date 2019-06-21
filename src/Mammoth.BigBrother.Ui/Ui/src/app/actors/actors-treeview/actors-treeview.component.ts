@@ -1,6 +1,6 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { MatTreeNestedDataSource } from '@angular/material';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { of, Subscription } from 'rxjs';
 import { IActorInfoDto } from '../../models/endpoint-web-api.models';
 import { ActorGraphNode } from '../actors-graph/actprs-graph.models';

@@ -45,7 +45,7 @@ import { DashboardEndpointsComponent } from './home-page/dashboard-endpoints/das
 import { SingletonEndpointWebApiService } from './services/singleton-endpoint-web-api.service';
 import { ActorDetailExceptionsComponent } from './actors/actor-detail/actor-detail-exceptions/actor-detail-exceptions.component';
 import { ActorDetailEventsComponent } from './actors/actor-detail/actor-detail-events/actor-detail-events.component';
-import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
+import { StoreRouterConnectingModule, RouterStateSerializer, DefaultRouterStateSerializer } from '@ngrx/router-store';
 import { CustomRouterStateSerializer } from './store/router/router';
 
 const COVALENT_MODULES: any[] = [
@@ -88,14 +88,14 @@ export function ConfigLoader(configService: ConfigService) {
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
     COVALENT_MODULES,
     MaterialModule,
     NgxChartsModule,
     NgxGraphModule,
     StoreModule.forRoot(reducers, { initialState: initialAppState }),
     EffectsModule.forRoot(effects),
-    StoreRouterConnectingModule,
+    StoreRouterConnectingModule.forRoot({ serializer: DefaultRouterStateSerializer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
