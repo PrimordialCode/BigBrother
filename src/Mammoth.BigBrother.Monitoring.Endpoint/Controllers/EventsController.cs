@@ -3,10 +3,10 @@ using System.Linq;
 using Mammoth.BigBrother.Monitoring.Endpoint.Dto;
 using Mammoth.BigBrother.Monitoring.Metrics;
 using Mammoth.BigBrother.Monitoring.Systems.InMemory;
-#if NET45
+#if NET461
 using System.Web.Http;
 #endif
-#if NETCOREAPP2_0
+#if NETCOREAPP2_2
 using Microsoft.AspNetCore.Mvc;
 #endif
 

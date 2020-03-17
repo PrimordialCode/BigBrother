@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using Mammoth.BigBrother.Monitoring.Endpoint.Dto;
 using Mammoth.BigBrother.Monitoring.Endpoint.Services;
-#if NET45
+#if NET461
 using System.Web.Http;
 #endif
-#if NETCOREAPP2_0
+#if NETCOREAPP2_2
 using Microsoft.AspNetCore.Mvc;
 #endif
 
