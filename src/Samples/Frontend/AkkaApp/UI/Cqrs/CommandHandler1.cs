@@ -1,6 +1,4 @@
-﻿extern alias akka;
-
-using akka::Akka.Actor;
+﻿using Akka.Actor;
 using Frontend.AkkaApp.UI.Console;
 using System;
 

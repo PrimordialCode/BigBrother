@@ -1,6 +1,4 @@
-﻿extern alias akka;
-
-using akka::Akka.Actor;
+﻿using Akka.Actor;
 using Frontend.Shared;
 using Frontend.Shared.Exceptions;
 using Frontend.Shared.UI.Messages;

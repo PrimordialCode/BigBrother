@@ -1,6 +1,4 @@
-﻿extern alias akka;
-
-using System;
+﻿using System;
 using Frontend.Shared;
 using Mammoth.BigBrother.Akka.Monitoring;
 

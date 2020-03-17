@@ -1,8 +1,6 @@
-﻿extern alias akka;
-
-using akka::Akka.Actor;
-using akka::Akka.Configuration;
-using akka::Akka.Event;
+﻿using Akka.Actor;
+using Akka.Configuration;
+using Akka.Event;
 using Frontend.AkkaApp.UI.Cqrs;
 using Frontend.Shared;
 using Mammoth.BigBrother.Akka.Monitoring;
@@ -46,7 +44,7 @@ namespace Frontend.AkkaApp
             // .WithFallback();
             ColoredConsole.WriteLine("Creating the ActorSystem");
             _actorSystem = ActorSystem.Create(name, config);
-            var resolver = new AkkaServiceProviderDependencyResolver(serviceCollection.BuildServiceProvider(), _actorSystem);
+            new AkkaServiceProviderDependencyResolver(serviceCollection.BuildServiceProvider(), _actorSystem);
 
             // add a deadletter watcher actor
             var deadlettermonitorRef = _actorSystem.ActorOf<DeadLetterMonitor>("deadlettermonitor");

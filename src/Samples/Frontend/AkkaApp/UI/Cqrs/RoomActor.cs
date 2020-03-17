@@ -1,6 +1,4 @@
-﻿extern alias akka;
-
-using akka::Akka.Actor;
+﻿using Akka.Actor;
 using Frontend.Shared.Cqrs.Commands;
 using System;
 using System.Threading.Tasks;

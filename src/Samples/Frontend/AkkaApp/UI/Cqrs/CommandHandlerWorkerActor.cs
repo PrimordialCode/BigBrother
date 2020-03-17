@@ -1,7 +1,5 @@
-﻿extern alias akka;
-
-using akka::Akka.Actor;
-using akka::Akka.Routing;
+﻿using Akka.Actor;
+using Akka.Routing;
 using Frontend.Shared.Exceptions;
 using Frontend.Shared.UI.Messages;
 using System;
@@ -94,7 +92,7 @@ namespace Frontend.AkkaApp.Ui.Cqrs
 								return Directive.Stop;
 							}
 							// delegate to the default supervision startegy
-							return akka.Akka.Actor.SupervisorStrategy.DefaultStrategy.Decider.Decide(ex);
+							return Akka.Actor.SupervisorStrategy.DefaultStrategy.Decider.Decide(ex);
 						})));
 	}
 }

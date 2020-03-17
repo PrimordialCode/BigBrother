@@ -37,6 +37,7 @@
     <None Include="AkkaApp\UI\Console\CommandHandlerActor.cs" />
   </ItemGroup>
 
+  <!-- extern akka trick: https://github.com/akkadotnet/akka.net/issues/3161
     <Target Name="ChangeAliasesOfStrongNameAssemblies" BeforeTargets="FindReferenceAssembliesForReferences;ResolveReferences">
         <ItemGroup>
             <ReferencePath Condition="'%(FileName)' == 'Akka'">
@@ -44,5 +45,6 @@
             </ReferencePath>
         </ItemGroup>
     </Target>
+  -->
 
 </Project>

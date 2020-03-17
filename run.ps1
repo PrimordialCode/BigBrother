@@ -22,7 +22,7 @@ $msBuild = Resolve-MsBuild
 
 & $msBuild ".\src" /t:restore /m
 & $msBuild ".\src" /t:build /m
-& Start-Process dotnet ".\src\Samples\Frontend\bin\Debug\netcoreapp2.0\Frontend.dll"
+& Start-Process dotnet ".\src\Samples\Frontend\bin\Debug\netcoreapp2.2\Frontend.dll"
 & Start-Process "C:\Work\BigBrother\src\Samples\Frontend.net45\bin\Debug\Frontend.net45.exe"
 & Start-Process dotnet "run --no-restore --no-build --project .\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj"
 

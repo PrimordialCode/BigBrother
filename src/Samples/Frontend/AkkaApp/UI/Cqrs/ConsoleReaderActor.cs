@@ -1,12 +1,10 @@
-﻿extern alias akka;
-
-using System;
-using akka::Akka.Actor;
+﻿using System;
 using Frontend.Shared.UI.Messages;
 using Frontend.AkkaApp.UI.Support.Messages;
 using Frontend.Shared.Cqrs.Commands;
 using Frontend.AkkaApp.UI.Cqrs;
 using Frontend.Shared.Cqrs.Domain.Room;
+using Akka.Actor;
 
 namespace Frontend.AkkaApp.Ui.Cqrs
 {
