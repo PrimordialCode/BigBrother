@@ -22,11 +22,17 @@ $msBuild = Resolve-MsBuild
 
 $artifactPath = "artifacts"
 $packageOutputPath = "..\..\$artifactPath"
+$configurationdefault = "Release"
+
+$configuration = Read-Host 'Configuration to build [default: Release] ?'
+if (!$configuration -or ($configuration -eq '')) {
+	$configuration = $configurationdefault
+}
 
 Remove-Item ".\$artifactPath\*" -Recurse -ErrorAction Ignore
 
-& $msBuild ".\src" /t:restore
-& $msBuild ".\src" /t:build
+& $msBuild ".\src" /t:restore /p:Configuration=$configuration
+& $msBuild ".\src" /t:build /p:Configuration=$configuration
 # todo: run tests
 & $msBuild ".\src\Mammoth.BigBrother.Monitoring\Mammoth.BigBrother.Monitoring.csproj" /t:pack /p:PackageOutputPath=$packageOutputPath
 & $msBuild ".\src\Mammoth.BigBrother.Akka.Monitoring\Mammoth.BigBrother.Akka.Monitoring.csproj" /t:pack /p:PackageOutputPath=$packageOutputPath

@@ -21,10 +21,16 @@ function Resolve-MsBuild {
 $msBuild = Resolve-MsBuild
 
 $artifactPath = ".\artifacts\ui"
+$configurationdefault = "Release"
+
+$configuration = Read-Host 'Configuration to build [default: Release] ?'
+if (!$configuration -or ($configuration -eq '')) {
+	$configuration = $configurationdefault
+}
 
 Remove-Item "$artifactPath\*" -Recurse -ErrorAction Ignore
 
-& $msBuild ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" /t:restore
+& $msBuild ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" /t:restore /p:Configuration=$configuration
 #& $msBuild ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" /t:build
 
 Set-Location ".\src\Mammoth.BigBrother.Ui\Ui"
@@ -34,7 +40,7 @@ npm run build
 Set-Location "..\..\.."
 
 # publish the app
-& $msbuild ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" /verbosity:normal /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=".\src\Mammoth.BigBrother.Ui\Properties\PublishProfiles\FolderProfile.pubxml"
+& $msbuild ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" /verbosity:normal /p:Configuration=$configuration /p:DeployOnBuild=true /p:PublishProfile=".\src\Mammoth.BigBrother.Ui\Properties\PublishProfiles\FolderProfile.pubxml"
 Move-Item -Path ".\src\Mammoth.BigBrother.Ui\bin\publish\*" $artifactPath
 
 Set-Content -Path "$artifactPath\run.cmd" -Value "dotnet Mammoth.BigBrother.Ui.dll"
