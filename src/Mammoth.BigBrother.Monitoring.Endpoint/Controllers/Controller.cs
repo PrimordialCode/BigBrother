@@ -4,7 +4,7 @@ using System.Text;
 #if NET461
 using System.Web.Http;
 #endif
-#if NET5_0
+#if NETCOREAPP3_1 || NET5_0
 using Microsoft.AspNetCore.Mvc;
 #endif
 
@@ -16,7 +16,7 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
     {
     }
 #endif
-#if NET5_0
+#if NETCOREAPP3_1 || NET5_0
     public abstract class Controller : ControllerBase
     {
     }

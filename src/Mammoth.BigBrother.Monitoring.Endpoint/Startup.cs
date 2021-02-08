@@ -1,4 +1,4 @@
-﻿#if NETCOREAPP2_2
+﻿#if NETCOREAPP2_2 || NETCOREAPP3_1 || NET5_0
 
 using System;
 using System.Collections.Generic;
@@ -25,7 +25,7 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

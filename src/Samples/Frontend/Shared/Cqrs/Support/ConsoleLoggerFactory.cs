@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 using NStore.Core.Logging;
 using NStore.Core.Persistence;
 using System;
@@ -14,16 +13,16 @@ namespace Frontend.Shared.Cqrs.Support
                 return NStoreNullLogger.Instance;
 
             return new ConsoleLoggerWrapper(
-                new ConsoleLogger(categoryName, (s, level) => true, true)
+                LoggerFactory.Create((configure) => configure.AddConsole()).CreateLogger(categoryName)
             );
         }
     }
 
     public class ConsoleLoggerWrapper : INStoreLogger
     {
-        private readonly ConsoleLogger _logger;
+        private readonly ILogger _logger;
 
-        public ConsoleLoggerWrapper(ConsoleLogger logger)
+        public ConsoleLoggerWrapper(ILogger logger)
         {
             _logger = logger;
         }

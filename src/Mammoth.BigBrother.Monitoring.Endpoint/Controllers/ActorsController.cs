@@ -6,7 +6,7 @@ using Mammoth.BigBrother.Monitoring.Systems.InMemory;
 #if NET461
 using System.Web.Http;
 #endif
-#if NETCOREAPP2_2 || NET5_0
+#if NETCOREAPP2_2 || NETCOREAPP3_1 || NET5_0
 using Microsoft.AspNetCore.Mvc;
 #endif
 
