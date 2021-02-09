@@ -1,27 +1,5 @@
-function Resolve-MsBuild {
-	$msb2017 = Resolve-Path "${env:ProgramFiles(x86)}\Microsoft Visual Studio\*\*\MSBuild\*\bin\msbuild.exe" -ErrorAction SilentlyContinue
-	if($msb2017) {
-		Write-Host "Found MSBuild 2017 (or later)."
-		Write-Host $msb2017
-		return $msb2017
-	}
-
-	$msBuild2015 = "${env:ProgramFiles(x86)}\MSBuild\14.0\bin\msbuild.exe"
-
-	if(-not (Test-Path $msBuild2015)) {
-		throw 'Could not find MSBuild 2015 or later.'
-	}
-
-	Write-Host "Found MSBuild 2015."
-	Write-Host $msBuild2015
-
-	return $msBuild2015
-}
-
-$msBuild = Resolve-MsBuild
-
 $artifactPath = "artifacts"
-$packageOutputPath = "..\..\$artifactPath"
+$packageOutputPath = $artifactPath
 $configurationdefault = "Release"
 
 $configuration = Read-Host 'Configuration to build [default: Release] ?'
@@ -29,14 +7,35 @@ if (!$configuration -or ($configuration -eq '')) {
 	$configuration = $configurationdefault
 }
 
-Remove-Item ".\$artifactPath\*" -Recurse -ErrorAction Ignore
+Remove-Item "$packageOutputPath\*" -Recurse -ErrorAction Ignore
 
-& $msBuild ".\src" /t:restore /p:Configuration=$configuration
-& $msBuild ".\src" /t:build /p:Configuration=$configuration
-# todo: run tests
-& $msBuild ".\src\Mammoth.BigBrother.Monitoring\Mammoth.BigBrother.Monitoring.csproj" /t:pack /p:PackageOutputPath=$packageOutputPath
-& $msBuild ".\src\Mammoth.BigBrother.Akka.Monitoring\Mammoth.BigBrother.Akka.Monitoring.csproj" /t:pack /p:PackageOutputPath=$packageOutputPath
-& $msBuild ".\src\Mammoth.BigBrother.Monitoring.Endpoint\Mammoth.BigBrother.Monitoring.Endpoint.csproj" /t:pack /p:PackageOutputPath=$packageOutputPath
+# Install gitversion tool
+dotnet tool restore
+$output = dotnet tool run dotnet-gitversion /nofetch | out-string
+
+# GitVersion
+Write-Host $output
+$version = $output | ConvertFrom-Json
+$assemblyVersion = $version.AssemblySemver
+$assemblyFileVersion = $version.AssemblySemver
+#$assemblyInformationalVersion = ($version.SemVer + "." + $version.Sha)
+$assemblyInformationalVersion = ($version.InformationalVersion)
+$nugetVersion = $version.NuGetVersion
+Write-Host $assemblyVersion
+Write-Host $assemblyFileVersion
+Write-Host $assemblyInformationalVersion
+Write-Host $nugetVersion
+
+# Restore and Build
+Write-Host "Building: "$nugetVersion
+dotnet restore "./src/Mammoth.BigBrother.sln" --verbosity m
+dotnet build "./src/Mammoth.BigBrother.sln" -c $configuration --no-restore /p:AssemblyVersion=$assemblyVersion /p:FileVersion=$assemblyFileVersion /p:InformationalVersion=$assemblyInformationalVersion
+
+# NuGet Packages
+Write-Host "NuGet Packages creation"
+dotnet pack ".\src\Mammoth.BigBrother.Monitoring\Mammoth.BigBrother.Monitoring.csproj" -c $configuration --no-build -o $packageOutputPath /p:PackageVersion=$nugetVersion
+dotnet pack ".\src\Mammoth.BigBrother.Akka.Monitoring\Mammoth.BigBrother.Akka.Monitoring.csproj" -c $configuration --no-build -o $packageOutputPath /p:PackageVersion=$nugetVersion
+dotnet pack ".\src\Mammoth.BigBrother.Monitoring.Endpoint\Mammoth.BigBrother.Monitoring.Endpoint.csproj" -c $configuration --no-build -o $packageOutputPath /p:PackageVersion=$nugetVersion
 
 Write-Host "Operation completed."
 

@@ -1,25 +1,3 @@
-function Resolve-MsBuild {
-	$msb2017 = Resolve-Path "${env:ProgramFiles(x86)}\Microsoft Visual Studio\*\*\MSBuild\*\bin\msbuild.exe" -ErrorAction SilentlyContinue
-	if($msb2017) {
-		Write-Host "Found MSBuild 2017 (or later)."
-		Write-Host $msb2017
-		return $msb2017
-	}
-
-	$msBuild2015 = "${env:ProgramFiles(x86)}\MSBuild\14.0\bin\msbuild.exe"
-
-	if(-not (Test-Path $msBuild2015)) {
-		throw 'Could not find MSBuild 2015 or later.'
-	}
-
-	Write-Host "Found MSBuild 2015."
-	Write-Host $msBuild2015
-
-	return $msBuild2015
-}
-
-$msBuild = Resolve-MsBuild
-
 $artifactPath = ".\artifacts\ui"
 $configurationdefault = "Release"
 
@@ -30,18 +8,40 @@ if (!$configuration -or ($configuration -eq '')) {
 
 Remove-Item "$artifactPath\*" -Recurse -ErrorAction Ignore
 
-& $msBuild ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" /t:restore /p:Configuration=$configuration
-#& $msBuild ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" /t:build
+# Install gitversion tool
+dotnet tool restore
+$output = dotnet tool run dotnet-gitversion /nofetch | out-string
 
+# GitVersion
+Write-Host $output
+$version = $output | ConvertFrom-Json
+$assemblyVersion = $version.AssemblySemver
+$assemblyFileVersion = $version.AssemblySemver
+#$assemblyInformationalVersion = ($version.SemVer + "." + $version.Sha)
+$assemblyInformationalVersion = ($version.InformationalVersion)
+$nugetVersion = $version.NuGetVersion
+Write-Host $assemblyVersion
+Write-Host $assemblyFileVersion
+Write-Host $assemblyInformationalVersion
+Write-Host $nugetVersion
+
+# Restore
+Write-Host "Restore"
+dotnet restore ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" --verbosity m
+
+write-Host "Build UI"
 Set-Location ".\src\Mammoth.BigBrother.Ui\Ui"
-npm install
+npm ci
 npm audit fix
 npm run build
 Set-Location "..\..\.."
 
-# publish the app
-& $msbuild ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" /verbosity:normal /p:Configuration=$configuration /p:DeployOnBuild=true /p:PublishProfile=".\src\Mammoth.BigBrother.Ui\Properties\PublishProfiles\FolderProfile.pubxml"
-Move-Item -Path ".\src\Mammoth.BigBrother.Ui\bin\publish\*" $artifactPath
+# Build and Publish the app
+dotnet build ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" -c $configuration --no-restore /p:AssemblyVersion=$assemblyVersion /p:FileVersion=$assemblyFileVersion /p:InformationalVersion=$assemblyInformationalVersion
+dotnet publish ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" --no-build /p:Configuration=$configuration /p:DeployOnBuild=true /p:PublishProfile=".\src\Mammoth.BigBrother.Ui\Properties\PublishProfiles\FolderProfile.pubxml"
+
+#& $msbuild ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" /verbosity:normal /p:Configuration=$configuration /p:DeployOnBuild=true /p:PublishProfile=".\src\Mammoth.BigBrother.Ui\Properties\PublishProfiles\FolderProfile.pubxml"
+Move-Item -Path ".\src\Mammoth.BigBrother.Ui\bin\$configuration\net5.0\publish\*" $artifactPath
 
 Set-Content -Path "$artifactPath\run.cmd" -Value "dotnet Mammoth.BigBrother.Ui.dll"
 

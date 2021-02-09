@@ -9,14 +9,11 @@
     look for: GetPackageVersionDependsOn
     https://github.com/NuGet/Home/issues/4790
     https://github.com/NuGet/NuGet.Client/pull/1915
-    -->
     <Version>0.0.1</Version>
+    -->
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitVersionTask" Version="5.2.4">
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
