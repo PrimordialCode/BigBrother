@@ -24,7 +24,7 @@ namespace Frontend.net45
                 new InMemoryEventsExpirationRule(TimeSpan.FromMinutes(5))
             });
             MetricsHousekeeper.Schedule(TimeSpan.FromMinutes(1));
-            EndpointInstaller.Start(5003);
+            EndpointInstaller.Start(5002);
 
             string hocon = System.IO.File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "hocon.cfg"));
             var config = ConfigurationFactory.ParseString(hocon);

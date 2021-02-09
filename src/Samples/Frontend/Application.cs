@@ -37,7 +37,7 @@ namespace Frontend
             {
                 case ActorFramework.Akka:
                     _akkaApp = new AkkaApplication();
-                    _akkaApp.Initialize("AkkaAppActorSystem", serviceCollection);
+                    _akkaApp.Initialize("AkkaAppActorSystem", serviceCollection, settings.EndpointPost);
                     _akkaApp.Start();
                     break;
                 case ActorFramework.ProtoActor:

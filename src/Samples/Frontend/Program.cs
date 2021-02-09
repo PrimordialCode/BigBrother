@@ -17,12 +17,26 @@ namespace Frontend
     {
         internal static void Main(string[] args)
         {
-            Console.Title = "DOTNET CORE - Starting Application";
-            ColoredConsole.WriteLine(Console.Title);
             var settings = new ApplicationSettings
             {
-                ActorFramework = ActorFramework.Akka
+                ActorFramework = ActorFramework.Akka,
+#if NETCOREAPP2_2
+                EndpointPost = 5003,
+                Title = "NETCOREAPP2_2"
+#endif
+#if NETCOREAPP3_1
+                EndpointPost = 5004,
+                Title = "NETCOREAPP3_1"
+#endif
+#if NET5_0
+                EndpointPost = 5005,
+                Title = "NET5_0"
+#endif
             };
+
+            Console.Title = $"{settings.Title} - Starting Application";
+            ColoredConsole.WriteLine(Console.Title);
+
             var application = new Application();
             application.Init(settings);
             application.WaitForShutdown();

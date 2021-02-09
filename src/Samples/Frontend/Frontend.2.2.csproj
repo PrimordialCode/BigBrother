@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <!-- <IntermediateOutputPath>.\obj2.2</IntermediateOutputPath> -->
   </PropertyGroup>
 
   <ItemGroup>

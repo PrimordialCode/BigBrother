@@ -21,7 +21,7 @@ namespace Frontend.AkkaApp
     {
         private ActorSystem _actorSystem;
 
-        public void Initialize(string name, IServiceCollection serviceCollection)
+        public void Initialize(string name, IServiceCollection serviceCollection, int endpointPort)
         {
             // register anything that is Actor Framework specific
             // Actors MUST be transient
@@ -37,7 +37,7 @@ namespace Frontend.AkkaApp
                 new InMemoryEventsExpirationRule(TimeSpan.FromMinutes(5))
             });
             MetricsHousekeeper.Schedule(TimeSpan.FromMinutes(1));
-            EndpointInstaller.Start(5001);
+            EndpointInstaller.Start(endpointPort);
 
             string hocon = System.IO.File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"AkkaApp\hocon.cfg"));
             var config = ConfigurationFactory.ParseString(hocon);

@@ -30,18 +30,35 @@ To build the front-end application:
 
 2- Publish the Web Application.
 
+# Information / Port Mappings
+
+localhost:5001 - BigBrother UI
+localhost:5002 - Frontend net461
+localhost:5003 - Frontend netcoreapp2.2
+localhost:5004 - Frontend netcoreapp3.1
+localhost:5005 - Frontend net5.0
+
+
 # debugging / running locally in non admin mode
 
 To debug or run the test application locally in non-admin mode you need to grant permissions to the URLs involved:
 
-    netsh http add urlacl url=http://+:80/MyUri user=DOMAIN\user
+```
+netsh http add urlacl url=http://+:80/MyUri user=DOMAIN\user
+```
 
 like so:
 
-    netsh http add urlacl url=http://+:5001 user=DOMAIN\user
-    netsh http add urlacl url=http://+:5002 user=DOMAIN\user
-    netsh http add urlacl url=http://+:5003 user=DOMAIN\user
+```
+netsh http add urlacl url=http://+:5001 user=DOMAIN\user
+netsh http add urlacl url=http://+:5002 user=DOMAIN\user
+netsh http add urlacl url=http://+:5003 user=DOMAIN\user
+netsh http add urlacl url=http://+:5004 user=DOMAIN\user
+netsh http add urlacl url=http://+:5005 user=DOMAIN\user
+```
 
 if you have already reseved URLs the you fiorst need to delete them:
 
-    netsh http delete urlacl url=http://+:80/MyUri
+```
+netsh http delete urlacl url=http://+:80/MyUri
+```

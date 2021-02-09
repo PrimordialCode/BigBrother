@@ -36,8 +36,8 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint
                 {
                     var env = hostingContext.HostingEnvironment;
                     config.SetBasePath(AppDomain.CurrentDomain.BaseDirectory);
-                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile("appsettings.bigbrother.json", optional: true, reloadOnChange: true)
+                          .AddJsonFile($"appsettings.bigbrother.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
                     config.AddEnvironmentVariables();
                 })
                 .ConfigureLogging((hostingContext, logging) =>
