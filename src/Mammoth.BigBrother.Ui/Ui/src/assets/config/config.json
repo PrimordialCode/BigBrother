@@ -1,12 +1,20 @@
 {
   "endpoints": [
     {
-      "name": "demo .net core",
-      "endpoint": "http://localhost:5001"
+      "name": "demo .net 4.6.1",
+      "endpoint": "http://localhost:5002"
     },
     {
-      "name": "demo .net 4.5",
+      "name": "demo .net core 2.2",
       "endpoint": "http://localhost:5003"
+    },
+    {
+      "name": "demo .net core 3.1",
+      "endpoint": "http://localhost:5004"
+    },
+    {
+      "name": "demo .net 5.0",
+      "endpoint": "http://localhost:5005"
     }
   ]
 }

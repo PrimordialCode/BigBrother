@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Net;
 using Mammoth.BigBrother.Ui.Configurations;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 
 namespace Mammoth.BigBrother.Ui
 {
@@ -18,29 +12,33 @@ namespace Mammoth.BigBrother.Ui
 
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            CreateHostBuilder(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IHost CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     var env = hostingContext.HostingEnvironment;
 
-                    config.SetBasePath(env.ContentRootPath)
-                        .AddJsonFile("./appsettings.json", optional: false, reloadOnChange: true)
-                        .AddJsonFile($"./appSettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                        .AddEnvironmentVariables();
+                    // not needed with this setup method (they are already included by default)
+                    //config.SetBasePath(env.ContentRootPath)
+                    //    .AddJsonFile("./appsettings.json", optional: false, reloadOnChange: true)
+                    //    .AddJsonFile($"./appSettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                    //    .AddEnvironmentVariables();
 
                     IConfigurationRoot cfg = config.Build();
 
                     _hostConfiguration = cfg.GetSection("Host").Get<HostConfiguration>();
                 })
-                .UseStartup<Startup>()
-                .UseKestrel(options =>
-                {
-                    options.Listen(IPAddress.Loopback, _hostConfiguration.Port);
-                })
+                .ConfigureWebHostDefaults(webBuilder =>
+                    {
+                        webBuilder.ConfigureKestrel(serverOptions =>
+                        {
+                            serverOptions.Listen(IPAddress.Loopback, _hostConfiguration.Port);
+                        })
+                        .UseStartup<Startup>();
+                    })
                 .Build();
     }
 }
