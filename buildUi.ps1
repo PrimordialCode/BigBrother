@@ -32,7 +32,7 @@ dotnet restore ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" --verb
 write-Host "Build UI"
 Set-Location ".\src\Mammoth.BigBrother.Ui\Ui"
 npm ci
-npm audit fix
+#npm audit fix
 npm run build
 Set-Location "..\..\.."
 
@@ -40,8 +40,7 @@ Set-Location "..\..\.."
 dotnet build ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" -c $configuration --no-restore /p:AssemblyVersion=$assemblyVersion /p:FileVersion=$assemblyFileVersion /p:InformationalVersion=$assemblyInformationalVersion
 dotnet publish ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" --no-build /p:Configuration=$configuration /p:DeployOnBuild=true /p:PublishProfile=".\src\Mammoth.BigBrother.Ui\Properties\PublishProfiles\FolderProfile.pubxml"
 
-#& $msbuild ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" /verbosity:normal /p:Configuration=$configuration /p:DeployOnBuild=true /p:PublishProfile=".\src\Mammoth.BigBrother.Ui\Properties\PublishProfiles\FolderProfile.pubxml"
-Move-Item -Path ".\src\Mammoth.BigBrother.Ui\bin\$configuration\net5.0\publish\*" $artifactPath
+Copy-Item -Path ".\src\Mammoth.BigBrother.Ui\bin\$configuration\net5.0\publish\*" -Destination $artifactPath -Recurse
 
 Set-Content -Path "$artifactPath\run.cmd" -Value "dotnet Mammoth.BigBrother.Ui.dll"
 
