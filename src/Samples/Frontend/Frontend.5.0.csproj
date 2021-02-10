@@ -17,10 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Akka.DI.Core" Version="1.4.2" />
+    <PackageReference Include="Akka.DI.Core" Version="1.4.16" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
-    <PackageReference Include="NStore.Domain" Version="0.8.0" />
+    <PackageReference Include="NStore.Domain" Version="0.10.4" />
   </ItemGroup>
 
   <ItemGroup>
