@@ -11,10 +11,23 @@
     https://github.com/NuGet/NuGet.Client/pull/1915
     <Version>0.0.1</Version>
     -->
+    <Authors>PrimordialCode, Alessandro Giorgetti</Authors>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/PrimordialCode/BigBrother</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/PrimordialCode/BigBrother</RepositoryUrl>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

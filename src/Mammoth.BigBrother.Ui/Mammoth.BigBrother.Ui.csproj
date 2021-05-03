@@ -5,6 +5,12 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <StartupObject>Mammoth.BigBrother.Ui.Program</StartupObject>
+    <Authors>PrimordialCode, Alessandro Giorgetti</Authors>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/PrimordialCode/BigBrother</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/PrimordialCode/BigBrother</RepositoryUrl>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,6 +45,13 @@
     <None Include="Ui\src\tsconfig.spec.json" />
     <None Include="Ui\tsconfig.json" />
     <None Include="Ui\tslint.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

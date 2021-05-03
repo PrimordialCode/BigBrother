@@ -3,6 +3,12 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461;net5.0</TargetFrameworks>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Authors>PrimordialCode, Alessandro Giorgetti</Authors>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/PrimordialCode/BigBrother</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/PrimordialCode/BigBrother</RepositoryUrl>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +17,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mammoth.BigBrother.Monitoring\Mammoth.BigBrother.Monitoring.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
