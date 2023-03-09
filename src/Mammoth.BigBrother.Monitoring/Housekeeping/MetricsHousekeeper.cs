@@ -10,7 +10,7 @@ namespace Mammoth.BigBrother.Monitoring.Housekeeping
     public static class MetricsHousekeeper
     {
         private static IMetricsHousekeeperRule[] _rules = new IMetricsHousekeeperRule[0];
-        private static System.Threading.Timer _schedulerTime;
+        private static System.Threading.Timer? _schedulerTime;
 
         public static void Configure(IMetricsHousekeeperRule[] rules)
         {
@@ -21,7 +21,7 @@ namespace Mammoth.BigBrother.Monitoring.Housekeeping
         {
             StopSchedule();
             _schedulerTime = new System.Threading.Timer(
-                state => Cleanup(),
+                _ => Cleanup(),
                 null,
                 0,
                 Convert.ToUInt32(interval.TotalMilliseconds));

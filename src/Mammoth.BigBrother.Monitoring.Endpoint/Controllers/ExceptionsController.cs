@@ -3,10 +3,10 @@ using System.Linq;
 using Mammoth.BigBrother.Monitoring.Endpoint.Dto;
 using Mammoth.BigBrother.Monitoring.Metrics;
 using Mammoth.BigBrother.Monitoring.Systems.InMemory;
-#if NET461
+#if NET472_OR_GREATER
 using System.Web.Http;
 #endif
-#if NETCOREAPP2_2 || NETCOREAPP3_1 || NET5_0
+#if NET5_0_OR_GREATER
 using Microsoft.AspNetCore.Mvc;
 #endif
 
@@ -33,7 +33,7 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
         {
             return InMemoryMonitoringData.Exceptions
                 .Where(e =>
-                    e.Properties.ContainsKey(MetricProperties.Actor)
+                    e.Properties?.ContainsKey(MetricProperties.Actor) == true
                     && e.Properties[MetricProperties.Actor] == args.Path)
                 .OrderByDescending(e => e.Timestamp);
         }

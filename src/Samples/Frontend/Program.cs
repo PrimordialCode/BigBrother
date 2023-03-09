@@ -20,17 +20,9 @@ namespace Frontend
             var settings = new ApplicationSettings
             {
                 ActorFramework = ActorFramework.Akka,
-#if NETCOREAPP2_2
-                EndpointPost = 5003,
-                Title = "NETCOREAPP2_2"
-#endif
-#if NETCOREAPP3_1
-                EndpointPost = 5004,
-                Title = "NETCOREAPP3_1"
-#endif
-#if NET5_0
+#if NET5_0_OR_GREATER
                 EndpointPost = 5005,
-                Title = "NET5_0"
+                Title = "NET5_OR_GREATER"
 #endif
             };
 

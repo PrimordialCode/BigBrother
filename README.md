@@ -2,7 +2,7 @@
 
 An Application Dashboard and Probes that can be injected into you main code to gather some metrics.
 
-Some gauges and probes are specificaly designed to work with and inpect Actors Frameworks.
+Some gauges and probes are specificaly designed to work with and inspect Actors Frameworks.
 
 # Warning
 
@@ -33,10 +33,8 @@ To build the front-end application:
 # Information / Port Mappings
 
 localhost:5001 - BigBrother UI
-localhost:5002 - Frontend net461
-localhost:5003 - Frontend netcoreapp2.2
-localhost:5004 - Frontend netcoreapp3.1
-localhost:5005 - Frontend net5.0
+localhost:5002 - Frontend net472
+localhost:5005 - Frontend net7.0
 
 
 # debugging / running locally in non admin mode

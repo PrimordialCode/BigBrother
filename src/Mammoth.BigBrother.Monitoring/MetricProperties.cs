@@ -1,9 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
-namespace Mammoth.BigBrother.Monitoring
-{
+namespace Mammoth.BigBrother.Monitoring {
     public static class MetricProperties
     {
         public const string Actor = "actor";
@@ -21,7 +20,7 @@ namespace Mammoth.BigBrother.Monitoring
 
     internal class MetricPropertiesBuilder
     {
-        private readonly Dictionary<string, string> _properties = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _properties = new();
 
         public MetricPropertiesBuilder Actor(string name)
         {
@@ -54,11 +53,11 @@ namespace Mammoth.BigBrother.Monitoring
                 string messageAsString;
                 try
                 {
-                    messageAsString = JsonConvert.SerializeObject(message);
+                    messageAsString = JsonSerializer.Serialize(message);
                 }
                 catch
                 {
-                    messageAsString = message.ToString();
+                    messageAsString = message.ToString() ?? string.Empty;
                 }
                 _properties[MetricProperties.Message] = messageAsString;
             }

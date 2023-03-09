@@ -1,5 +1,5 @@
-@import '../node_modules/@angular/material/theming';
-@import '../node_modules/@covalent/core/theming/all-theme';
+@import '../node_modules/@angular/material/_theming.scss';
+@import '../node_modules/@covalent/core/theming/_all-theme.scss';
 // @import '../node_modules/@covalent/markdown/markdown-theme';
 // @import '../node_modules/@covalent/highlight/highlight-theme';
 // Plus imports for other components in your app.
@@ -14,7 +14,7 @@ $custom-toolbar-typography: mat-typography-config(
 
 // Include the base styles for Angular Material core. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
-@include mat-core($custom-typography);
+@include mat-core();
 
 // Setting the toolbar to the proper spec weight
 @include mat-toolbar-typography($custom-toolbar-typography);
