@@ -17,7 +17,7 @@ namespace Mammoth.BigBrother.Monitoring
         /// <summary>
         /// The list of active clients who are available for broadcast
         /// </summary>
-        private static readonly List<IMonitoringSystem> _monitoringSystems = new List<IMonitoringSystem>();
+        private static readonly List<IMonitoringSystem> _monitoringSystems = new();
 
         public static bool IsEnabled => _monitoringSystems.Count > 0;
 
@@ -63,7 +63,7 @@ namespace Mammoth.BigBrother.Monitoring
         /// <param name="metricName"></param>
         /// <param name="delta"></param>
         /// <param name="properties"></param>
-        public static void UpdateCounter(string metricName, double delta = 1, IDictionary<string, string> properties = null)
+        public static void UpdateCounter(string metricName, double delta = 1, IDictionary<string, string>? properties = null)
         {
             foreach (var client in _monitoringSystems)
                 client.UpdateCounter(metricName, delta, properties);
@@ -75,7 +75,7 @@ namespace Mammoth.BigBrother.Monitoring
         /// <param name="metricName"></param>
         /// <param name="time"></param>
         /// <param name="properties"></param>
-        public static void TrackTiming(string metricName, long time, IDictionary<string, string> properties = null)
+        public static void TrackTiming(string metricName, long time, IDictionary<string, string>? properties = null)
         {
             foreach (var client in _monitoringSystems)
                 client.TrackTiming(metricName, time, properties);
@@ -87,19 +87,19 @@ namespace Mammoth.BigBrother.Monitoring
         /// <param name="metricName"></param>
         /// <param name="value"></param>
         /// <param name="properties"></param>
-        public static void UpdateGauge(string metricName, int value, IDictionary<string, string> properties = null)
+        public static void UpdateGauge(string metricName, int value, IDictionary<string, string>? properties = null)
         {
             foreach (var client in _monitoringSystems)
                 client.UpdateGauge(metricName, value, properties);
         }
 
-        public static void TrackEvent(string evt, IDictionary<string, string> properties = null, bool expires = false)
+        public static void TrackEvent(string evt, IDictionary<string, string>? properties = null, bool expires = false)
         {
             foreach (var client in _monitoringSystems)
                 client.TrackEvent(evt, properties, expires);
         }
 
-        public static void TrackException(Exception exception, IDictionary<string, string> properties = null)
+        public static void TrackException(Exception exception, IDictionary<string, string>? properties = null)
         {
             foreach (var client in _monitoringSystems)
                 client.TrackException(exception, properties);

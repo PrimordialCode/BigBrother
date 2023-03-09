@@ -1,11 +1,11 @@
 import { Location } from "@angular/common";
 import { Injectable } from "@angular/core";
 import { NavigationExtras, Params, Router, RouterStateSnapshot } from "@angular/router";
-import { Actions, Effect, ofType } from "@ngrx/effects";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { RouterStateSerializer } from "@ngrx/router-store";
 import { Action } from "@ngrx/store";
-import { IAppState } from "../state";
 import { tap } from "rxjs/operators";
+import { IAppState } from "../state";
 
 export interface IRouterStateUrl {
   url: string;
@@ -63,28 +63,25 @@ export type RouterActions = RouterGoTo
 @Injectable()
 export class RouterEffects {
 
-  @Effect({ dispatch: false })
-  goto$ = this.actions$
+  goto$ = createEffect(() => this.actions$
     .pipe(
       ofType(RouterActionsTypes.GOTO),
       tap(action => {
         this.router.navigate(action.path, { queryParams: action.query, ...action.extras });
       })
-    );
+    ), { dispatch: false });
 
-  @Effect({ dispatch: false })
-  back$ = this.actions$
+  back$ = createEffect(() => this.actions$
     .pipe(
       ofType(RouterActionsTypes.BACK),
       tap(() => this.location.back())
-    );
+    ), { dispatch: false });
 
-  @Effect({ dispatch: false })
-  forward$ = this.actions$
+  forward$ = createEffect(() => this.actions$
     .pipe(
       ofType(RouterActionsTypes.FORWARD),
       tap(() => this.location.forward())
-    );
+    ), { dispatch: false });
 
   constructor(
     private actions$: Actions<RouterActions>,

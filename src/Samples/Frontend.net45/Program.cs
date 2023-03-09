@@ -6,7 +6,7 @@ namespace Frontend.net45
     {
         static void Main(string[] args)
         {
-            Console.Title = "NET461 - Starting Application";
+            Console.Title = "NET472_OR_GREATER - Starting Application";
             ColoredConsole.WriteLine(Console.Title);
             var _akkaApp = new AkkaApplication();
             _akkaApp.Initialize("AkkaAppActorSystem");

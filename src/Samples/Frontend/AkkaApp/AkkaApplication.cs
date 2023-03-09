@@ -1,5 +1,6 @@
 ﻿using Akka.Actor;
 using Akka.Configuration;
+using Akka.DependencyInjection;
 using Akka.Event;
 using Frontend.AkkaApp.UI.Cqrs;
 using Frontend.Shared;
@@ -43,9 +44,11 @@ namespace Frontend.AkkaApp
             var config = ConfigurationFactory.ParseString(hocon);
             // .WithFallback();
             ColoredConsole.WriteLine("Creating the ActorSystem");
-            _actorSystem = ActorSystem.Create(name, config);
-            new AkkaServiceProviderDependencyResolver(serviceCollection.BuildServiceProvider(), _actorSystem);
-
+            var bootstrap = BootstrapSetup.Create().WithConfig(hocon);
+            var di = DependencyResolverSetup.Create(serviceCollection.BuildServiceProvider());
+            var actorSystemSetup = bootstrap.And(di);
+            _actorSystem = ActorSystem.Create(name, actorSystemSetup);
+            
             // add a deadletter watcher actor
             var deadlettermonitorRef = _actorSystem.ActorOf<DeadLetterMonitor>("deadlettermonitor");
             _actorSystem.EventStream.Subscribe(deadlettermonitorRef, typeof(DeadLetter));
