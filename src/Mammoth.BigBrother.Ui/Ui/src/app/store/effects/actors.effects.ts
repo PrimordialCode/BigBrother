@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Actions, Effect, ofType } from "@ngrx/effects";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { of } from "rxjs";
 import { catchError, map, switchMap } from "rxjs/operators";
 import { SingletonEndpointWebApiService } from "../../services/singleton-endpoint-web-api.service";
@@ -8,8 +8,7 @@ import { ActorsActions, ActorsActionsTypes, ActorsGetActorCounters, ActorsGetAct
 @Injectable()
 export class ActorsEffects {
 
-  @Effect()
-  loadHierarchy$ = this.actions$
+  loadHierarchy$ = createEffect(() => this.actions$
     .pipe(
       ofType(ActorsActionsTypes.ACTORS_LOAD_HIERARCHY),
       switchMap(action => {
@@ -18,10 +17,9 @@ export class ActorsEffects {
           catchError(error => of(new ActorsLoadHierarcyFailed(action.endpointName, error)))
         );
       })
-    );
+    ));
 
-  @Effect()
-  getGlobalCounters$ = this.actions$
+  getGlobalCounters$ = createEffect(() => this.actions$
     .pipe(
       ofType(ActorsActionsTypes.ACTORS_GET_GLOBAL_COUNTERS),
       switchMap(action => {
@@ -30,10 +28,9 @@ export class ActorsEffects {
           catchError(error => of(new ActorsGetGlobalCountersFailed(action.endpointName, error)))
         );
       })
-    );
+    ));
 
-  @Effect()
-  displayActor$ = this.actions$
+  displayActor$ = createEffect(() => this.actions$
     .pipe(
       ofType(ActorsActionsTypes.ACTORS_DISPLAY_ACTOR),
       switchMap(action => action.id != null ? [
@@ -42,10 +39,9 @@ export class ActorsEffects {
         new ActorsGetActorEvents(action.endpointName, action.id),
         new ActorsGetActorExceptions(action.endpointName, action.id)
       ] : [])
-    );
+    ));
 
-  @Effect()
-  getActorDetail$ = this.actions$
+  getActorDetail$ = createEffect(() => this.actions$
     .pipe(
       ofType(ActorsActionsTypes.ACTORS_GET_ACTOR_DETAIL),
       switchMap(action => {
@@ -54,10 +50,9 @@ export class ActorsEffects {
           catchError(error => of(new ActorsGetActorDetailFailed(action.endpointName, action.id, error)))
         );
       })
-    );
+    ));
 
-  @Effect()
-  getActorCounters$ = this.actions$
+  getActorCounters$ = createEffect(() => this.actions$
     .pipe(
       ofType(ActorsActionsTypes.ACTORS_GET_ACTOR_COUNTERS),
       switchMap(action => {
@@ -66,10 +61,9 @@ export class ActorsEffects {
           catchError(error => of(new ActorsGetActorCountersFailed(action.endpointName, action.id, error)))
         );
       })
-    );
+    ));
 
-  @Effect()
-  getActorEvents$ = this.actions$
+  getActorEvents$ = createEffect(() => this.actions$
     .pipe(
       ofType(ActorsActionsTypes.ACTORS_GET_ACTOR_EVENTS),
       switchMap(action => {
@@ -78,10 +72,9 @@ export class ActorsEffects {
           catchError(error => of(new ActorsGetActorEventsFailed(action.endpointName, action.id, error)))
         );
       })
-    );
+    ));
 
-  @Effect()
-  getActorExceptions$ = this.actions$
+  getActorExceptions$ = createEffect(() => this.actions$
     .pipe(
       ofType(ActorsActionsTypes.ACTORS_GET_ACTOR_EXCEPTIONS),
       switchMap(action => {
@@ -90,7 +83,7 @@ export class ActorsEffects {
           catchError(error => of(new ActorsGetActorExceptionsFailed(action.endpointName, action.id, error)))
         );
       })
-    );
+    ));
 
   constructor(
     private actions$: Actions<ActorsActions>,

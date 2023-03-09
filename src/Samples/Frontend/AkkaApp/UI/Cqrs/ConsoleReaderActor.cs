@@ -158,7 +158,7 @@ namespace Frontend.AkkaApp.Ui.Cqrs
 
         private void ReportUnsupportedCommand(string text)
         {
-            _writer.Tell("Unsuported command: " + text);
+            _writer.Tell("Unsupported command: " + text);
         }
     }
 }

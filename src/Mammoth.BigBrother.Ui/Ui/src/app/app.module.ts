@@ -1,57 +1,53 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { MaterialModule } from './material/material.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
+import { MaterialModule } from './material/material.module';
+
 
 import { CovalentCommonModule } from '@covalent/core/common';
-import { CovalentSearchModule } from '@covalent/core/search';
-import { CovalentLayoutModule } from '@covalent/core/layout';
 import { CovalentDialogsModule } from '@covalent/core/dialogs';
-import { CovalentMediaModule } from '@covalent/core/media';
+import { CovalentLayoutModule } from '@covalent/core/layout';
 import { CovalentLoadingModule } from '@covalent/core/loading';
-import { CovalentDataTableModule } from '@covalent/core/data-table';
-import { CovalentNotificationsModule } from '@covalent/core/notifications';
 import { CovalentMenuModule } from '@covalent/core/menu';
-import { CovalentPagingModule } from '@covalent/core/paging';
-import { CovalentStepsModule } from '@covalent/core/steps';
+import { CovalentSearchModule } from '@covalent/core/search';
 
-import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { reducers } from './store/reducers';
 import { effects } from './store/effects';
+import { reducers } from './store/reducers';
 
-import { AppComponent } from './app.component';
-import { ActorsGraphComponent } from './actors/actors-graph/actors-graph.component';
 import { ActorDetailComponent } from './actors/actor-detail/actor-detail.component';
+import { ActorsGraphComponent } from './actors/actors-graph/actors-graph.component';
 import { ActorsOverviewComponent } from './actors/actors-overview/actors-overview.component';
+import { AppComponent } from './app.component';
 
 import { RouterModule } from '@angular/router';
-import { ConfigService } from './settings/config.service';
+import { FullRouterStateSerializer, RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { environment } from '../environments/environment';
-import { ActorsTreeviewComponent } from './actors/actors-treeview/actors-treeview.component';
-import { initialAppState } from './store/state/app.state';
-import { MenuComponent } from './shell/menu/menu.component';
-import { DrawerMenuComponent } from './shell/drawer-menu/drawer-menu.component';
-import { routes } from './app.routes';
-import { HomePageComponent } from './home-page/home-page.component';
-import { ActorsPageComponent } from './actors/actors-page/actors-page.component';
-import { DashboardEndpointsComponent } from './home-page/dashboard-endpoints/dashboard-endpoints.component';
-import { SingletonEndpointWebApiService } from './services/singleton-endpoint-web-api.service';
-import { ActorDetailExceptionsComponent } from './actors/actor-detail/actor-detail-exceptions/actor-detail-exceptions.component';
 import { ActorDetailEventsComponent } from './actors/actor-detail/actor-detail-events/actor-detail-events.component';
-import { StoreRouterConnectingModule, RouterStateSerializer, DefaultRouterStateSerializer } from '@ngrx/router-store';
+import { ActorDetailExceptionsComponent } from './actors/actor-detail/actor-detail-exceptions/actor-detail-exceptions.component';
+import { ActorsPageComponent } from './actors/actors-page/actors-page.component';
+import { ActorsTreeviewComponent } from './actors/actors-treeview/actors-treeview.component';
+import { routes } from './app.routes';
+import { DashboardEndpointsComponent } from './home-page/dashboard-endpoints/dashboard-endpoints.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { SingletonEndpointWebApiService } from './services/singleton-endpoint-web-api.service';
+import { ConfigService } from './settings/config.service';
+import { DrawerMenuComponent } from './shell/drawer-menu/drawer-menu.component';
+import { MenuComponent } from './shell/menu/menu.component';
 import { CustomRouterStateSerializer } from './store/router/router';
+import { initialAppState } from './store/state/app.state';
 
 const COVALENT_MODULES: any[] = [
-  CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
-  CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule,
-  CovalentPagingModule, CovalentSearchModule, CovalentStepsModule,
+  CovalentLoadingModule,
+  CovalentLayoutModule, CovalentMenuModule,
+  CovalentSearchModule,
   CovalentCommonModule, CovalentDialogsModule,
 ];
 
@@ -95,7 +91,7 @@ export function ConfigLoader(configService: ConfigService) {
     NgxGraphModule,
     StoreModule.forRoot(reducers, { initialState: initialAppState }),
     EffectsModule.forRoot(effects),
-    StoreRouterConnectingModule.forRoot({ serializer: DefaultRouterStateSerializer }),
+    StoreRouterConnectingModule.forRoot({ serializer: FullRouterStateSerializer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
