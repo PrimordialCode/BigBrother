@@ -88,7 +88,7 @@ export function ConfigLoader(configService: ConfigService) {
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
+    RouterModule.forRoot(routes, {}),
     COVALENT_MODULES,
     MaterialModule,
     NgxChartsModule,
