@@ -1,13 +1,12 @@
 ﻿using Akka.Actor;
-using Akka.DI.Core;
+using Akka.DependencyInjection;
 using Frontend.AkkaApp.UI.Cqrs;
 using Frontend.Shared;
 using Frontend.Shared.Exceptions;
 using Frontend.Shared.UI.Messages;
 using System;
 
-namespace Frontend.AkkaApp.Ui.Cqrs
-{
+namespace Frontend.AkkaApp.Ui.Cqrs {
     /// <summary>
     /// We implement the routing by hand
     /// 
@@ -48,7 +47,8 @@ namespace Frontend.AkkaApp.Ui.Cqrs
                         child = Context.ActorOf(Props.Create<CommandHandler2>(_writer), childActorName);
                         break;
                     case ActorTypes.Room:
-                        child = Context.ActorOf(Context.DI().Props<RoomActor>(), childActorName);
+                        var props = DependencyResolver.For(Context.System).Props<RoomActor>();
+                        child = Context.ActorOf(props, childActorName);
                         break;
 
                 }

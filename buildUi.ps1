@@ -40,7 +40,7 @@ Set-Location "..\..\.."
 dotnet build ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" -c $configuration --no-restore /p:AssemblyVersion=$assemblyVersion /p:FileVersion=$assemblyFileVersion /p:InformationalVersion=$assemblyInformationalVersion
 dotnet publish ".\src\Mammoth.BigBrother.Ui\Mammoth.BigBrother.Ui.csproj" --no-build /p:Configuration=$configuration /p:DeployOnBuild=true /p:PublishProfile=".\src\Mammoth.BigBrother.Ui\Properties\PublishProfiles\FolderProfile.pubxml"
 
-Copy-Item -Path ".\src\Mammoth.BigBrother.Ui\bin\$configuration\net5.0\publish\*" -Destination $artifactPath -Recurse
+Copy-Item -Path ".\src\Mammoth.BigBrother.Ui\bin\$configuration\net7.0\publish\*" -Destination $artifactPath -Recurse
 
 Set-Content -Path "$artifactPath\run.cmd" -Value "dotnet Mammoth.BigBrother.Ui.dll"
 

@@ -15,7 +15,7 @@ namespace Mammoth.BigBrother.Monitoring
         /// <param name="metricName">the metric name</param>
         /// <param name="delta">amount to update the counter</param>
         /// <param name="properties">additional properties</param>
-        void UpdateCounter(string metricName, double delta, IDictionary<string, string> properties = null);
+        void UpdateCounter(string metricName, double delta, IDictionary<string, string>? properties = null);
 
         /// <summary>
         /// Updates a Gauge with the specified value. This is an instant value.
@@ -23,7 +23,7 @@ namespace Mammoth.BigBrother.Monitoring
         /// <param name="metricName">the metric name</param>
         /// <param name="value">the value to set</param>
         /// <param name="properties">additional properties</param>
-        void UpdateGauge(string metricName, double value, IDictionary<string, string> properties = null);
+        void UpdateGauge(string metricName, double value, IDictionary<string, string>? properties = null);
 
         /// <summary>
         /// Updates a counter with the duration it took an operation to complete
@@ -31,7 +31,7 @@ namespace Mammoth.BigBrother.Monitoring
         /// <param name="metricName">the metric name</param>
         /// <param name="time">time elapsed in milliseconds</param>
         /// <param name="properties">additional properties</param>
-        void TrackTiming(string metricName, long time, IDictionary<string, string> properties = null);
+        void TrackTiming(string metricName, long time, IDictionary<string, string>? properties = null);
 
         /// <summary>
         /// Track a specific event that occurred in the system
@@ -39,14 +39,14 @@ namespace Mammoth.BigBrother.Monitoring
         /// <param name="evt">the event to store</param>
         /// <param name="properties">additional properties</param>
         /// <param name="expires">true if this metric can expire</param>
-        void TrackEvent(string evt, IDictionary<string, string> properties = null, bool expires = false);
+        void TrackEvent(string evt, IDictionary<string, string>? properties = null, bool expires = false);
 
         /// <summary>
         /// Track an exception
         /// </summary>
         /// <param name="exception"></param>
         /// <param name="properties"></param>
-        void TrackException(Exception exception, IDictionary<string, string> properties = null);
+        void TrackException(Exception exception, IDictionary<string, string>? properties = null);
 
         /// <summary>
         /// A unique name for the monitoring system, represents the Monitor System Type

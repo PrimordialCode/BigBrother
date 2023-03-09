@@ -19,5 +19,12 @@
         /// Name/Path of the parent
         /// </summary>
         public string Parent { get; set; }
-    }
+
+		public ActorIdentityInfo(string name, string type, string parent)
+		{
+			Name = name;
+			Type = type;
+			Parent = parent;
+		}
+	}
 }

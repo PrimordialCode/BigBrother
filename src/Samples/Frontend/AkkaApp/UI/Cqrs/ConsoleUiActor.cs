@@ -1,5 +1,5 @@
 ﻿using Akka.Actor;
-using Akka.DI.Core;
+using Akka.DependencyInjection;
 using Frontend.AkkaApp.Ui.Console;
 using Frontend.AkkaApp.UI.Cqrs;
 using Frontend.AkkaApp.UI.Support;
@@ -7,8 +7,7 @@ using Frontend.Shared;
 using Frontend.Shared.Exceptions;
 using System;
 
-namespace Frontend.AkkaApp.Ui.Cqrs
-{
+namespace Frontend.AkkaApp.Ui.Cqrs {
     /// <summary>
     /// The main application actor: it will manage a specific user interface
     /// 
@@ -27,7 +26,8 @@ namespace Frontend.AkkaApp.Ui.Cqrs
             {
                 case "start":
                     // create the CQRS engine actors
-                    var projectionActor = Context.ActorOf(Context.DI().Props<ProjectionActorV2>(), "projectionEngine");
+                    var props = DependencyResolver.For(Context.System).Props<ProjectionActorV2>();
+                    var projectionActor = Context.ActorOf(props, "projectionEngine");
                     projectionActor.Tell(StartPolling.Instance);
                     // create the writer and the reader
                     var writer = Context.ActorOf<ConsoleWriterActor>("ConsoleWriter");

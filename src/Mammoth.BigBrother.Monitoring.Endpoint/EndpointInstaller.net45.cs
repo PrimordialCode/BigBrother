@@ -1,4 +1,4 @@
-﻿#if NET461
+﻿#if NET472_OR_GREATER
 
 using System;
 using System.IO;
@@ -12,15 +12,15 @@ using Newtonsoft.Json.Serialization;
 
 namespace Mammoth.BigBrother.Monitoring.Endpoint
 {
-    public static class EndpointInstaller
+	public static class EndpointInstaller
     {
-        private static HttpSelfHostServer _webHost;
+        private static HttpSelfHostServer? _webHost;
         private static int _loopbackPort;
 
         public static void Start(int loopbackPort)
         {
             _loopbackPort = loopbackPort;
-            _webHost = BuildWebHost(null);
+            _webHost = BuildWebHost(Array.Empty<string>());
             _webHost.OpenAsync().Wait();
         }
 

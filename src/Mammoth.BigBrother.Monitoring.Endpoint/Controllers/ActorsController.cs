@@ -3,10 +3,10 @@ using System.Text;
 using Mammoth.BigBrother.Monitoring.Endpoint.Dto;
 using Mammoth.BigBrother.Monitoring.Endpoint.Services;
 using Mammoth.BigBrother.Monitoring.Systems.InMemory;
-#if NET461
+#if NET472_OR_GREATER
 using System.Web.Http;
 #endif
-#if NETCOREAPP2_2 || NETCOREAPP3_1 || NET5_0
+#if NET5_0_OR_GREATER
 using Microsoft.AspNetCore.Mvc;
 #endif
 
@@ -77,7 +77,7 @@ namespace Mammoth.BigBrother.Monitoring.Endpoint.Controllers
                     else
                     {
                         // create the new node
-                        ActorInfoDto node = new ActorInfoDto(item, partialPath.ToString().TrimEnd(separator));
+                        var node = new ActorInfoDto(item, partialPath.ToString().TrimEnd(separator));
                         // add it to the children
                         currentNode.Children.Add(node);
                         // set it as the current node
