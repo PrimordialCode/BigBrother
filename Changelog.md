@@ -1,3 +1,9 @@
+## 0.5.0
+
+## Breaking Changes
+
+- net472: updated Microsoft.AspNet.WebApi >= 5.3.0
+
 ## 0.4.0
 
 ### Breaking Changes
