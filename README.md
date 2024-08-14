@@ -2,7 +2,7 @@
 
 An Application Dashboard and Probes that can be injected into you main code to gather some metrics.
 
-Some gauges and probes are specificaly designed to work with and inspect Actors Frameworks.
+Some gauges and probes are specifically designed to work with and inspect Actors Frameworks.
 
 # Warning
 
@@ -16,7 +16,7 @@ Steps to follow to run the application in develop mode:
 
 1- Open up the UI project in VSCode .\src\Mammoth.BigBrother.Ui\Ui).
 
-2- Compile the application with: npm run buildwatch.
+2- Compile the application with: `npm run buildwatch`.
 
 3- Compile and run the C# UI Host application (Mammoth.BigBrother.Ui) and the demo app (Frontend).
 
@@ -36,7 +36,6 @@ localhost:5001 - BigBrother UI
 localhost:5002 - Frontend net472
 localhost:5005 - Frontend net7.0
 
-
 # debugging / running locally in non admin mode
 
 To debug or run the test application locally in non-admin mode you need to grant permissions to the URLs involved:
@@ -55,7 +54,7 @@ netsh http add urlacl url=http://+:5004 user=DOMAIN\user
 netsh http add urlacl url=http://+:5005 user=DOMAIN\user
 ```
 
-if you have already reseved URLs the you fiorst need to delete them:
+if you have already reserved URLs the you first need to delete them:
 
 ```
 netsh http delete urlacl url=http://+:80/MyUri
