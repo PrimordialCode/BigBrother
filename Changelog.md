@@ -1,6 +1,14 @@
+## 0.6.0
+
+### Breaking Changes
+
+- Dropped net6.0
+- Dropped net7.0
+- Added net8.0
+
 ## 0.5.0
 
-## Breaking Changes
+### Breaking Changes
 
 - net472: updated Microsoft.AspNet.WebApi >= 5.3.0
 
