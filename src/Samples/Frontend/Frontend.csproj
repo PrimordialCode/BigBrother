@@ -17,8 +17,8 @@
 
   <ItemGroup>
     <PackageReference Include="Akka.DependencyInjection" Version="1.5.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
     <PackageReference Include="NStore.Domain" Version="0.14.0" />
   </ItemGroup>
 

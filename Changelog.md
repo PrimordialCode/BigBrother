@@ -1,5 +1,8 @@
 ## 0.6.0
 
+- Updated .net assemblies to the latest 8.0 versions.
+- Updated System.Text.Json to 8.0.4 (fixes vulnerabilities)
+
 ### Breaking Changes
 
 - Dropped net6.0
