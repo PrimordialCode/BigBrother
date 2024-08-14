@@ -1,6 +1,18 @@
+## 0.6.0
+
+- Updated .net assemblies to the latest 8.0 versions.
+- Updated System.Text.Json to 8.0.4 (fixes vulnerabilities)
+- Updated Akka.Net to 1.5.27.1
+
+### Breaking Changes
+
+- Dropped net6.0
+- Dropped net7.0
+- Added net8.0
+
 ## 0.5.0
 
-## Breaking Changes
+### Breaking Changes
 
 - net472: updated Microsoft.AspNet.WebApi >= 5.3.0
 

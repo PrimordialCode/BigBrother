@@ -20,11 +20,11 @@ $assemblyVersion = $version.AssemblySemver
 $assemblyFileVersion = $version.AssemblySemver
 #$assemblyInformationalVersion = ($version.SemVer + "." + $version.Sha)
 $assemblyInformationalVersion = ($version.InformationalVersion)
-$nugetVersion = $version.NuGetVersion
-Write-Host $assemblyVersion
-Write-Host $assemblyFileVersion
-Write-Host $assemblyInformationalVersion
-Write-Host $nugetVersion
+$nugetVersion = $version.SemVer
+Write-Host "assemblyVersion: "$assemblyVersion
+Write-Host "assemblyFileVersion: "$assemblyFileVersion
+Write-Host "assemblyInformationalVersion: "$assemblyInformationalVersion
+Write-Host "nugetVersion: "$nugetVersion
 
 # Restore and Build
 Write-Host "Building: "$nugetVersion
