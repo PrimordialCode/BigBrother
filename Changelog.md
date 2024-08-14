@@ -2,6 +2,7 @@
 
 - Updated .net assemblies to the latest 8.0 versions.
 - Updated System.Text.Json to 8.0.4 (fixes vulnerabilities)
+- Updated Akka.Net to 1.5.27.1
 
 ### Breaking Changes
 

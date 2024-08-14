@@ -8,8 +8,5 @@ namespace Frontend.Shared.Exceptions
 		public ResumeException() { }
 		public ResumeException(string message) : base(message) { }
 		public ResumeException(string message, Exception inner) : base(message, inner) { }
-		protected ResumeException(
-		  System.Runtime.Serialization.SerializationInfo info,
-		  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 	}
 }
