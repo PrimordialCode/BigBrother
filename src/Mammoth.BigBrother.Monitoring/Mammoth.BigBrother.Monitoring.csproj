@@ -13,17 +13,23 @@
     -->
     <Authors>PrimordialCode, Alessandro Giorgetti</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>Mammoth.png</PackageIcon>
     <PackageProjectUrl>https://github.com/PrimordialCode/BigBrother</PackageProjectUrl>
     <RepositoryUrl>https://github.com/PrimordialCode/BigBrother</RepositoryUrl>
+    <Copyright>Copyright Giorgetti Alessandro 2024</Copyright>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <DebugSymbols>true</DebugSymbols>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\Mammoth.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">

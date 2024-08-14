@@ -1,3 +1,7 @@
+## 0.6.1
+
+- Improved NuGet packages with metadata and symbols.
+
 ## 0.6.0
 
 - Updated .net assemblies to the latest 8.0 versions.
