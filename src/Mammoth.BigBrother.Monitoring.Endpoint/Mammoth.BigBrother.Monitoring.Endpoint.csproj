@@ -5,6 +5,7 @@
     <OutputType>Library</OutputType>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>PrimordialCode, Alessandro Giorgetti</Authors>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>Mammoth.png</PackageIcon>
     <PackageProjectUrl>https://github.com/PrimordialCode/BigBrother</PackageProjectUrl>
