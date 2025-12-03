@@ -1,6 +1,10 @@
 ## 0.7.0
 
 - Added support for net9.0, net10.0
+- Updated Akka.net 1.5.56
+- Updated System.Text.Json to 9.0.0
+- Improved NuGet packages: deterministic
+- Updated .net assemblies to 9.0.0 versions.
 
 ## 0.6.1
 
