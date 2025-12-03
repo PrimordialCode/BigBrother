@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{CC03556A-1DEB-4A25-8FAC-B064221618C7}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>$(NetFullFramework)</TargetFramework>
+    <IsPackable>false</IsPackable>
     <AssemblyTitle>Frontend.net45</AssemblyTitle>
     <Product>Frontend.net45</Product>
     <Copyright>Copyright ©  2018</Copyright>

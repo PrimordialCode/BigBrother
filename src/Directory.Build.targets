@@ -1,0 +1,51 @@
+<!-- This file is processed after each individual .csproj file -->
+<Project>
+	<PropertyGroup Condition="'$(IsPackable)' == 'false'">
+		<!-- Disable generating a documentation file and running analyzers for non-packable projects -->
+		<GenerateDocumentationFile>false</GenerateDocumentationFile>
+		<RunAnalyzers>false</RunAnalyzers>
+		<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+		<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+		<RunCodeAnalysis>false</RunCodeAnalysis>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(IsPackable)' != 'false'">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<!-- Required to generate documentation file with conditional pre-processing -->
+		<DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+		<DebugSymbols>true</DebugSymbols>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Deterministic>true</Deterministic>
+		<DebugType>portable</DebugType>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true'">true</ContinuousIntegrationBuild>
+		<ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<AnalysisLevel>latest-recommended</AnalysisLevel>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	</PropertyGroup>
+	<!-- Only add PackageReference for SDK-style projects (exclude old-style projects that use packages.config) -->
+	<ItemGroup Condition="'$(IsPackable)' != 'false' AND '$(UsingMicrosoftNETSdk)' == 'true'">
+		<!-- I might be forced to disable PackageReference injection because with MsBuild will cause
+				 Issues with NuGet package restore for old non SDK-style projects: if for whatever reason there's a
+				 PackageReference in the .csproj file that will result in old packages.config being ignored.
+				 We are forced to add the SourceLink to every single project we publish as nuget package in this solution.
+
+				 It seems that now even old-style projects can use PackageReferences with little adjustment, look st the
+				 migration script in the project root-->
+		<!-- Reference the Source Link package for Azure Repos -->
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	<Target Name="LogProperties" BeforeTargets="Build">
+		<Message Text="IsPackable: $(IsPackable)" Importance="High" />
+		<Message Text="GenerateDocumentationFile: $(GenerateDocumentationFile)" Importance="High" />
+		<Message Text="DocumentationFile: $(DocumentationFile)" Importance="High" />
+		<Message Text="Configuration: $(Configuration)" Importance="High" />
+		<Message Text="UsingMicrosoftNETSdk: $(UsingMicrosoftNETSdk)" Importance="High" />
+		<!-- log other configuration you want to check here -->
+	</Target>
+</Project>
